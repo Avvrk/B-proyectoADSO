@@ -1,0 +1,12 @@
+import mongoose from 'mongoose';
+
+const fincaSchema = new mongoose.Schema({
+  _idAdmin: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true },
+  nombre: { type: String, required: true },
+  rut: { type: String, required: true },
+  direccion: { type: String, required: true },
+  ubicacionGeografica: { type: String, required: true },
+  area: { type: Number, required: true }
+}, {
+  timestamps: true
+});
