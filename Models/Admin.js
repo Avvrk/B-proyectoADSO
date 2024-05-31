@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const cocoSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   direccion: { type: String, required: true },
   correo: { type: String, required: true, unique: true, match: [/\S+@\S+\.\S+/, 'is invalid'] },
@@ -11,4 +11,4 @@ const cocoSchema = new mongoose.Schema({
   timestamps: true
 });
 
-export default mongoose.model('Coco', cocoSchema);
+export default mongoose.model('Admin', adminSchema);

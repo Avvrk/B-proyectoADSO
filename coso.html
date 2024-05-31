@@ -1,0 +1,21 @@
+
+    <label for="hora_inicio">Hora de inicio:</label>
+    <input type="time" id="hora_inicio" name="hora_inicio"><br><br>
+    <label for="hora_fin">Hora de fin:</label>
+    <input type="time" id="hora_fin" name="hora_fin"><br><br>
+    <button onclick="calcularDuracion()">Calcular duración</button>
+    <p id="resultado"></p>
+
+  <script>
+    function calcularDuracion() {
+      const horaInicio = document.getElementById('hora_inicio').value;
+      const horaFin = document.getElementById('hora_fin').value;
+      const inicio = new Date(`1970-01-01T${horaInicio}`);
+      const fin = new Date(`1970-01-01T${horaFin}`);
+      const duracion = fin - inicio;
+      const horas = Math.floor(duracion / 3600000);
+      const minutos = Math.floor((duracion % 3600000) / 60000);
+      const segundos = Math.floor((duracion % 60000) / 1000);
+      console.log(`La duración es de ${horas} horas, ${minutos} minutos y ${segundos} segundos`, horaInicio, horaFin);
+    }
+  </script>
