@@ -8,7 +8,8 @@ const analisisSuelosSchema = new mongoose.Schema({
   cultivo: { type: String },
   laboratorio: { type: String },
   resultados: [{ type: String }],
-  recomendaciones: { type: String }
+  recomendaciones: { type: String },
+  estado: {type: Number, default: 1}
 }, {
   timestamps: true
 });

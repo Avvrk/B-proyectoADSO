@@ -10,7 +10,8 @@ const preparacionSuelosSchema = new mongoose.Schema({
   metodoAplicacion: { type: String },
   operario: { type: String },
   responsable: { type: String },
-  observaciones: { type: String }
+  observaciones: { type: String },
+  estado: {type: Number, default: 1}
 }, {
   timestamps: true
 });

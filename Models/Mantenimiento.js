@@ -7,7 +7,8 @@ const mantenimientoSchema = new mongoose.Schema({
   verificacionRealizada: { type: String },
   calibracion: { type: String },
   responsable: { type: String },
-  observaciones: { type: String }
+  observaciones: { type: String },
+  estado: { type: Number, default: 1 },
 }, {
   timestamps: true
 });

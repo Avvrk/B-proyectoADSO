@@ -52,9 +52,9 @@ const httpClimas = {
         try {
             const { id } = req.params;
             const climas = await Clima.findById(id);
-            
+
         } catch (error) {
-            
+
         }
         const horaInicio = document.getElementById('hora_inicio').value;
         const horaFin = document.getElementById('hora_fin').value;

@@ -4,7 +4,8 @@ const nominaSchema = new mongoose.Schema({
   fecha: { type: Date, required: true },
   id_empleado: { type: mongoose.Schema.Types.ObjectId, ref: 'Empleado', required: true },
   tipo: { type: String, required: true },
-  valor: { type: Number, required: true }
+  valor: { type: Number, required: true },
+  estado: { type: Number, default: 1},
 }, {
   timestamps: true
 });
