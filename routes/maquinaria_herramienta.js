@@ -7,18 +7,23 @@ import helpersMaquinariaHerramienta from '../helpers/maquinaria_herramienta.js';
 
 const router = Router();
 
+// Obtener todas las maquinarias y herramientas
 router.get('/', validarJWT, httpMaquinariaHerramientas.getMaquinariaH);
 
+// Obtener una maquinaria o herramienta por su ID
 router.get('/:id', [
     check('id', 'El ID de la maquinaria o herramienta debe ser un mongoId válido.').isMongoId(),
     validarJWT,
     validarCampos
 ], httpMaquinariaHerramientas.getMaquinariaHId);
 
+// Obtener maquinarias y herramientas activas
 router.get('/activos', validarJWT, httpMaquinariaHerramientas.getMaquinariaHActivos);
 
+// Obtener maquinarias y herramientas inactivas
 router.get('/inactivos', validarJWT, httpMaquinariaHerramientas.getMaquinariaHInactivos);
 
+// Obtener maquinarias y herramientas por fechas
 router.get('/fechas', [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
@@ -28,14 +33,17 @@ router.get('/fechas', [
     validarCampos
 ], httpMaquinariaHerramientas.getMaquinariaHFechas);
 
+// Obtener cantidad de maquinarias y herramientas por tipo
 router.get('/cantidad/:tipo', [
     check('tipo', 'El tipo de maquinaria o herramienta es requerido.').notEmpty(),
     validarJWT,
     validarCampos
 ], httpMaquinariaHerramientas.getMaquinariaHCantidad);
 
+// Obtener el total de maquinarias y herramientas
 router.get('/total', validarJWT, httpMaquinariaHerramientas.getMaquinariaHTotal);
 
+// Crear una nueva maquinaria o herramienta
 router.post('/', [
     check('proveedores_id', 'El ID del proveedor es requerido.').notEmpty(),
     check('proveedores_id', 'El ID del proveedor debe ser un mongoId válido.').isMongoId(),
@@ -54,6 +62,7 @@ router.post('/', [
     validarCampos
 ], httpMaquinariaHerramientas.postMaquinariaH);
 
+// Actualizar una maquinaria o herramienta existente
 router.put('/:id', [
     check('id', 'El ID de la maquinaria o herramienta es requerido.').notEmpty(),
     check('id', 'El ID de la maquinaria o herramienta debe ser un mongoId válido.').isMongoId(),
@@ -69,12 +78,14 @@ router.put('/:id', [
     validarCampos
 ], httpMaquinariaHerramientas.putMaquinariaH);
 
+// Activar una maquinaria o herramienta
 router.put('/activar/:id', [
     check('id', 'El ID de la maquinaria o herramienta debe ser un mongoId válido.').isMongoId(),
     validarJWT,
     validarCampos
 ], httpMaquinariaHerramientas.putMaquinariaHActivar);
 
+// Inactivar una maquinaria o herramienta
 router.put('/inactivar/:id', [
     check('id', 'El ID de la maquinaria o herramienta debe ser un mongoId válido.').isMongoId(),
     validarJWT,

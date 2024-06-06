@@ -1,6 +1,7 @@
 import Parcela from '../models/Parcelas.js';
 
 const httpParcelas = {
+    // Método para obtener todas las parcelas
     getParcelas: async (req, res) => {
         try {
             const parcelas = await Parcela.find();
@@ -9,6 +10,8 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    // Método para obtener una parcela por ID
     getParcelaId: async (req, res) => {
         try {
             const { id } = req.params;
@@ -18,6 +21,8 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    // Método para obtener todas las parcelas activas
     getParcelaActivos: async (req, res) => {
         try {
             const parcelas = await Parcela.find({ estado: '1' });
@@ -26,6 +31,8 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    // Método para obtener todas las parcelas inactivas
     getParcelaInactivos: async (req, res) => {
         try {
             const parcelas = await Parcela.find({ estado: '0' });
@@ -34,6 +41,8 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    // Método para obtener parcelas en un rango de fechas
     getParcelaFechas: async (req, res) => {
         try {
             const { fechaInicio, fechaFin } = req.body;
@@ -47,6 +56,12 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    getPacerlaCultivo: async (req, res) => {
+        
+    },
+
+    // Método para obtener parcelas por cultivo actual
     getParcelaCultivoActual: async (req, res) => {
         try {
             const { cultivo } = req.params;
@@ -56,6 +71,8 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    // Método para obtener parcelas por asistente técnico
     getParcelaAsistente: async (req, res) => {
         try {
             const { asistente } = req.params;
@@ -65,9 +82,11 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    // Método para agregar una nueva parcela
     postParcela: async (req, res) => {
         try {
-            const { numero, ubicacionGeografica, cultivoAnterior, cultivoActual, detalle, estado, area, asistenteTecnico, id_fincas } = req.body;
+            const { numero, ubicacionGeografica, cultivoAnterior, cultivoActual, detalle, estado, area, asistenteTecnico, id_fincas } = req.body; // Obtiene los datos de la parcela del cuerpo de la solicitud
             const parcela = new Parcela({
                 numero,
                 ubicacionGeografica,
@@ -85,6 +104,8 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    // Método para actualizar una parcela por ID
     putParcela: async (req, res) => {
         try {
             const { id } = req.params;
@@ -95,6 +116,8 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    // Método para activar una parcela por ID
     putParcelaActivar: async (req, res) => {
         try {
             const { id } = req.params;
@@ -104,6 +127,8 @@ const httpParcelas = {
             res.json({ error });
         }
     },
+
+    // Método para inactivar una parcela por ID
     putParcelaInactivar: async (req, res) => {
         try {
             const { id } = req.params;

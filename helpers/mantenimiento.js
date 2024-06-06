@@ -4,6 +4,7 @@ import Herramienta from '../models/Maquinaria_herramienta.js';
 
 const { isMongoId } = validator;
 
+// Función para validar si una cadena de texto es una fecha válida
 function dateValido(dateString) {
     const registroTiempo = Date.parse(dateString);
     if (isNaN(registroTiempo)) {
@@ -12,10 +13,11 @@ function dateValido(dateString) {
 
     const fecha = new Date(dateString);
     const formatoFecha = fecha.toISOString().split("T")[0];
-    return dateString === formatoFecha;
+    return dateString === formatoFecha; // Verifica si el formato de la fecha coincide con la fecha en formato ISO
 }
 
 const helpersMantenimiento = {
+    // Valida que el campo fecha sea una fecha válida y no esté vacío
     validarFecha: (fecha) => {
         if (fecha !== undefined) {
             if (!dateValido(fecha)) {
@@ -27,6 +29,7 @@ const helpersMantenimiento = {
             throw new Error("La fecha es obligatoria.");
         }
     },
+    // Valida que el campo verificación realizada no esté vacío y sea una cadena de texto
     validarVerificacionRealizada: (verificacionRealizada) => {
         if (verificacionRealizada !== undefined) {
             if (typeof verificacionRealizada !== 'string' || verificacionRealizada.trim() === "") {
@@ -38,6 +41,7 @@ const helpersMantenimiento = {
             return true;
         }
     },
+    // Valida que el campo calibración no esté vacío y sea una cadena de texto
     validarCalibracion: (calibracion) => {
         if (calibracion !== undefined) {
             if (typeof calibracion !== 'string' || calibracion.trim() === "") {
@@ -49,6 +53,7 @@ const helpersMantenimiento = {
             return true;
         }
     },
+    // Valida que el campo responsable no esté vacío y sea una cadena de texto
     validarResponsable: (responsable) => {
         if (responsable !== undefined) {
             if (typeof responsable !== 'string' || responsable.trim() === "") {
@@ -60,10 +65,11 @@ const helpersMantenimiento = {
             return true;
         }
     },
+    // Valida que el campo observaciones no esté vacío y sea una cadena de texto
     validarObservaciones: (observaciones) => {
         if (observaciones !== undefined) {
             if (typeof observaciones !== 'string' || observaciones.trim() === "") {
-                throw new Error("Las observaciones no debe estar vacío.");
+                throw new Error("Las observaciones no deben estar vacías.");
             } else {
                 return true;
             }
@@ -71,6 +77,7 @@ const helpersMantenimiento = {
             return true;
         }
     },
+    // Valida que el campo estado sea 0 (inactivo) o 1 (activo)
     validarEstado: (estado) => {
         if (estado !== undefined) {
             if (![0, 1].includes(Number(estado))) {
@@ -82,6 +89,7 @@ const helpersMantenimiento = {
             return true;
         }
     },
+    // Valida que el ID de gastos sea un MongoID válido y que exista en la base de datos
     validarIdGastos: async (gastos_id) => {
         if (gastos_id !== undefined) {
             if (!isMongoId(gastos_id)) {
@@ -101,6 +109,7 @@ const helpersMantenimiento = {
             throw new Error("El campo gastos_id es obligatorio.");
         }
     },
+    // Valida que el ID de herramienta sea un MongoID válido y que exista en la base de datos
     validarIdHerramienta: async (id_herramienta) => {
         if (id_herramienta !== undefined) {
             if (!isMongoId(id_herramienta)) {

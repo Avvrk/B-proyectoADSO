@@ -7,18 +7,23 @@ import helpersParcela from '../helpers/parcela.js';
 
 const router = Router();
 
+// Obtener todas las parcelas
 router.get('/', validarJWT, httpParcelas.getParcelas);
 
+// Obtener una parcela por su ID
 router.get('/:id', [
     check('id', 'El ID de la parcela debe ser un mongoId válido.').isMongoId(),
     validarJWT,
     validarCampos
 ], httpParcelas.getParcelaId);
 
+// Obtener parcelas activas
 router.get('/activos', validarJWT, httpParcelas.getParcelaActivos);
 
+// Obtener parcelas inactivas
 router.get('/inactivos', validarJWT, httpParcelas.getParcelaInactivos);
 
+// Obtener parcelas por fechas
 router.get('/fechas', [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
@@ -28,18 +33,21 @@ router.get('/fechas', [
     validarCampos
 ], httpParcelas.getParcelaFechas);
 
+// Obtener parcelas por cultivo actual
 router.get('/cultivo/:cultivo', [
     check('cultivo', 'El nombre del cultivo es requerido.').notEmpty(),
     validarJWT,
     validarCampos
 ], httpParcelas.getParcelaCultivoActual);
 
+// Obtener parcelas por asistente técnico
 router.get('/asistente/:asistente', [
     check('asistente', 'El nombre del asistente técnico es requerido.').notEmpty(),
     validarJWT,
     validarCampos
 ], httpParcelas.getParcelaAsistente);
 
+// Crear una nueva parcela
 router.post('/', [
     check('numero', 'El número es requerido.').notEmpty(),
     check('ubicacionGeografica', 'La ubicación geográfica es requerida.').notEmpty(),
@@ -52,6 +60,7 @@ router.post('/', [
     validarCampos
 ], httpParcelas.postParcela);
 
+// Actualizar una parcela existente
 router.put('/:id', [
     check('id', 'El ID de la parcela es requerido.').notEmpty(),
     check('id', 'El ID de la parcela debe ser un mongoId válido.').isMongoId(),
@@ -67,12 +76,14 @@ router.put('/:id', [
     validarCampos
 ], httpParcelas.putParcela);
 
+// Activar una parcela
 router.put('/activar/:id', [
     check('id', 'El ID de la parcela debe ser un mongoId válido.').isMongoId(),
     validarJWT,
     validarCampos
 ], httpParcelas.putParcelaActivar);
 
+// Inactivar una parcela
 router.put('/inactivar/:id', [
     check('id', 'El ID de la parcela debe ser un mongoId válido.').isMongoId(),
     validarJWT,

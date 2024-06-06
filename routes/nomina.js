@@ -7,18 +7,23 @@ import helpersNomina from '../helpers/nomina.js';
 
 const router = Router();
 
+// Obtener todas las nóminas
 router.get('/', validarJWT, httpNominas.getNomina);
 
+// Obtener una nómina por su ID
 router.get('/:id', [
     check('id', 'El ID de la nómina debe ser un mongoId válido.').isMongoId(),
     validarJWT,
     validarCampos
 ], httpNominas.getNominaId);
 
+// Obtener nóminas activas
 router.get('/activos', validarJWT, httpNominas.getNominaActivos);
 
+// Obtener nóminas inactivas
 router.get('/inactivos', validarJWT, httpNominas.getNominaInactivos);
 
+// Obtener nóminas por fechas
 router.get('/fechas', [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
@@ -28,14 +33,17 @@ router.get('/fechas', [
     validarCampos
 ], httpNominas.getNominaFechas);
 
+// Obtener nóminas de un empleado por su ID
 router.get('/empleados/:id', [
     check('id', 'El ID del empleado debe ser un mongoId válido.').isMongoId(),
     validarJWT,
     validarCampos
 ], httpNominas.getNominaEmpleados);
 
+// Obtener el total de las nóminas
 router.get('/total', validarJWT, httpNominas.getNominaTotal);
 
+// Crear una nueva nómina
 router.post('/', [
     check('fecha', 'La fecha es requerida.').notEmpty(),
     check('fecha', 'La fecha debe ser una fecha válida.').isISO8601().toDate(),
@@ -50,6 +58,7 @@ router.post('/', [
     validarCampos
 ], httpNominas.postNomina);
 
+// Actualizar una nómina existente
 router.put('/:id', [
     check('id', 'El ID de la nómina es requerido.').notEmpty(),
     check('id', 'El ID de la nómina debe ser un mongoId válido.').isMongoId(),
@@ -62,12 +71,14 @@ router.put('/:id', [
     validarCampos
 ], httpNominas.putNomina);
 
+// Activar una nómina
 router.put('/activar/:id', [
     check('id', 'El ID de la nómina debe ser un mongoId válido.').isMongoId(),
     validarJWT,
     validarCampos
 ], httpNominas.putNominaActivar);
 
+// Inactivar una nómina
 router.put('/inactivar/:id', [
     check('id', 'El ID de la nómina debe ser un mongoId válido.').isMongoId(),
     validarJWT,

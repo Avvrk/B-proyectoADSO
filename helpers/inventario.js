@@ -3,6 +3,7 @@ import Inventario from "../models/Inventario.js";
 
 const { isMongoId } = validator;
 
+// Función para validar si una cadena de texto es una fecha válida
 function dateValido(dateString) {
     const registroTiempo = Date.parse(dateString);
     if (isNaN(registroTiempo)) {
@@ -11,10 +12,11 @@ function dateValido(dateString) {
 
     const fecha = new Date(dateString);
     const formatoFecha = fecha.toISOString().split("T")[0];
-    return dateString === formatoFecha;
+    return dateString === formatoFecha; // Verifica si el formato de la fecha coincide con la fecha en formato ISO
 }
 
 const helpersInventario = {
+    // Valida que el campo tipo no esté vacío y sea una cadena de texto
     validarTipo: (tipo) => {
         if (tipo != undefined) {
             if (typeof tipo !== 'string' || tipo.trim() === "") {
@@ -26,6 +28,7 @@ const helpersInventario = {
             return true;
         }
     },
+    // Valida que la cantidad sea un número positivo
     validarCantidad: (cantidad) => {
         if (cantidad != undefined) {
             if (isNaN(Number(cantidad))) {
@@ -39,6 +42,7 @@ const helpersInventario = {
             return true;
         }
     },
+    // Valida que el campo unidad no esté vacío y sea una cadena de texto
     validarUnidad: (unidad) => {
         if (unidad != undefined) {
             if (typeof unidad !== 'string' || unidad.trim() === "") {
@@ -50,6 +54,7 @@ const helpersInventario = {
             return true;
         }
     },
+    // Valida que el estado sea 0 (inactivo) o 1 (activo)
     validarEstado: (estado) => {
         if (estado != undefined) {
             if (![0, 1].includes(Number(estado))) {
@@ -61,6 +66,7 @@ const helpersInventario = {
             return true;
         }
     },
+    // Valida que el ID de semillas sea un MongoID válido y que exista en la base de datos
     validarIdSemillas: async (semillas_id) => {
         if (semillas_id != undefined) {
             if (!isMongoId(semillas_id)) {
@@ -80,6 +86,7 @@ const helpersInventario = {
             return true;
         }
     },
+    // Valida que el ID de insumos sea un MongoID válido y que exista en la base de datos
     validarIdInsumos: async (insumos_id) => {
         if (insumos_id != undefined) {
             if (!isMongoId(insumos_id)) {
@@ -99,6 +106,7 @@ const helpersInventario = {
             return true;
         }
     },
+    // Valida que el ID de maquinaria sea un MongoID válido y que exista en la base de datos
     validarIdMaquinaria: async (maquinaria_id) => {
         if (maquinaria_id != undefined) {
             if (!isMongoId(maquinaria_id)) {

@@ -7,12 +7,16 @@ import helpersPreparacionSuelos from '../helpers/preparacion_suelos.js';
 
 const router = Router();
 
+// Obtener todas las preparaciones de suelos
 router.get('/', validarJWT, httpPreparacionSuelos.getPreparacionSue);
 
+// Obtener preparaciones de suelos activas
 router.get('/activos', validarJWT, httpPreparacionSuelos.getPreparacionSueActivos);
 
+// Obtener preparaciones de suelos inactivas
 router.get('/inactivos', validarJWT, httpPreparacionSuelos.getPreparacionSueInactivos);
 
+// Obtener preparaciones de suelos por fechas
 router.get('/fechas', [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
@@ -22,14 +26,17 @@ router.get('/fechas', [
     validarCampos
 ], httpPreparacionSuelos.getPreparacionSueFechas);
 
+// Obtener preparaciones de suelos por responsable
 router.get('/responsable/:Responsable', [
     check('Responsable', 'El nombre del responsable es requerido.').notEmpty(),
     validarJWT,
     validarCampos
 ], httpPreparacionSuelos.getPreparacionSueResponsable);
 
+// Obtener porcentaje de preparaciones de suelos
 router.get('/porcentaje', validarJWT, httpPreparacionSuelos.getPreparacionSuePorcentaje);
 
+// Crear una nueva preparación de suelos
 router.post('/', [
     check('fecha', 'La fecha es requerida.').notEmpty(),
     check('id_parcela', 'El ID de la parcela es requerido.').notEmpty(),
@@ -50,6 +57,7 @@ router.post('/', [
     validarCampos
 ], httpPreparacionSuelos.postPreparacionSue);
 
+// Actualizar una preparación de suelos existente
 router.put('/:id', [
     check('id', 'El ID de la preparación de suelos es requerido.').notEmpty(),
     check('id', 'El ID de la preparación de suelos debe ser un mongoId válido.').isMongoId(),
@@ -68,12 +76,14 @@ router.put('/:id', [
     validarCampos
 ], httpPreparacionSuelos.putPreparacionSue);
 
+// Activar una preparación de suelos
 router.put('/activar/:id', [
     check('id', 'El ID de la preparación de suelos debe ser un mongoId válido.').isMongoId(),
     validarJWT,
     validarCampos
 ], httpPreparacionSuelos.putPreparacionSueActivar);
 
+// Inactivar una preparación de suelos
 router.put('/inactivar/:id', [
     check('id', 'El ID de la preparación de suelos debe ser un mongoId válido.').isMongoId(),
     validarJWT,
