@@ -1,102 +1,105 @@
 import Proceso from '../Models/Procesos.js';
+import preparacion_suelos from '../Models/preparacion_suelos.js';
 
 const httpProcesos = {
-        // Método para listar todos los procesos
-        getProcesos: async (req, res) => {
-            try {
-                const procesos = await Procesos.find();
-                res.json({ procesos });
-            } catch (error) {
-                res.json({ error });
-            }
-        },
-    
-        // Método para listar todos los empleados
-        getEmpleados: async (req, res) => {
-            try {
-
-                res.json({ empleados });
-            } catch (error) {
-                res.json({ error });
-            }
-        },
-    
-        // Método para listar procesos en un rango de fechas
-        getProcesosEntreFechas: async (req, res) => {
-            try {
-                const { fechaInicio, fechaFin } = req.body;
-                const procesos = await Procesos.find({
-                    fecha_inicio: { $gte: fechaInicio, $lte: fechaFin }
-                });
-                res.json({ procesos });
-            } catch (error) {
-                res.json({ error });
-            }
-        },
-    
-        // Método para crear un nuevo proceso
-        crearProceso: async (req, res) => {
-            try {
-                const nuevoProceso = new Procesos(req.body);
-                await nuevoProceso.save();
-                res.json({ nuevoProceso });
-            } catch (error) {
-                res.json({ error });
-            }
-        },
-    
-        // Método para modificar un proceso por su ID
-        modificarProceso: async (req, res) => {
-            try {
-                const { id } = req.params;
-                const procesoModificado = await Procesos.findByIdAndUpdate(id, req.body, { new: true });
-                res.json({ procesoModificado });
-            } catch (error) {
-                res.json({ error });
-            }
-        },
-    
-        // Método para activar un proceso por su ID
-        activarProceso: async (req, res) => {
-            try {
-                const { id } = req.params;
-                const procesoActivado = await Procesos.findByIdAndUpdate(id, { estado: 'activo' }, { new: true });
-                res.json({ procesoActivado });
-            } catch (error) {
-                res.json({ error });
-            }
-        },
-    
-        // Método para inactivar un proceso por su ID
-        inactivarProceso: async (req, res) => {
-            try {
-                const { id } = req.params;
-                const procesoInactivado = await Procesos.findByIdAndUpdate(id, { estado: 'inactivo' }, { new: true });
-                res.json({ procesoInactivado });
-            } catch (error) {
-                res.json({ error });
-            }
-        },
-    
-        // Método para listar procesos activos
-        getProcesosActivos: async (req, res) => {
-            try {
-                const procesos = await Procesos.find({ estado: 'activo' });
-                res.json({ procesos });
-            } catch (error) {
-                res.json({ error });
-            }
-        },
-    
-        // Método para listar procesos inactivos
-        getProcesosInactivos: async (req, res) => {
-            try {
-                const procesos = await Procesos.find({ estado: 'inactivo' });
-                res.json({ procesos });
-            } catch (error) {
-                res.json({ error });
-            }
+    // Método para listar todos los procesos
+    getProcesos: async (req, res) => {
+        try {
+            const procesos = await Proceso.find();
+            res.json({ procesos });
+        } catch (error) {
+            res.json({ error });
         }
+    },
+    // Método para listar todos los procesos por ID empleado
+    getProcesoEmpleadoID: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const empleado = await Proceso.find({ empleado_id: id });
+            res.json({ empleado })
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    // Método para listar procesos en un rango de fechas
+    getProcesosEntreFechas: async (req, res) => {
+        try {
+            const { fechaInicio, fechaFin } = req.body;
+            const procesos = await Proceso.find({
+                fecha_inicio: { $gte: fechaInicio, $lte: fechaFin }
+            });
+            res.json({ procesos });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    // Método para listar procesos activos
+    getProcesosActivos: async (req, res) => {
+        try {
+            const procesos = await Proceso.find({ estado: 1 });
+            res.json({ procesos });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    // Método para listar procesos inactivos
+    getProcesosInactivos: async (req, res) => {
+        try {
+            const procesos = await Proceso.find({ estado: 0 });
+            res.json({ procesos });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    // Método para crear un nuevo proceso
+    postProceso: async (req, res) => {
+        try {
+            const { cultivo_id, empleado_id, tipo, descripcion, fecha_inicio, fecha_final } = req.body;
+            const procesos = new Proceso({
+                cultivo_id,
+                empleado_id,
+                tipo,
+                descripcion,
+                fecha_inicio,
+                fecha_final
+            });
+            await procesos.save()
+            res.json({ procesos })
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    // Método para modificar un proceso por su ID
+    putProceso: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const info = req.body;
+            const proceso = await Proceso.findByIdAndUpdate(id, info, { new: true });
+            res.json({ proceso });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    // Método para activar un proceso por su ID
+    putProcesoActivar: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const proceso = await Proceso.findByIdAndUpdate(id, { estado: 1 }, { new: true });
+            res.json({ proceso });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    // Método para inactivar un proceso por su ID
+    putProcesoInactivar: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const proceso = await Proceso.findByIdAndUpdate(id, { estado: 0 }, { new: true });
+            res.json({ proceso });
+        } catch (error) {
+            res.json({ error });
+        }
+    }
 };
 
 export default httpProcesos;

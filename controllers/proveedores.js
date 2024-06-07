@@ -1,8 +1,8 @@
 import Proveedor from '../Models/Proveedores.js';
 
 const httpProveedores = {
-     // Método para listar todos los proveedores
-     getProveedores: async (req, res) => {
+    // Método para listar todos los proveedores
+    getProveedores: async (req, res) => {
         try {
             const proveedores = await Proveedor.find();
             res.json({ proveedores });
@@ -12,7 +12,7 @@ const httpProveedores = {
     },
 
     // Método para listar un proveedor por su ID
-    getProveedorById: async (req, res) => {
+    getProveedorId: async (req, res) => {
         try {
             const { id } = req.params;
             const proveedor = await Proveedor.findById(id);
@@ -22,8 +22,28 @@ const httpProveedores = {
         }
     },
 
+    // Método para listar todos los proveedores activos
+    getProveedorActivos: async (req, res) => {
+        try {
+            const proveedores = await Proveedor.find({ estado: 1 });
+            res.json({ proveedores });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    // Método para listar todos los proveedores inactivos
+    getProveedorInactivos: async (req, res) => {
+        try {
+            const proveedores = await Proveedor.find({ estado: 0 });
+            res.json({ proveedores });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
     // Método para crear un nuevo proveedor
-    crearProveedor: async (req, res) => {
+    postProveedor: async (req, res) => {
         try {
             const { nombre, direccion, telefono, email } = req.body;
             const proveedor = new Proveedor({
@@ -40,7 +60,7 @@ const httpProveedores = {
     },
 
     // Método para modificar un proveedor por su ID
-    modificarProveedor: async (req, res) => {
+    putProveedor: async (req, res) => {
         try {
             const { id } = req.params;
             const { nombre, direccion, telefono, email } = req.body;
@@ -57,7 +77,7 @@ const httpProveedores = {
     },
 
     // Método para activar un proveedor por su ID
-    activarProveedor: async (req, res) => {
+    putProveedorActivar: async (req, res) => {
         try {
             const { id } = req.params;
             const proveedor = await Proveedor.findByIdAndUpdate(id, { estado: 1 }, { new: true });
@@ -68,31 +88,11 @@ const httpProveedores = {
     },
 
     // Método para inactivar un proveedor por su ID
-    inactivarProveedor: async (req, res) => {
+    putProveedorInactivar: async (req, res) => {
         try {
             const { id } = req.params;
             const proveedor = await Proveedor.findByIdAndUpdate(id, { estado: 0 }, { new: true });
             res.json({ proveedor });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-
-    // Método para listar todos los proveedores activos
-    getProveedoresActivos: async (req, res) => {
-        try {
-            const proveedores = await Proveedor.find({ estado: 1 });
-            res.json({ proveedores });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-
-    // Método para listar todos los proveedores inactivos
-    getProveedoresInactivos: async (req, res) => {
-        try {
-            const proveedores = await Proveedor.find({ estado: 0 });
-            res.json({ proveedores });
         } catch (error) {
             res.json({ error });
         }

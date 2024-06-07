@@ -21,7 +21,6 @@ const httpProducciones = {
             res.json({ error });
         }
     },
-
     // Método para listar producciones en un rango de fechas
     getProduccionesFechas: async (req, res) => {
         try {
@@ -36,7 +35,6 @@ const httpProducciones = {
             res.json({ error });
         }
     },
-
     // Método para listar la cantidad producida por cultivo
     getProduccionesPorCultivo: async (req, res) => {
         try {
@@ -57,6 +55,26 @@ const httpProducciones = {
         try {
             const totalProducciones = await Produccion.countDocuments();
             res.json({ totalProducciones });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    // Método para listar producciones activas
+    getProduccionesActivas: async (req, res) => {
+        try {
+            const producciones = await Produccion.find({ estado: 1 });
+            res.json({ producciones });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    // Método para listar producciones inactivas
+    getProduccionesInactivas: async (req, res) => {
+        try {
+            const producciones = await Produccion.find({ estado: 0 });
+            res.json({ producciones });
         } catch (error) {
             res.json({ error });
         }
@@ -111,26 +129,6 @@ const httpProducciones = {
             const { id } = req.params;
             const produccion = await Produccion.findByIdAndUpdate(id, { estado: 0 }, { new: true });
             res.json({ produccion });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-
-    // Método para listar producciones activas
-    getProduccionesActivas: async (req, res) => {
-        try {
-            const producciones = await Produccion.find({ estado: 1 });
-            res.json({ producciones });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-
-    // Método para listar producciones inactivas
-    getProduccionesInactivas: async (req, res) => {
-        try {
-            const producciones = await Produccion.find({ estado: 0 });
-            res.json({ producciones });
         } catch (error) {
             res.json({ error });
         }

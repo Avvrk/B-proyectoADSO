@@ -10,9 +10,15 @@ const httpPreparacionSuelos = {
             res.json({ error });
         }
     },
-
+    //Método para obtener una preparacion de suelo por ID
     getPrepacionSueID: async (req, res) => {
-        
+        try {
+            const { id } = req.params;
+            const preparacionSue = await PreparacionS.findById(id);
+            res.json({ preparacionSue });
+        } catch (error) {
+            res.json({ error });
+        }
     },
 
     // Método para obtener el porcentaje de preparaciones activas
@@ -76,7 +82,7 @@ const httpPreparacionSuelos = {
     // Método para agregar una nueva preparación de suelos
     postPreparacionSue: async (req, res) => {
         try {
-            const { fecha, id_parcela, empleado_id, productos, ingredienteActivo, dosis, metodoAplicacion, operario, responsable, observaciones, estado } = req.body; // Obtiene los datos de la preparación de suelos del cuerpo de la solicitud
+            const { fecha, id_parcela, empleado_id, productos, ingredienteActivo, dosis, metodoAplicacion, operario, responsable, observaciones, estado } = req.body;
             const preparaciones = new PreparacionS({
                 fecha,
                 id_parcela,

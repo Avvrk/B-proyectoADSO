@@ -21,24 +21,30 @@ const httpInventarios = {
             res.json({ error });
         }
     },
-
+    //Método para listar entre fechas.
     getInventarioFechas: async (req, res) => {
         try {
-            
+            const { fechaInicio, fechaFin } = req.body;
+            const fechaInicioObj = new Date(fechaInicio);
+            const fechaFinObj = new Date(fechaFin);
+            const inventarios = await Inventario.find({ fecha: { $gte: fechaInicioObj, $lte: fechaFinObj } });
+            res.json({ inventarios })
         } catch (error) {
             res.json({ error });
         }
     },
-
+    //Método para listar el total del inventario
     getInventarioTotal: async (req, res) => {
         try {
-            
+            const inventarioTotal = await Inventario.find();
+            const total = inventarioTotal.reduce((acc, item) => { return acc + item.valor }, 0);
+            res.json({ total: total })
         } catch (error) {
             res.json({ error });
         }
     },
 
-    // Método para obtener todos los elementos activos del inventario
+    // Método para obtener los activos del inventario
     getInventarioActivos: async (req, res) => {
         try {
             const inventario = await Inventario.find({ estado: 1 });
@@ -48,7 +54,7 @@ const httpInventarios = {
         }
     },
 
-    // Método para obtener todos los elementos inactivos del inventario
+    // Método para obtener los inactivos del inventario
     getInventarioInactivos: async (req, res) => {
         try {
             const inventario = await Inventario.find({ estado: 0 });
@@ -70,7 +76,7 @@ const httpInventarios = {
         }
     },
 
-    // Método para agregar un nuevo elemento al inventario
+    // Método para agregar inventario
     postInventario: async (req, res) => {
         try {
             const { tipo, observacion, unidad, cantidad, semillas_id, insumos_id, maquinaria_id, estado } = req.body;

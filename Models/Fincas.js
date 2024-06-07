@@ -6,7 +6,11 @@ const fincaSchema = new mongoose.Schema({
   rut: { type: String, required: true },
   direccion: { type: String, required: true },
   ubicacionGeografica: { type: String, required: true },
-  area: { type: Number, required: true }
+  departamento: {type:String, required:true}, //Nuevo campo añadido
+  ciudad: {type:String, required:true}, //Nuevo campo añadido
+  limites: {type:String, required:true}, //Nuevo campo añadido
+  area: { type: Number, required: true },
+  estado: {type:Number, default: 1}
 }, {
   timestamps: true
 });

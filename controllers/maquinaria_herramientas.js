@@ -57,7 +57,7 @@ const httpMaquinariaHerramientas = {
         }
     },
 
-    // Método para obtener la cantidad de maquinaria y herramientas por tipo
+    // Método para obtener la cantidad de maquinaria y herramientas por tipo (máquina/herramienta)
     getMaquinariaHCantidad: async (req, res) => {
         try {
             const { tipo } = req.params;

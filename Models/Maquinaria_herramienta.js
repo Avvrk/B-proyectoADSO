@@ -4,6 +4,7 @@ const maquinariaHerramientaSchema = new mongoose.Schema({
   proveedores_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Proveedor', required: true },
   nombre: { type: String, required: true },
   tipo: { type: String, required: true },
+  fecha: { type: Date, required: true },
   fechaCompra: { type: Date, required: true },
   observaciones: { type: String },
   cantidad: { type: Number, required: true },

@@ -25,7 +25,7 @@ const httpParcelas = {
     // Método para obtener todas las parcelas activas
     getParcelaActivos: async (req, res) => {
         try {
-            const parcelas = await Parcela.find({ estado: '1' });
+            const parcelas = await Parcela.find({ estado: 1 });
             res.json({ parcelas });
         } catch (error) {
             res.json({ error });
@@ -35,7 +35,7 @@ const httpParcelas = {
     // Método para obtener todas las parcelas inactivas
     getParcelaInactivos: async (req, res) => {
         try {
-            const parcelas = await Parcela.find({ estado: '0' });
+            const parcelas = await Parcela.find({ estado: 0 });
             res.json({ parcelas });
         } catch (error) {
             res.json({ error });
@@ -55,10 +55,6 @@ const httpParcelas = {
         } catch (error) {
             res.json({ error });
         }
-    },
-
-    getPacerlaCultivo: async (req, res) => {
-        
     },
 
     // Método para obtener parcelas por cultivo actual
@@ -121,7 +117,7 @@ const httpParcelas = {
     putParcelaActivar: async (req, res) => {
         try {
             const { id } = req.params;
-            const parcela = await Parcela.findByIdAndUpdate(id, { estado: '1' }, { new: true });
+            const parcela = await Parcela.findByIdAndUpdate(id, { estado: 1 }, { new: true });
             res.json({ parcela });
         } catch (error) {
             res.json({ error });
@@ -132,7 +128,7 @@ const httpParcelas = {
     putParcelaInactivar: async (req, res) => {
         try {
             const { id } = req.params;
-            const parcela = await Parcela.findByIdAndUpdate(id, { estado: '0' }, { new: true });
+            const parcela = await Parcela.findByIdAndUpdate(id, { estado: 0 }, { new: true });
             res.json({ parcela });
         } catch (error) {
             res.json({ error });

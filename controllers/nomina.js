@@ -57,7 +57,7 @@ const httpNominas = {
         }
     },
 
-    // Método para obtener nómina por empleado
+    // Método para obtener nómina por el ID de un empleado
     getNominaEmpleados: async (req, res) => {
         try {
             const { id } = req.params;
