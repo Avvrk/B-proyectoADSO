@@ -52,18 +52,83 @@ const httpClimas = {
         try {
             const { id } = req.params;
             const climas = await Clima.findById(id);
+            const horaInicio = climas.horaInicio;
+            const horaFinal = climas.horaFinal;
+            const inicio = new Date(`1970-01-01T${horaInicio}`);
+            const fin = new Date(`1970-01-01T${horaFinal}`);
+            const duracion = fin - inicio;
+            const horas = Math.floor(duracion / 3600000);
+            const minutos = Math.floor((duracion % 3600000) / 60000);
+            const segundos = Math.floor((duracion % 60000) / 1000);
 
+            res.json({ horas, minutos, segundos });
         } catch (error) {
-
+            res.json({ error });
         }
-        const horaInicio = document.getElementById('hora_inicio').value;
-        const horaFin = document.getElementById('hora_fin').value;
-        const inicio = new Date(`1970-01-01T${horaInicio}`);
-        const fin = new Date(`1970-01-01T${horaFin}`);
-        const duracion = fin - inicio;
-        const horas = Math.floor(duracion / 3600000);
-        const minutos = Math.floor((duracion % 3600000) / 60000);
-        const segundos = Math.floor((duracion % 60000) / 1000);
-        console.log(`La duración es de ${horas} horas, ${minutos} minutos y ${segundos} segundos`, horaInicio, horaFin);
-    }
+    },
+    getClimasActivos: async (req, res) => {
+        try {
+            const climas = await Clima.find({ estado: 1 });
+            res.json({ climas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    getClimasInactivos: async (req, res) => {
+        try {
+            const climas = await Clima.find({ estado: 1 });
+            res.json({ climas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    postClimas: async (req, res) => {
+        try {
+            const { finca_id, empleado_id, fecha, tipoClima, horaInicio, horaFinal, temperaturaMaxima, temperaturaMinima } = req.body;
+            const climas = new Clima({
+                finca_id,
+                empleado_id,
+                fecha,
+                tipoClima,
+                horaInicio,
+                horaFinal,
+                temperaturaMaxima,
+                temperaturaMinima,
+            });
+            await climas.save();
+            res.json({ climas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    putClimas: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { ...info } = req.body;
+            const climas = await Clima.findByIdAndUpdate(id, info, { new: true });
+            res.json({ climas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    putClimasActivar: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const climas = await Clima.findByIdAndUpdate(id, { estado: 1 }, { new: true });
+            res.json({ climas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    putClimasInactivar: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const climas = await Clima.findByIdAndUpdate(id, { estado: o }, { new: true });
+            res.json({ climas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
 };
+
+export default httpClimas;

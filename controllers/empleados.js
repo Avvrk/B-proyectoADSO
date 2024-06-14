@@ -1,0 +1,58 @@
+import Empleado from "../Models/Empleados.js";
+
+const httpEmpleados = {
+    getEmpleados: async (req, res) => {
+        try {
+            const empleados = await Empleado.find();
+            res.json({ empleados });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    getEmpleadosId: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const empleados = await Empleado.findById(id);
+            res.json({ empleados });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    getEmpleadosDescripcion: async (req, res) => {
+        try {
+            const { descripcion } = req.params;
+            const empleados = await Empleado.find({ descripcion });
+            res.json({ empleados });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    postEmpleados: async (req, res) => {
+        try {
+            const { nombre, direccion, telefono, estudios, descripcion } = req.body;
+            const empleados = new Empleado({
+                nombre,
+                direccion,
+                telefono,
+                estudios,
+                descripcion,
+            });
+            await empleados.save();
+            res.json({ empleados });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+    putEmpleados: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const { ...info } = req.body;
+            const empleados = await Empleado.findByIdAndUpdate(id, info, { new: true });
+            res.json({ empleados });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+};
+
+export default httpEmpleados;
