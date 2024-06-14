@@ -33,6 +33,15 @@ const httpProcesos = {
             res.json({ error });
         }
     },
+    getProcesosEmpleado: async (req,res) =>{
+        try{
+            const {empleado} = req.params;
+            const procesos = await Proceso.find({empleado_id: empleado});
+            res.json({procesos});
+        } catch (error){
+            res.json({error});
+        }
+    },
     // Método para listar procesos activos
     getProcesosActivos: async (req, res) => {
         try {
