@@ -7,7 +7,8 @@ const produccionSchema = new mongoose.Schema({
   especie: { type: String },
   cantidad: { type: Number, required: true },
   cantidadTrabajadores: { type: Number },
-  observaciones: { type: String }
+  observaciones: { type: String },
+  estado: {type: Number, default: 1},
 }, {
   timestamps: true
 });

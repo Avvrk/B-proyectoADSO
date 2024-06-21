@@ -38,7 +38,7 @@ const httpInventarios = {
         try {
             const inventarioTotal = await Inventario.find();
             const total = inventarioTotal.reduce((acc, item) => { return acc + item.valor }, 0);
-            res.json({ total: total })
+            res.json({ total: total });
         } catch (error) {
             res.json({ error });
         }

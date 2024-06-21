@@ -6,7 +6,8 @@ const ProcesosSchema = new mongoose.Schema({
   tipo: { type: String, required: true },
   descripcion: { type: String },
   fecha_inicio: { type: Date, required: true },
-  fecha_final: { type: Date }
+  fecha_final: { type: Date },
+  estado: {type: Number, default:1},
 }, {
   timestamps: true
 });
