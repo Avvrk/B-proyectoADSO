@@ -9,7 +9,8 @@ const riegoSchema = new mongoose.Schema({
   hora_inicio: { type: String },
   hora_fin: { type: String },
   dosis: { type: Number },
-  cantidad_agua: { type: Number }
+  cantidad_agua: { type: Number },
+  estado: { type: Number, default: 1 }
 }, {
   timestamps: true
 });

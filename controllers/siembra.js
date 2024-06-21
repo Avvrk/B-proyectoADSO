@@ -1,6 +1,20 @@
 import e from 'cors';
 import Siembra from '../Models/Siembra.js';
 
+// CRUD
+// Listar siembras
+// Listar por ID
+// Listar entre fechas
+// Listar por empleado
+// Listar por cultivo anterior
+// Listar activos
+// Listar inactivos
+// Crear siembras
+// Modificar siembras
+// Activar
+// Inactivar
+
+
 const httpSiembras = {
     // Método para listar todas las siembras
     getSiembras: async (req, res) => {

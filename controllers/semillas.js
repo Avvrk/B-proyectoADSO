@@ -1,5 +1,18 @@
 import Semilla from '../Models/Semillas.js';
 
+// CRUD
+// Listar semillas
+// Listar por ID
+// Listar entre fechas
+// Listar por proveedor
+// Listar activas
+// Listar inactivas
+// Crear semilla
+// Modificar semilla
+// Activar 
+// Inactivar
+
+
 const httpSemillas = {
     // Método para listar todas las semillas
     getSemillas: async (req, res) => {
@@ -63,7 +76,7 @@ const httpSemillas = {
     // Método para crear una nueva semilla
     postSemilla: async (req, res) => {
         try {
-            const { proveedor_id, numFactura, fechaCompra, fechaVencimiento, especieVariedad, proveedorSemilla, numeroLote, origen, poderGerminativo, observaciones, unidad, total } = req.body;
+            const { proveedor_id, numFactura, fechaCompra, fechaVencimiento, especieVariedad, proveedorSemilla, numeroLote, origen, poderGerminativo, observaciones, unidad, total, estado } = req.body;
             const semilla = new Semilla({
                 proveedor_id,
                 numFactura,
@@ -76,7 +89,8 @@ const httpSemillas = {
                 poderGerminativo,
                 observaciones,
                 unidad,
-                total
+                total,
+                estado
             });
             await Semilla.save();
             res.json({ semilla })

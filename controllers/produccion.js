@@ -1,5 +1,20 @@
 import Produccion from '../Models/Produccion.js';
 
+
+// CRUD
+// Listar producciones
+// Listar por ID
+// Listar entre fechas
+// Listar cantidad por cultivo
+// Listar total producciones
+// Listar Activos
+// Listar Inactivos
+// Listar total
+// Crear produccion
+// Modificar produccion
+// Activar
+// Inactivar
+
 const httpProducciones = {
     // Método para listar todas las producciones
     getProducciones: async (req, res) => {

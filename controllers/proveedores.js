@@ -1,5 +1,16 @@
 import Proveedor from '../Models/Proveedores.js';
 
+// CRUD
+// Listar proveedores
+// Listar por ID
+// Listar activos
+// Listar inactivos
+// Crear proveedores
+// Modificar proveedores
+// Activar
+// Inactivar
+
+
 const httpProveedores = {
     // Método para listar todos los proveedores
     getProveedores: async (req, res) => {

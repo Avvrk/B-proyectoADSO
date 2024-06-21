@@ -1,5 +1,20 @@
 import Riego from '../Models/Riego.js';
 
+// CRUD
+// Listar riegos
+// Listar riegos ID
+// Listar entre fechas
+// Listar por empleado
+// Listar por cultivo
+// Listar por cantidad de agua (Litros) usada en el riego
+// Listar activos
+// Listar inactivos
+// Crear riego
+// Modificar riego
+// Activar
+// Inactivar
+
+
 const httpRiegos = {
     // Método para listar todos los riegos
     getRiegos: async (req, res) => {
@@ -85,7 +100,7 @@ const httpRiegos = {
     // Método para crear un nuevo riego
     postRiego: async (req, res) => {
         try {
-            const { cultivo_id, empleado_id, fecha, dias_transplante, estado_fenologico, hora_inicio, hora_fin, dosis, cantidad_agua } = req.body;
+            const { cultivo_id, empleado_id, fecha, dias_transplante, estado_fenologico, hora_inicio, hora_fin, dosis, cantidad_agua, estado } = req.body;
             const riego = new Riego({
                 cultivo_id,
                 empleado_id,
@@ -95,7 +110,8 @@ const httpRiegos = {
                 hora_inicio,
                 hora_fin,
                 dosis,
-                cantidad_agua
+                cantidad_agua,
+                estado
             });
             await Riego.save();
             res.json({ riego })
