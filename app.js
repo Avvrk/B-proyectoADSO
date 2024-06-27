@@ -36,7 +36,7 @@ app.use("/semillas", semillas);
 app.use("/siembra", siembra);
 
 app.listen(process.env.PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${process.ser.PORT}`);
+  console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
 });
 
 export default app;

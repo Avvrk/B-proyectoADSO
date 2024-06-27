@@ -34,7 +34,7 @@ router.get('/empleado/:empleado', [
 ], httpProcesos.getProcesoEmpleadoID);
 
 // Obtener porcentaje de procesos
-router.get('/porcentaje', validarJWT, httpProcesos.getProcesosPorcentaje);
+// router.get('/porcentaje', validarJWT, httpProcesos.getProcesosPorcentaje);
 
 // Crear un nuevo proceso
 router.post('/', [
