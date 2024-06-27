@@ -1,4 +1,4 @@
-import MaquinariaH from '../models/maquinaria_herramientas.js';
+import MaquinariaH from '../Models/Maquinaria_herramientas.js';
 
 const httpMaquinariaHerramientas = {
     // Método para obtener toda la maquinaria y herramientas

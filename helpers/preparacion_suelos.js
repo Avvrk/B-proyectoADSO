@@ -1,7 +1,6 @@
 import validator from 'validator';
 import Parcela from '../models/Parcelas.js';
-import Empleado from '../models/Empleado.js';
-
+import Empleado from '../Models/Empleados.js';
 const { isMongoId } = validator;
 
 // Función para validar si una cadena de texto es una fecha válida

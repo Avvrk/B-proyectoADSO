@@ -14,3 +14,5 @@ const fincaSchema = new mongoose.Schema({
 }, {
   timestamps: true
 });
+
+export default mongoose.model('Finca', fincaSchema);

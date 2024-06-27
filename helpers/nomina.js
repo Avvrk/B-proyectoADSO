@@ -1,5 +1,5 @@
 import validator from "validator";
-import Empleado from '../models/Empleados.js';
+import Empleado from '../Models/Empleados.js';
 
 const { isMongoId } = validator;
 

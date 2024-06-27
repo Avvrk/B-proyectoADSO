@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import express from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
 import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpProcesos from '../controllers/procesos.js';
 import helpersProcesos from '../helpers/procesos.js';
 
-const router = Router();
+const router = express.Router();
 
 // Obtener todos los procesos
 router.get('/', validarJWT, httpProcesos.getProcesos);
@@ -24,14 +24,14 @@ router.get('/fechas', [
     check('fechaFin', 'La fecha de fin debe ser una fecha válida.').isISO8601(),
     validarJWT,
     validarCampos
-], httpProcesos.getProcesosFechas);
+], httpProcesos.getProcesosEntreFechas);
 
-// Obtener procesos por responsable
-router.get('/responsable/:responsable', [
-    check('responsable', 'El nombre del responsable es requerido.').notEmpty(),
+// Obtener procesos por empleado
+router.get('/empleado/:empleado', [
+    check('empleado', 'El nombre del empleado es requerido.').notEmpty(),
     validarJWT,
     validarCampos
-], httpProcesos.getProcesosResponsable);
+], httpProcesos.getProcesoEmpleadoID);
 
 // Obtener porcentaje de procesos
 router.get('/porcentaje', validarJWT, httpProcesos.getProcesosPorcentaje);
@@ -56,7 +56,7 @@ router.post('/', [
     check('estado', 'El estado debe ser 0 (inactivo) o 1 (activo).').isIn(['0', '1']),
     validarJWT,
     validarCampos
-], httpProcesos.postProceso);
+], httpProcesos.postProcesos);
 
 // Actualizar un proceso existente
 router.put('/:id', [
@@ -75,14 +75,14 @@ router.put('/:id', [
     check('estado').optional().custom(helpersProcesos.validarEstado),
     validarJWT,
     validarCampos
-], httpProcesos.putProceso);
+], httpProcesos.putProcesos);
 
 // Activar un proceso
 router.put('/activar/:id', [
     check('id', 'El ID del proceso debe ser un mongoId válido.').isMongoId(),
     validarJWT,
     validarCampos
-], httpProcesos.putProcesoActivar);
+], httpProcesos.putProcesosActivar);
 
 // Inactivar un proceso
 router.put('/inactivar/:id', [

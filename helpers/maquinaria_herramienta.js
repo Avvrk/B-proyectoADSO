@@ -1,5 +1,5 @@
 import validator from "validator";
-import Proveedor from '../models/Proveedor.js';
+import Proveedor from '../Models/Proveedores.js';
 
 const { isMongoId } = validator;
 

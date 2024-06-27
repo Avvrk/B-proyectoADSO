@@ -1,6 +1,6 @@
 import validator from "validator";
 import Gasto from '../models/Gastos.js';
-import Herramienta from '../models/Maquinaria_herramienta.js';
+import Herramienta from '../Models/Maquinaria_herramientas.js';
 
 const { isMongoId } = validator;
 

@@ -3,7 +3,7 @@ import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
 import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpParcelas from '../controllers/parcelas.js';
-import helpersParcela from '../helpers/parcela.js';
+import helpersParcela from '../helpers/parcelas.js';
 
 const router = Router();
 
