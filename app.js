@@ -3,7 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 //importar la conexion a la base de datos
 import dbConexion from "./database/conexionMongo.js";
-// impotar las rutas
+// importar las rutas
 import inventario from "./routes/inventario.js";
 import mantenimiento from "./routes/mantenimiento.js";
 import maquinaria_herramienta from "./routes/maquinaria_herramienta.js";
@@ -35,8 +35,5 @@ app.use("/riego", riego);
 app.use("/semillas", semillas);
 app.use("/siembra", siembra);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
-});
 
 export default app;

@@ -1,9 +1,7 @@
 import app from "./app.js";
 import db from "./database/conexionMongo.js";
 
-const PORT = process.env.PORT || 4000;
-
-app.listen(PORT, async () => {
+app.listen(process.env.PORT, async () => {
     try {
       await db();
       console.log(`Puerto: ${process.env.PORT}`);
