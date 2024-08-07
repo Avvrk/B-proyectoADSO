@@ -1,0 +1,128 @@
+import Parcela from '../models/parcelas.js';
+
+const httpParcelas = {
+    getParcelas: async (req, res) => {
+        try {
+            const parcelas = await Parcela.find();
+            res.json({ parcelas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    getParcelaId: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const parcela = await Parcela.findById(id);
+            res.json({ parcela });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    getParcelaActivos: async (req, res) => {
+        try {
+            const parcelas = await Parcela.find({ estado: 1 });
+            res.json({ parcelas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    getParcelaInactivos: async (req, res) => {
+        try {
+            const parcelas = await Parcela.find({ estado: 0 });
+            res.json({ parcelas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    getParcelaFechas: async (req, res) => {
+        try {
+            const { fechaInicio, fechaFin } = req.body;
+            const fechaInicioObj = new Date(fechaInicio);
+            const fechaFinObj = new Date(fechaFin);
+            const parcelas = await Parcela.find({
+                createdAt: { $gte: fechaInicioObj, $lte: fechaFinObj },
+            });
+            res.json({ parcelas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    getParcelaCultivoActual: async (req, res) => {
+        try {
+            const { cultivo } = req.params;
+            const parcelas = await Parcela.find({ cultivoActual: cultivo });
+            res.json({ parcelas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    getParcelaAsistente: async (req, res) => {
+        try {
+            const { asistente } = req.params;
+            const parcelas = await Parcela.find({ asistenteTecnico: asistente });
+            res.json({ parcelas });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    postParcela: async (req, res) => {
+        try {
+            const { numero, ubicacionGeografica, cultivoAnterior, cultivoActual, detalle, estado, area, asistenteTecnico, id_fincas } = req.body; // Obtiene los datos de la parcela del cuerpo de la solicitud
+            const parcela = new Parcela({
+                numero,
+                ubicacionGeografica,
+                cultivoAnterior,
+                cultivoActual,
+                detalle,
+                estado,
+                area,
+                asistenteTecnico,
+                id_fincas
+            });
+            await parcela.save();
+            res.json({ parcela });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    putParcela: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const info = req.body;
+            const parcela = await Parcela.findByIdAndUpdate(id, info, { new: true });
+            res.json({ parcela });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    putParcelaActivar: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const parcela = await Parcela.findByIdAndUpdate(id, { estado: 1 }, { new: true });
+            res.json({ parcela });
+        } catch (error) {
+            res.json({ error });
+        }
+    },
+
+    putParcelaInactivar: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const parcela = await Parcela.findByIdAndUpdate(id, { estado: 0 }, { new: true });
+            res.json({ parcela });
+        } catch (error) {
+            res.json({ error });
+        }
+    }
+};
+
+export default httpParcelas;
