@@ -34,7 +34,6 @@ router.get("/responsable/:empleado_idResponsable", [
     check("empleado_idResponsable").custom(helpersSustratos.validarIdEmpleado),
     validarCampos
 ], httpElaboracionSustrato.getSustratosResponsable);
-router.get("/cultivo/:tipo", httpElaboracionSustrato.getSustratosCultivo);
 
 router.post("/", [
     check("id_proceso", "El idProceso no puede estar vacio").notEmpty(),

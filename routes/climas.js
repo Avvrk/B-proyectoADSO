@@ -37,7 +37,7 @@ router.post("/", [
     check("finca_id").custom(helpersClimas.validarIdFinca),
     check("empleado_id", "El id empleado no puede estar vacio").notEmpty(),
     check("empleado_id", "Ingrese un mongo id valido en empleado").isMongoId(),
-    check("empleado_id").custom(helpersClimas.validarIdEmpleado()),
+    check("empleado_id").custom(helpersClimas.validarIdEmpleado),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
     check("fecha", "Ingrese una fecha valida").isISO8601().toDate(),
     check("tipoClima", "El tipo clima no puede estar vacio").notEmpty(),

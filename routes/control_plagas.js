@@ -18,7 +18,7 @@ router.get("/inactivos", [], httpControlPlagas.getPlagasInactivos);
 router.get("/fecha/:fechaInicio/:fechaFin", [
     check("fechaInicio", "Ingrese una fecha inicial valida").isISO8601().toDate(),
     check("fechaFin", "Ingrese una fecha final valida").isISO8601().toDate(),
-    check(["fechaInicio", "fechaFin"]).custom(herlpersControlPlagas.validarFechas()),
+    check(["fechaInicio", "fechaFin"]).custom(herlpersControlPlagas.validarFechas),
     validarCampos
 ], httpControlPlagas.getPlagasFechas);
 router.get("/operario/:operario", [], httpControlPlagas.getPlagasOperario);

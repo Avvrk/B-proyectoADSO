@@ -18,8 +18,6 @@ router.get('/id/:id', [
 
 
 router.get('/activos', httpMaquinariaHerramientas.getMaquinariaHActivos);
-
-
 router.get('/inactivos', httpMaquinariaHerramientas.getMaquinariaHInactivos);
 
 

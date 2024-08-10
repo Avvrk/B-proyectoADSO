@@ -41,13 +41,13 @@ const httpMantenimientos = {
 
     getMantenimientosFechas: async (req, res) => {
         try {
-            const { fechaInicio, fechaFin } = req.body;
+            const { fechaInicio, fechaFin } = req.params;
             const fechaInicioObj = new Date(fechaInicio);
             const fechaFinObj = new Date(fechaFin);
-            const mantenimientos = await Mantenimiento.find({
+            const mantenimiento = await Mantenimiento.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
             });
-            res.json({ mantenimientos });
+            res.json({ mantenimiento });
         } catch (error) {
             res.json({ error });
         }
@@ -75,7 +75,7 @@ const httpMantenimientos = {
 
     postMantenimiento: async (req, res) => {
         try {
-            const { gastos_id, id_herramienta, fecha, verificacionRealizada, calibracion, responsable, observaciones, estado } = req.body;
+            const { gastos_id, id_herramienta, fecha, verificacionRealizada, calibracion, responsable, observaciones } = req.body;
             const mantenimientos = new Mantenimiento({
                 gastos_id,
                 id_herramienta,
@@ -83,8 +83,7 @@ const httpMantenimientos = {
                 verificacionRealizada,
                 calibracion,
                 responsable,
-                observaciones,
-                estado
+                observaciones
             });
             await mantenimientos.save();
             res.json({ mantenimientos });
@@ -97,7 +96,7 @@ const httpMantenimientos = {
         try {
             const { id } = req.params;
             const { ...info } = req.body;
-            const mantenimientos = await Mantenimiento.findByIdAndUpdate(id, ...info, { new: true });
+            const mantenimientos = await Mantenimiento.findByIdAndUpdate(id, info, { new: true });
             res.json({ mantenimientos });
         } catch (error) {
             res.json({ error });
