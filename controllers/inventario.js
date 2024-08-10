@@ -71,16 +71,16 @@ const httpInventarios = {
 
     postInventario: async (req, res) => {
         try {
-            const { tipo, observacion, unidad, cantidad, semillas_id, insumos_id, maquinaria_id, estado } = req.body;
+            const { tipo, observacion, unidad, cantidad, fecha, semillas_id, insumos_id, maquinaria_id } = req.body;
             const inventario = new Inventario({
                 tipo,
                 observacion,
                 unidad,
                 cantidad,
+                fecha,
                 semillas_id,
                 insumos_id,
-                maquinaria_id,
-                estado
+                maquinaria_id
             });
             await inventario.save();
             res.json({ inventario });
@@ -93,7 +93,7 @@ const httpInventarios = {
         try {
             const { id } = req.params;
             const { ...info } = req.body;
-            const inventario = await Inventario.findByIdAndUpdate(id, ...info, { new: true });
+            const inventario = await Inventario.findByIdAndUpdate(id, info, { new: true });
             res.json({ inventario });
         } catch (error) {
             res.json({ error });

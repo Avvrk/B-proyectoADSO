@@ -11,6 +11,7 @@ const compradorSchema = new mongoose.Schema({
   numeroGuiaTransporte: { type: String },
   numeroLoteComercial: { type: String },
   total: { type: Number },
+  estado: { type: Number, default: 1 }
 }, {
   timestamps: true
 });

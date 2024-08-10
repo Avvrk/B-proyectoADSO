@@ -45,8 +45,8 @@ const httpSiembras = {
 
     getSiembraCultivoAnterior: async (req, res) => {
         try {
-            const { cultivoAnterior } = req.params;
-            const siembras = await Siembra.find({ cultivoAnterior: cultivoAnterior });
+            const { id} = req.params;
+            const siembras = await Siembra.findById(id,{ cultivoAnterior: 1 });
             res.json({ siembras });
         } catch (error) {
             res.json({ error });

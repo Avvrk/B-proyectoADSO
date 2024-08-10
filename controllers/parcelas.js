@@ -38,19 +38,7 @@ const httpParcelas = {
         }
     },
 
-    getParcelaFechas: async (req, res) => {
-        try {
-            const { fechaInicio, fechaFin } = req.body;
-            const fechaInicioObj = new Date(fechaInicio);
-            const fechaFinObj = new Date(fechaFin);
-            const parcelas = await Parcela.find({
-                createdAt: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            });
-            res.json({ parcelas });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
+   
 
     getParcelaCultivoActual: async (req, res) => {
         try {
@@ -65,7 +53,11 @@ const httpParcelas = {
     getParcelaAsistente: async (req, res) => {
         try {
             const { asistente } = req.params;
-            const parcelas = await Parcela.find({ asistenteTecnico: asistente });
+            const resultado = asistente
+           .toLowerCase()
+           .replace("-", " ")
+           .replace(/(?:^|\s|[-])\S/g, (char) => char.toUpperCase());
+            const parcelas = await Parcela.find({ asistenteTecnico:resultado });
             res.json({ parcelas });
         } catch (error) {
             res.json({ error });

@@ -16,20 +16,20 @@ router.get("/id/:id", [
 router.get("/activos", [], httpAnalisisSuelo.getSuelosActivos);
 router.get("/desactivados", [], httpAnalisisSuelo.getSuelosInactivos);
 router.get("/fecha/:fechaInicio/:fechaFin", [
-    check("fechaInicio", "Ingrese una fecha inicial valida").isISO8601().toDate(),
-    check("fechaFin", "Ingrese una fecha final valida").isISO8601().toDate(),
+    check("fechaInicio").custom(helpersAnalisisSuelos.validarFecha),
+    check("fechaFin").custom(helpersAnalisisSuelos.validarFecha),
     check(["fechaInicio", "fechaFin"]).custom(helpersAnalisisSuelos.validarFechas),
     validarCampos
 ], httpAnalisisSuelo.getSualosFechas);
 router.get("/responsable/:empleado_id", [
     check("empleado_id", "Ingrese un mongo id valido").isMongoId(),
-    check("empleado_id").custom(httpAnalisisSuelo.validarIdEmpleado),
+    check("empleado_id").custom(helpersAnalisisSuelos.validarIdEmpleado),
     validarCampos
 ], httpAnalisisSuelo.getSuelosResponsables);
 
 router.post("/", [
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "Ingrese una fecha valida").isISO8601().toDate(),
+    check("fecha").custom(helpersAnalisisSuelos.validarFecha),
     check("id_parcela", "El id de la parcela no puede estar vacia").notEmpty(),
     check("id_parcela", "Ingrese un mongo id valido en parcela").isMongoId(),
     check("id_parcela").custom(helpersAnalisisSuelos.validarIdParcela),
@@ -46,15 +46,15 @@ router.post("/", [
 
 router.put("/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
-    check("id").custom(httpAnalisisSuelo.validarId),
+    check("id").custom(helpersAnalisisSuelos.validarId),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "Ingrese una fecha valida").isISO8601().toDate(),
+    check("fecha").custom(helpersAnalisisSuelos.validarFecha),
     check("id_parcela", "El id de la parcela no puede estar vacia").notEmpty(),
     check("id_parcela", "Ingrese un mongo id valido en parcela").isMongoId(),
-    check("id_parcela").custom(helpersAnalisisSuelos.validarIdParcela()),
+    check("id_parcela").custom(helpersAnalisisSuelos.validarIdParcela),
     check("empleado_id", "El id de empleado no puede estar vacio").notEmpty(),
     check("empleado_id", "Ingrese un mongo id valido en empleado").isMongoId(),
-    check("empleado_id").custom(helpersAnalisisSuelos.validarIdEmpleado()),
+    check("empleado_id").custom(helpersAnalisisSuelos.validarIdEmpleado),
     check("muestra", "La muestra no puede estar vacia").notEmpty(),
     check("cultivo", "El cultivo no puede estar vacio").notEmpty(),
     check("laboratorio", "El laboratorio no puede estar vacio").notEmpty(),

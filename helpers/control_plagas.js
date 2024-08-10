@@ -2,6 +2,17 @@ import ControlPlagas from "../models/control_plagas.js"
 import Cultivo from "../models/cultivos.js"
 import Empleado from "../models/empleados.js";
 
+function dateValido(dateString) {
+    const registroTiempo = Date.parse(dateString);
+    if (isNaN(registroTiempo)) {
+        return false;
+    }
+
+    const fecha = new Date(dateString);
+    const formatoFecha = fecha.toISOString().split('T')[0];
+    return dateString === formatoFecha;
+}
+
 const herlpersControlPlagas = {
     validarId: async (id) => {
         if (id != undefined) {
@@ -63,7 +74,15 @@ const herlpersControlPlagas = {
         } else {
             return true;
         }
-    }
+    },
+    validarFecha: (fecha) => {
+        if (fecha !== undefined) {
+            if (!dateValido(fecha)) {
+                throw new Error("Ingrese una fecha válida.");
+            }
+        }
+        return true;
+    },
 }
 
 export default herlpersControlPlagas

@@ -39,19 +39,25 @@ const helpersRiego = {
     },
 
     validarFecha: (fecha) => {
+        console.log("Fecha: ", fecha);
+        console.log("Fecha: ", typeof fecha);
+        
         if (!fecha) {
             throw new Error("La fecha es requerida.");
         }
         if (isNaN(Date.parse(fecha))) {
             throw new Error("La fecha no es válido");
         }
+
+        return true
     },
 
     validarEstadoFenologico: (estado) => {
-        const estadosValidos = ['Inicial', 'Floracion', 'Cosecha'];
+        const estadosValidos = ['inicial', 'floracion', 'cosecha'];
         if (!estadosValidos.includes(estado)) {
             throw new Error("El estado fenológico debe ser uno de los siguientes: Inicial, Floracion o Cosecha");
         }
+        return true
     },
 
     validarHora: (hora) => {
@@ -59,19 +65,24 @@ const helpersRiego = {
         if (!horaRegex.test(hora)) {
             throw new Error('La hora no es válida. Debe estar en el formato HH:MM.');
         }
+        return true
     },
+    
 
     validarDosis : (dosis) => {
         if (dosis < 0) {
             throw new Error('La dosis debe ser un número positivo.');
 
         }
+        return true
     },
 
     validarCantidadAgua: (cantidad) => {
-        if (cantidad_agua < 0) {
+        if (cantidad< 0) {
             throw new Error('La cantidad de agua debe ser un número positivo.');
         }
+
+        return true
     },
 
     validarEstado: (estado) => {

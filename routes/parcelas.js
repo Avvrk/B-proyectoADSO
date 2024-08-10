@@ -23,24 +23,17 @@ router.get('/activos', httpParcelas.getParcelaActivos);
 router.get('/inactivos', httpParcelas.getParcelaInactivos);
 
 
-router.get('/fechas', [
-    check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
-    check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
-    check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
-    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().isDate(),
-    validarCampos
-], httpParcelas.getParcelaFechas);
 
 
-router.get('/cultivo/:id', [
-    check('cultivo', 'El nombre del cultivo es requerido.').notEmpty(),
-    validarCampos
+
+router.get('/cultivo/:cultivo', [
+   
+   
 ], httpParcelas.getParcelaCultivoActual);
 
 
-router.get('/asistente/:id', [
-    check('asistente', 'El nombre del asistente técnico es requerido.').notEmpty(),
-    validarCampos
+router.get('/asistente/:asistente', [
+    
 ], httpParcelas.getParcelaAsistente);
 
 

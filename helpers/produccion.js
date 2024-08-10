@@ -37,17 +37,13 @@ const helpersProducciones = {
         }
     },
 
-
     validarFecha: (fecha) => {
         if (fecha !== undefined) {
             if (!dateValido(fecha)) {
-                throw new Error("El campo fecha debe ser una fecha válida.");
-            } else {
-                return true;
+                throw new Error("Ingrese una fecha válida.");
             }
-        } else {
-            throw new Error("El campo fecha es obligatorio.");
         }
+        return true;
     },
 
 

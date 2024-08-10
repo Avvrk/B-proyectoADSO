@@ -4,22 +4,15 @@ import Herramienta from '../models/maquinaria_herramientas.js';
 
 const { isMongoId } = validator;
 
-function dateValido(dateString) {
-    const registroTiempo = Date.parse(dateString);
-    if (isNaN(registroTiempo)) {
-        return false;
-    }
-
-    const fecha = new Date(dateString);
-    const formatoFecha = fecha.toISOString().split("T")[0];
-    return dateString === formatoFecha;
-}
-
 const helpersMantenimiento = {
 
     validarFecha: (fecha) => {
         if (fecha !== undefined) {
-            if (!dateValido(fecha)) {
+            // Intenta convertir el valor en una fecha
+            const fechaConvertida = new Date(fecha);
+    
+            // Verifica si la conversión resultó en una fecha válida
+            if (isNaN(fechaConvertida.getTime())) {
                 throw new Error("El campo fecha debe ser una fecha válida.");
             } else {
                 return true;
@@ -27,7 +20,7 @@ const helpersMantenimiento = {
         } else {
             throw new Error("La fecha es obligatoria.");
         }
-    },
+    },    
 
     validarVerificacionRealizada: (verificacionRealizada) => {
         if (verificacionRealizada !== undefined) {

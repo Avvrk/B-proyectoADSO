@@ -40,7 +40,7 @@ const httpNominas = {
 
     getNominaFechas: async (req, res) => {
         try {
-            const { fechaInicio, fechaFin } = req.body;
+            const { fechaInicio, fechaFin } = req.params;
             const fechaInicioObj = new Date(fechaInicio);
             const fechaFinObj = new Date(fechaFin);
             const nomina = await Nomina.find({
@@ -93,7 +93,7 @@ const httpNominas = {
         try {
             const { id } = req.params;
             const { ...info } = req.body;
-            const nomina = await Nomina.findByIdAndUpdate(id, ...info, { new: true });
+            const nomina = await Nomina.findByIdAndUpdate(id, info, { new: true });
             res.json({ nomina });
         } catch (error) {
             res.json({ error });

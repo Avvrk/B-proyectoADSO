@@ -30,8 +30,9 @@ router.get('/empleado/:empleadoId', [
 ], httpSiembras.getSiembraEmpleado);
 
 
-router.get('/cultivoAnterior/:cultivoAnterior', [
-    check('cultivoAnterior', 'El nombre del cultivo anterior es requerido.').notEmpty(),
+router.get('/cultivoAnterior/:id', [
+    check('id', 'Ingrese un mongoId valido').isMongoId(),
+    
     validarCampos
 ], httpSiembras.getSiembraCultivoAnterior);
 
@@ -45,8 +46,8 @@ router.get('/inactivos', httpSiembras.getSiembrasInactivas);
 router.post('/', [
     check('id_cultivo', 'El ID del cultivo es requerido y debe ser un mongoId válido.').isMongoId(),
     check('empleado_id', 'El ID del empleado es requerido y debe ser un mongoId válido.').isMongoId(),
-    check('fechaSiembra', 'La fecha de siembra es requerida y debe ser válida.').isISO8601().toDate(),
-    check('fechaCosecha', 'La fecha de cosecha debe ser válida.').optional({ nullable: true }).isISO8601().toDate(),
+    check('fechaSiembra').custom(helpersSiembras.validarFecha),
+    check('fechaCosecha').custom(helpersSiembras.validarFecha),
     check('transplante', 'El campo transplante debe ser un booleano.').optional().isBoolean(),
     check('id_cultivo').custom(helpersSiembras.validarIdCultivo),
     check('empleado_id').custom(helpersSiembras.validarIdEmpleado),

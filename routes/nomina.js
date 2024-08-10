@@ -23,11 +23,11 @@ router.get('/activos', httpNominas.getNominaActivos);
 router.get('/inactivos', httpNominas.getNominaInactivos);
 
 
-router.get('/fechas', [
+router.get("/fechas/:fechaInicio/:fechaFin", [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
     check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
-    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().isDate(),
+    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().toDate(),
     validarCampos
 ], httpNominas.getNominaFechas);
 

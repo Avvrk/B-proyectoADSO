@@ -73,6 +73,15 @@ const helpersProcesos = {
     },
 
 
+    validarFecha: (fecha) => {
+        if (fecha !== undefined) {
+            if (!dateValido(fecha)) {
+                throw new Error("Ingrese una fecha válida.");
+            }
+        }
+        return true;
+    },
+
     validarFechaInicio: (fecha_inicio) => {
         if (fecha_inicio !== undefined) {
             if (!dateValido(fecha_inicio)) {

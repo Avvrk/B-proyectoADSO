@@ -15,10 +15,10 @@ router.get("/id/:id", [
 ], httpControlPlagas.getPlagasId);
 router.get("/activos", [], httpControlPlagas.getPlagasActivos);
 router.get("/inactivos", [], httpControlPlagas.getPlagasInactivos);
-router.get("/fecha/:fechaInicio/:fechaFin", [
-    check("fechaInicio", "Ingrese una fecha inicial valida").isISO8601().toDate(),
-    check("fechaFin", "Ingrese una fecha final valida").isISO8601().toDate(),
-    check(["fechaInicio", "fechaFin"]).custom(herlpersControlPlagas.validarFechas()),
+router.get("/fechas/:fechaInicio/:fechaFin", [
+    check("fechaInicio").custom(herlpersControlPlagas.validarFecha),
+    check("fechaFin").custom(herlpersControlPlagas.validarFecha),
+    check(["fechaInicio", "fechaFin"]).custom(herlpersControlPlagas.validarFechas),
     validarCampos
 ], httpControlPlagas.getPlagasFechas);
 router.get("/operario/:operario", [], httpControlPlagas.getPlagasOperario);
@@ -32,7 +32,7 @@ router.post("/", [
     check("empleado_id", "Ingrese un mongo id valido en el id cultivo").isMongoId(),
     check("empleado_id").custom(herlpersControlPlagas.validarIdEmpleado),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "ingrese una fecha valida").matches(/^([01]\d|2[0-3]):([0-5]\d)$/),
+    check("fecha").custom(herlpersControlPlagas.validarFecha),
     check("tipoCultivo", "El tipo cultivo no puede estar vacio").notEmpty(),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("tipo", "El tipo no puede estar vacio").notEmpty(),
@@ -53,7 +53,7 @@ router.put("/:id", [
     check("empleado_id", "Ingrese un mongo id valido en el id cultivo").isMongoId(),
     check("empleado_id").custom(herlpersControlPlagas.validarIdEmpleado),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "ingrese una fecha valida").matches(/^([01]\d|2[0-3]):([0-5]\d)$/),
+    check("fecha").custom(herlpersControlPlagas.validarFecha),
     check("tipoCultivo", "El tipo cultivo no puede estar vacio").notEmpty(),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("tipo", "El tipo no puede estar vacio").notEmpty(),
