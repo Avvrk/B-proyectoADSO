@@ -8,7 +8,8 @@ const maquinariaHerramientaSchema = new mongoose.Schema({
   fechaCompra: { type: Date, required: true },
   observaciones: { type: String },
   cantidad: { type: Number, required: true },
-  total: { type: Number, required: true }
+  total: { type: Number, required: true },
+  estado: { type:Number, default:1 }
 }, {
   timestamps: true
 });
