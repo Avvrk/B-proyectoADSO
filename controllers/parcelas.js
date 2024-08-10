@@ -96,7 +96,7 @@ const httpParcelas = {
     putParcela: async (req, res) => {
         try {
             const { id } = req.params;
-            const info = req.body;
+            const { ...info } = req.body;
             const parcela = await Parcela.findByIdAndUpdate(id, info, { new: true });
             res.json({ parcela });
         } catch (error) {

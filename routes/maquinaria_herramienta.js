@@ -21,11 +21,11 @@ router.get('/activos', httpMaquinariaHerramientas.getMaquinariaHActivos);
 router.get('/inactivos', httpMaquinariaHerramientas.getMaquinariaHInactivos);
 
 
-router.get('/fechas', [
+router.get("/fechas/:fechaInicio/:fechaFin", [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
     check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
-    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().isDate(),
+    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').isISO8601().toDate(),
     validarCampos
 ], httpMaquinariaHerramientas.getMaquinariaHFechas);
 

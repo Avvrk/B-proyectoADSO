@@ -98,7 +98,7 @@ const httpPreparacionSuelos = {
     putPreparacionSue: async (req, res) => {
         try {
             const { id } = req.params;
-            const info = req.body;
+            const { ...info } = req.body;
             const preparaciones = await PreparacionS.findByIdAndUpdate(id, info, { new: true });
             res.json({ preparaciones });
         } catch (error) {
