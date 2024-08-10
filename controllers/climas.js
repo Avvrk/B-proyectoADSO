@@ -30,7 +30,7 @@ const httpClimas = {
     getClimasFecha: async (req, res) => {
         try {
             const { fecha } = req.params;
-            const climas = await Clima.findById({ fecha });
+            const climas = await Clima.find({ fecha });
             res.json({ climas });
         } catch (error) {
             res.json({ error });

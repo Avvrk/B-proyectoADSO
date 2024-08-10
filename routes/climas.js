@@ -16,8 +16,7 @@ router.get("/id/:id", [
 router.get("/activos", [], httpClimas.getClimasActivos);
 router.get("/desactivados", [], httpClimas.getClimasInactivos);
 router.get("/fechas/:fecha", [
-    check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "Ingrese una fecha valida").isISO8601().toDate(),
+    check("fecha").custom(helpersClimas.validarFecha),
     validarCampos
 ], httpClimas.getClimasFecha);
 router.get("/temperatura", [], httpClimas.getClimasPromedio);
@@ -39,7 +38,7 @@ router.post("/", [
     check("empleado_id", "Ingrese un mongo id valido en empleado").isMongoId(),
     check("empleado_id").custom(helpersClimas.validarIdEmpleado),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "Ingrese una fecha valida").isISO8601().toDate(),
+    check("fecha").custom(helpersClimas.validarFecha),
     check("tipoClima", "El tipo clima no puede estar vacio").notEmpty(),
     check("horaInicio", "La hora inicio no puede estar vacia").notEmpty(),
     check("horaInicio", "Ingrese una hora valida").matches(/^([01]\d|2[0-3]):([0-5]\d)$/),
@@ -63,7 +62,7 @@ router.put("/:id", [
     check("empleado_id", "Ingrese un mongo id valido en empleado").isMongoId(),
     check("empleado_id").custom(helpersClimas.validarIdEmpleado),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "Ingrese una fecha valida").isISO8601().toDate(),
+    check("fecha").custom(helpersClimas.validarFecha),
     check("tipoClima", "El tipo clima no puede estar vacio").notEmpty(),
     check("horaInicio", "La hora inicio no puede estar vacia").notEmpty(),
     check("horaInicio", "Ingrese una hora valida").matches(/^([01]\d|2[0-3]):([0-5]\d)$/),

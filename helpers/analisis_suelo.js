@@ -2,6 +2,17 @@ import Analisis_suelos from "../models/analisis_suelos.js";
 import Parcela from '../models/parcelas.js';
 import Empleado from "../models/empleados.js";
 
+function dateValido(dateString) {
+    const registroTiempo = Date.parse(dateString);
+    if (isNaN(registroTiempo)) {
+        return false;
+    }
+
+    const fecha = new Date(dateString);
+    const formatoFecha = fecha.toISOString().split('T')[0];
+    return dateString === formatoFecha;
+}
+
 const helpersAnalisisSuelos = {
     validarId: async (id) => {
         if (id != undefined) {
@@ -50,6 +61,14 @@ const helpersAnalisisSuelos = {
         } else {
             return true;
         }
+    },
+    validarFecha: (fecha) => {
+        if (fecha !== undefined) {
+            if (!dateValido(fecha)) {
+                throw new Error("Ingrese una fecha válida.");
+            }
+        }
+        return true;
     },
     validarFechas: (fechas) => {
         if (Array.isArray(fechas) && fechas.length >= 2 && fechas[0] != undefined && fechas[1] != undefined) {
