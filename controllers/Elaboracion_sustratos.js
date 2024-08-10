@@ -58,15 +58,6 @@ const httpSustratos = {
             res.json({ error });
         }
     },
-    getSustratosCultivo: async (req, res) => {
-        try {
-            const { tipo } = req.params;
-            const sustratos = await Sustrato.find({ tipo });
-            res.json({ sustratos });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
     postSustratos: async (req, res) => {
         try {
             const { id_proceso, fecha, productoComercial, ingredienteActivo, dosisUtilizada, metodoAplicacion, empleado_idOperario, empleado_idResponsable, observaciones } = req.body;

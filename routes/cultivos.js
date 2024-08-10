@@ -15,7 +15,7 @@ router.get("/id/:id", [
 ], httpCultivo.getCultivosId);
 router.get("/parcelas/:id_parcela", [
     check("id_parcela", "Ingrese un mongo id valido").isMongoId(),
-    check("id_parcela").custom(helpersCultivos.validarId),
+    check("id_parcela").custom(helpersCultivos.validarIdParcela),
     validarCampos
 ], httpCultivo.getCultivosParcela);
 router.get("/tipo/:tipo", [], httpCultivo.getCultivosTipo);

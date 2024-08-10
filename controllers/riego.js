@@ -108,7 +108,7 @@ const httpRiegos = {
     putRiego: async (req, res) => {
         try {
             const { id } = req.params;
-            const info = req.body;
+            const { ...info } = req.body;
             const riego = await Riego.findByIdAndUpdate(id, info, { new: true });
             res.json({ riego });
         } catch (error) {

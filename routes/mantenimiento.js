@@ -16,21 +16,16 @@ router.get('/id/:id', [
     validarCampos
 ], httpMantenimientos.getMantenimientosId);
 
-
 router.get('/activos', httpMantenimientos.getMantenimientosActivos);
-
-
 router.get('/inactivos', httpMantenimientos.getMantenimientosInactivos);
 
-
-router.get('/fechas', [
-    check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
-    check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
-    check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
-    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().isDate(),
+router.get("/fechas/:fechaInicio/:fechaFin", [
+    // check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
+    // check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
+    // check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
+    // check('fechaFin', 'La fecha de fin debe ser una fecha válida.').isISO8601().toDate(),
     validarCampos
 ], httpMantenimientos.getMantenimientosFechas);
-
 
 router.get('/herramienta/:id', [
     check('id', 'El ID de la herramienta debe ser un mongoId válido.').isMongoId(),

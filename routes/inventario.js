@@ -16,18 +16,13 @@ router.get('/id/:id', [
     validarCampos
 ], httpInventarios.getInventarioId);
 
-
 router.get('/activos', httpInventarios.getInventarioActivos);
-
-
 router.get('/inactivos', httpInventarios.getInventarioInactivos);
-
 
 router.get('/cantidad/:id', [
     check('id', 'El ID del inventario debe ser un mongoId válido.').isMongoId(),
     validarCampos
 ], httpInventarios.getInventarioCantidades);
-
 
 router.post('/', [
     check('tipo', 'El tipo es requerido.').notEmpty(),
@@ -40,7 +35,6 @@ router.post('/', [
     check('maquinaria_id').custom(helpersInventario.validarIdMaquinaria),
     validarCampos
 ], httpInventarios.postInventario);
-
 
 router.put('/:id', [
     check('id', 'El ID del inventario es requerido.').notEmpty(),

@@ -18,8 +18,12 @@ function dateValido(dateString) {
 const helpersNomina = {
 
     validarFecha: (fecha) => {
-        if (fecha !== undefined) {
-            if (!dateValido(fecha)) {
+    if (fecha !== undefined) {
+        // Intenta convertir el valor en una fecha
+        const fechaConvertida = new Date(fecha);
+
+        // Verifica si la conversión resultó en una fecha válida
+        if (isNaN(fechaConvertida.getTime())) {
                 throw new Error("La fecha debe ser una fecha válida.");
             } else {
                 return true;

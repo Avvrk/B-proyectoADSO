@@ -40,7 +40,7 @@ router.put("/:id", [
     check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
     check("cantidad", "La cantidad debe ser numerica").isNumeric(),
     check("unidad", "La unidad no puede estar vacia").notEmpty(),
-    check("respondable", "El respondable no puede estar vacio").notEmpty(),
+    check("responsable", "El respondable no puede estar vacio").notEmpty(),
     check("observaciones", "La observacion no puede estar vacia").notEmpty(),
     check("total", "El total no puede estar vacio").notEmpty(),
     check("total", "El total debe ser numerico").isNumeric(),

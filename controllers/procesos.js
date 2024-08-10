@@ -106,7 +106,7 @@ const httpProcesos = {
     try {
       const { id } = req.params;
       const { ...info } = req.body;
-      const procesos = await Proceso.findByIdAndUpdate(id, ...info, {
+      const procesos = await Proceso.findByIdAndUpdate(id, info, {
         new: true,
       });
       res.json({ procesos });
