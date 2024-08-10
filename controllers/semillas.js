@@ -57,6 +57,8 @@ const httpSemillas = {
     postSemilla: async (req, res) => {
         try {
             const { proveedor_id, numFactura, fechaCompra, fechaVencimiento, especieVariedad, proveedorSemilla, numeroLote, origen, poderGerminativo, observaciones, unidad, total, estado } = req.body;
+            
+            // Crear una nueva instancia del modelo Semilla
             const semilla = new Semilla({
                 proveedor_id,
                 numFactura,
@@ -72,16 +74,21 @@ const httpSemillas = {
                 total,
                 estado
             });
-            await Semilla.save();
-            res.json({ semilla })
+    
+            // Guardar la instancia en la base de datos
+            await semilla.save();
+    
+            // Responder con la semilla guardada
+            res.json({ semilla });
         } catch (error) {
-            res.json({ error });
+            res.status(500).json({ error: error.message });
         }
     },
+    
     putSemilla: async (req, res) => {
         try {
             const { id } = req.params;
-            const { ...info } = req.body;
+            const info = req.body;
             const semilla = await Semilla.findByIdAndUpdate(id, info, { new: true });
             res.json({ semilla });
         } catch (error) {

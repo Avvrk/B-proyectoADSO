@@ -24,7 +24,7 @@ const httpProducciones = {
 
     getProduccionesFechas: async (req, res) => {
         try {
-            const { fechaInicio, fechaFin } = req.body;
+            const { fechaInicio, fechaFin } = req.params;
             const fechaInicioObj = new Date(fechaInicio);
             const fechaFinObj = new Date(fechaFin);
             const producciones = await Produccion.find({
@@ -104,7 +104,7 @@ const httpProducciones = {
     putProduccion: async (req, res) => {
         try {
             const { id } = req.params;
-            const { ...info } = req.body;
+            const info = req.body;
             const produccion = await Produccion.findByIdAndUpdate(id, info, { new: true });
             res.json({ produccion });
         } catch (error) {

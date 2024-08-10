@@ -17,17 +17,15 @@ router.get('/activos', httpProcesos.getProcesosActivos);
 router.get('/inactivos', httpProcesos.getProcesosInactivos);
 
 
-router.get('/fechas', [
-    check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
-    check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601(),
-    check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
-    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').isISO8601(),
+router.get('/fechas/:fechaInicio/:fechaFin', [
+    check('fechaInicio').custom(helpersProcesos.validarFecha),
+    check('fechaFin').custom(helpersProcesos.validarFecha),
     validarCampos
 ], httpProcesos.getProcesosEntreFechas);
 
 
-router.get('/empleado/:empleado', [
-    check('empleado', 'El nombre del empleado es requerido.').notEmpty(),
+router.get('/empleado/:id', [
+    check('id', 'Ingrese un mongo id valido').isMongoId(),
     validarCampos
 ], httpProcesos.getProcesoEmpleadoID);
 
@@ -36,8 +34,8 @@ router.get('/empleado/:empleado', [
 
 
 router.post('/', [
-    check('fecha', 'La fecha es requerida.').notEmpty(),
-    check('fecha', 'La fecha debe ser una fecha válida.').isISO8601(),
+    check('fecha').custom(helpersProcesos.validarFecha),
+    check('fecha').custom(helpersProcesos.validarFecha),
     check('id_parcela', 'El ID de la parcela es requerido.').notEmpty(),
     check('id_parcela', 'El ID de la parcela debe ser un mongoId válido.').isMongoId(),
     check('empleado_id', 'El ID del empleado es requerido.').notEmpty(),
@@ -59,9 +57,9 @@ router.post('/', [
 router.put('/:id', [
     check('id', 'El ID del proceso es requerido.').notEmpty(),
     check('id', 'El ID del proceso debe ser un mongoId válido.').isMongoId(),
-    check('fecha').optional().custom(helpersProcesos.validarFecha),
+    check('fecha').custom(helpersProcesos.validarFecha),
     check('id_parcela').optional().custom(helpersProcesos.validarIdParcela),
-    check('empleado_id').optional().custom(helpersProcesos.validarEmpleadoId),
+    check('empleado_id').optional().custom(helpersProcesos.validarEmpleadoID),
     check('productos').optional().custom(helpersProcesos.validarProductos),
     check('ingredienteActivo').optional().custom(helpersProcesos.validarIngredienteActivo),
     check('dosis').optional().custom(helpersProcesos.validarDosis),

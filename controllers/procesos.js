@@ -34,9 +34,11 @@ const httpProcesos = {
 
   getProcesosEntreFechas: async (req, res) => {
     try {
-      const { fechaInicio, fechaFin } = req.body;
+      const { fechaInicio, fechaFin } = req.params;
+      const fechaInicioObj = new Date(fechaInicio);
+      const fechaFinObj = new Date(fechaFin);
       const procesos = await Proceso.find({
-        fecha_inicio: { $gte: fechaInicio, $lte: fechaFin },
+        fecha_inicio: { $gte: fechaInicioObj, $lte: fechaFinObj },
       });
       res.json({ procesos });
     } catch (error) {
@@ -105,10 +107,11 @@ const httpProcesos = {
   putProcesos: async (req, res) => {
     try {
       const { id } = req.params;
-      const { ...info } = req.body;
+      const { info } = req.body;
       const procesos = await Proceso.findByIdAndUpdate(id, info, {
         new: true,
       });
+      
       res.json({ procesos });
     } catch (error) {
       res.json({ error });

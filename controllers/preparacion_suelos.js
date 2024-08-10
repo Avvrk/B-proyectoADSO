@@ -1,4 +1,4 @@
-import PreparacionS from '../models/preparacion_suelos.js';
+import PreparacionS from "../models/preparacion_suelos.js";
 
 const httpPreparacionSuelos = {
     getPreparacionSue: async (req, res) => {
@@ -18,7 +18,7 @@ const httpPreparacionSuelos = {
             res.json({ error });
         }
     },
-
+/* 
     getPreparacionSuePorcentaje: async (req, res) => {
         try {
             const totalPreparaciones = await PreparacionS.countDocuments();
@@ -28,7 +28,7 @@ const httpPreparacionSuelos = {
         } catch (error) {
             res.json({ error });
         }
-    },
+    }, */
 
     getPreparacionSueActivos: async (req, res) => {
         try {
@@ -64,8 +64,14 @@ const httpPreparacionSuelos = {
 
     getPreparacionSueResponsable: async (req, res) => {
         try {
-            const { Responsable } = req.params;
-            const preparaciones = await PreparacionS.find({ responsable: Responsable });
+            const { responsable } = req.params;
+            const resultado = responsable
+            .toLowerCase()
+            .replace("-", " ")
+            .replace(/(?:^|\s|[-])\S/g, (char) => char.toUpperCase());
+                console.log(resultado);
+                
+            const preparaciones = await PreparacionS.find({ responsable: resultado });
             res.json({ preparaciones });
         } catch (error) {
             res.json({ error });
@@ -86,7 +92,7 @@ const httpPreparacionSuelos = {
                 operario,
                 responsable,
                 observaciones,
-                estado
+                estado,
             });
             await preparaciones.save();
             res.json({ preparaciones });
@@ -98,7 +104,7 @@ const httpPreparacionSuelos = {
     putPreparacionSue: async (req, res) => {
         try {
             const { id } = req.params;
-            const { ...info } = req.body;
+            const info = req.body;
             const preparaciones = await PreparacionS.findByIdAndUpdate(id, info, { new: true });
             res.json({ preparaciones });
         } catch (error) {
@@ -124,7 +130,7 @@ const httpPreparacionSuelos = {
         } catch (error) {
             res.json({ error });
         }
-    }
+    },
 };
 
 export default httpPreparacionSuelos;
