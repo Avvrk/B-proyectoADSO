@@ -1,12 +1,12 @@
 {
-  "name": "bakend-bpa",
+  "name": "backend-jvlj",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/app.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
