@@ -6,18 +6,23 @@ import httpEmpleado from "../controllers/empleados.js";
 import helpersEmpleados from "../helpers/empleados.js";
 
 const router = Router();
+
 router.get("/", httpEmpleado.getEmpleados);
+
 router.get("/id/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersEmpleados.validarId),
     validarCampos
 ], httpEmpleado.getEmpleadosId);
+
 router.get("/descripcion/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersEmpleados.validarId),
     validarCampos
 ], httpEmpleado.getEmpleadosDescripcion);
+
 router.get("/activos", httpEmpleado.getEmpleadosActivos);
+
 router.get("/inactivos", httpEmpleado.getEmpleadosInactivos);
 
 router.post("/",[
@@ -41,11 +46,13 @@ router.put("/:id",[
     check("descripcion", "La descripcion no puede estar vacia").notEmpty(),
     validarCampos
 ], httpEmpleado.putEmpleados);
+
 router.put("/activar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersEmpleados.validarId),
     validarCampos
 ], httpEmpleado.putEmpleadosActivar);
+
 router.put("/inactivar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersEmpleados.validarId),
