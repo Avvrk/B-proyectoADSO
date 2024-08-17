@@ -3,7 +3,6 @@ import Proveedor from '../models/proveedores.js';
 
 const { isMongoId } = validator;
 
-
 function dateValido(dateString) {
     const registroTiempo = Date.parse(dateString);
     if (isNaN(registroTiempo)) {
@@ -63,7 +62,11 @@ const helpersMaquinariaHerramienta = {
 
     validarFechaCompra: (fechaCompra) => {
         if (fechaCompra !== undefined) {
-            if (!dateValido(fechaCompra)) {
+            // Intenta convertir el valor en una fechaCompra
+            const fechaConvertida = new Date(fechaCompra);
+    
+            // Verifica si la conversión resultó en una fecha válida
+            if (isNaN(fechaConvertida.getTime())) {
                 throw new Error("La fecha de compra debe ser una fecha válida.");
             } else {
                 return true;

@@ -1,28 +1,46 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-datos.js";
-// import { validarJWT } from "../middlewares/validar-jwt";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 import httpControlPlagas from "../controllers/control_plagas.js";
 import herlpersControlPlagas from "../helpers/control_plagas.js";
 
 const router = Router();
 
-router.get("/", [], httpControlPlagas.getPlagas);
+router.get("/", [
+    validarJWT
+], httpControlPlagas.getPlagas);
+
 router.get("/id/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(herlpersControlPlagas.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpControlPlagas.getPlagasId);
-router.get("/activos", [], httpControlPlagas.getPlagasActivos);
-router.get("/inactivos", [], httpControlPlagas.getPlagasInactivos);
-router.get("/fecha/:fechaInicio/:fechaFin", [
-    check("fechaInicio", "Ingrese una fecha inicial valida").isISO8601().toDate(),
-    check("fechaFin", "Ingrese una fecha final valida").isISO8601().toDate(),
-    check(["fechaInicio", "fechaFin"]).custom(herlpersControlPlagas.validarFechas()),
-    validarCampos
+
+router.get("/activos", [
+    validarJWT
+], httpControlPlagas.getPlagasActivos);
+
+router.get("/inactivos", [
+    validarJWT
+], httpControlPlagas.getPlagasInactivos);
+
+router.get("/fechas/:fechaInicio/:fechaFin", [
+    check("fechaInicio").custom(herlpersControlPlagas.validarFecha),
+    check("fechaFin").custom(herlpersControlPlagas.validarFecha),
+    check(["fechaInicio", "fechaFin"]).custom(herlpersControlPlagas.validarFechas),
+    validarCampos,
+    validarJWT
 ], httpControlPlagas.getPlagasFechas);
-router.get("/operario/:operario", [], httpControlPlagas.getPlagasOperario);
-router.get("/tipo/:tipo", [], httpControlPlagas.getPlagasTipo);
+
+router.get("/operario/:operario", [
+    validarJWT
+], httpControlPlagas.getPlagasOperario);
+
+router.get("/tipo/:tipo", [
+    validarJWT
+], httpControlPlagas.getPlagasTipo);
 
 router.post("/", [
     check("id_cultivo", "El id cultivo no puede estar vacio").notEmpty(),
@@ -32,7 +50,7 @@ router.post("/", [
     check("empleado_id", "Ingrese un mongo id valido en el id cultivo").isMongoId(),
     check("empleado_id").custom(herlpersControlPlagas.validarIdEmpleado),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "ingrese una fecha valida").matches(/^([01]\d|2[0-3]):([0-5]\d)$/),
+    check("fecha").custom(herlpersControlPlagas.validarFecha),
     check("tipoCultivo", "El tipo cultivo no puede estar vacio").notEmpty(),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("tipo", "El tipo no puede estar vacio").notEmpty(),
@@ -40,7 +58,8 @@ router.post("/", [
     check("dosis", "La dosis no puede estar vacia").notEmpty(),
     check("operario", "El operario no puede estar vacio").notEmpty(),
     check("observaciones", "La observaciones no puede estar vacia").notEmpty(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpControlPlagas.postPlagas);
 
 router.put("/:id", [
@@ -53,7 +72,7 @@ router.put("/:id", [
     check("empleado_id", "Ingrese un mongo id valido en el id cultivo").isMongoId(),
     check("empleado_id").custom(herlpersControlPlagas.validarIdEmpleado),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "ingrese una fecha valida").matches(/^([01]\d|2[0-3]):([0-5]\d)$/),
+    check("fecha").custom(herlpersControlPlagas.validarFecha),
     check("tipoCultivo", "El tipo cultivo no puede estar vacio").notEmpty(),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("tipo", "El tipo no puede estar vacio").notEmpty(),
@@ -61,17 +80,22 @@ router.put("/:id", [
     check("dosis", "La dosis no puede estar vacia").notEmpty(),
     check("operario", "El operario no puede estar vacio").notEmpty(),
     check("observaciones", "La observaciones no puede estar vacia").notEmpty(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpControlPlagas.putPlagas);
+
 router.put("/activar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(herlpersControlPlagas.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpControlPlagas.putPlagasActivar);
+
 router.put("/desactivar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(herlpersControlPlagas.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpControlPlagas.putPlagasInactivar);
 
 export default router;

@@ -1,44 +1,52 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-// import { validarJWT } from '../middlewares/validar-jwt.js';
+import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpMaquinariaHerramientas from '../controllers/maquinaria_herramientas.js';
 import helpersMaquinariaHerramienta from '../helpers/maquinaria_herramienta.js';
 
 const router = Router();
 
 
-router.get('/', httpMaquinariaHerramientas.getMaquinariaH);
+router.get('/', [
+    validarJWT
+], httpMaquinariaHerramientas.getMaquinariaH);
 
 
 router.get('/id/:id', [
     check('id', 'El ID de la maquinaria o herramienta debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMaquinariaHerramientas.getMaquinariaHId);
 
 
-router.get('/activos', httpMaquinariaHerramientas.getMaquinariaHActivos);
+router.get('/activos', [
+    validarJWT
+], httpMaquinariaHerramientas.getMaquinariaHActivos);
+
+router.get('/inactivos', [validarJWT], httpMaquinariaHerramientas.getMaquinariaHInactivos);
 
 
-router.get('/inactivos', httpMaquinariaHerramientas.getMaquinariaHInactivos);
-
-
-router.get('/fechas', [
+router.get("/fechas/:fechaInicio/:fechaFin", [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
     check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
-    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().isDate(),
-    validarCampos
+    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').isISO8601().toDate(),
+    validarCampos,
+    validarJWT
 ], httpMaquinariaHerramientas.getMaquinariaHFechas);
 
 
 router.get('/cantidad/:tipo', [
     check('tipo', 'El tipo de maquinaria o herramienta es requerido.').notEmpty(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMaquinariaHerramientas.getMaquinariaHCantidad);
 
 
-router.get('/total', httpMaquinariaHerramientas.getMaquinariaHTotal);
+router.get('/total', [
+    validarJWT
+], httpMaquinariaHerramientas.getMaquinariaHTotal);
 
 
 router.post('/', [
@@ -55,7 +63,8 @@ router.post('/', [
     check('total', 'El total debe ser un número positivo.').isNumeric().toFloat().isFloat({ min: 0 }),
     check('estado', 'El estado es requerido.').notEmpty(),
     check('estado', 'El estado debe ser un número válido.').isNumeric(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMaquinariaHerramientas.postMaquinariaH);
 
 
@@ -70,19 +79,22 @@ router.put('/:id', [
     check('cantidad').custom(helpersMaquinariaHerramienta.validarCantidad),
     check('total').custom(helpersMaquinariaHerramienta.validarTotal),
     check('estado').custom(helpersMaquinariaHerramienta.validarEstado),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMaquinariaHerramientas.putMaquinariaH);
 
 
 router.put('/activar/:id', [
     check('id', 'El ID de la maquinaria o herramienta debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMaquinariaHerramientas.putMaquinariaHActivar);
 
 
 router.put('/inactivar/:id', [
     check('id', 'El ID de la maquinaria o herramienta debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMaquinariaHerramientas.putMaquinariaHInactivar);
 
 export default router;

@@ -1,46 +1,49 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-// import { validarJWT } from '../middlewares/validar-jwt.js';
+import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpParcelas from '../controllers/parcelas.js';
 import helpersParcela from '../helpers/parcelas.js';
 
 const router = Router();
 
 
-router.get('/', httpParcelas.getParcelas);
+router.get('/', [
+    validarJWT
+], httpParcelas.getParcelas);
 
 
 router.get('/id/:id', [
     check('id', 'El ID de la parcela debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpParcelas.getParcelaId);
 
 
-router.get('/activos', httpParcelas.getParcelaActivos);
+router.get('/activos', [
+    validarJWT
+], httpParcelas.getParcelaActivos);
 
 
-router.get('/inactivos', httpParcelas.getParcelaInactivos);
+router.get('/inactivos', [
+    validarJWT
+], httpParcelas.getParcelaInactivos);
 
 
-router.get('/fechas', [
-    check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
-    check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
-    check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
-    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().isDate(),
-    validarCampos
-], httpParcelas.getParcelaFechas);
 
 
-router.get('/cultivo/:id', [
-    check('cultivo', 'El nombre del cultivo es requerido.').notEmpty(),
-    validarCampos
+
+router.get('/cultivo/:cultivo', [
+    check('id_cultivo', 'El ID del cultivo debe ser un mongoId válido.').isMongoId(),
+    check('id_cultivo', 'El ID del cultivo es requerido.').notEmpty(),
+    validarJWT
 ], httpParcelas.getParcelaCultivoActual);
 
 
-router.get('/asistente/:id', [
-    check('asistente', 'El nombre del asistente técnico es requerido.').notEmpty(),
-    validarCampos
+router.get('/asistente/:asistente', [
+    check('asistenteTecnico', 'El ID del asistente debe ser un mongoId válido.').isMongoId(),
+    check('asistenteTecnico', 'El ID del asistente es requerido.').notEmpty(),
+    validarJWT
 ], httpParcelas.getParcelaAsistente);
 
 
@@ -52,7 +55,8 @@ router.post('/', [
     check('area', 'El área debe ser un número positivo.').isNumeric().toFloat().isFloat({ min: 0 }),
     check('id_fincas', 'El ID de la finca es requerido.').notEmpty(),
     check('id_fincas', 'El ID de la finca debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpParcelas.postParcela);
 
 
@@ -67,19 +71,22 @@ router.put('/:id', [
     check('area').custom(helpersParcela.validarArea),
     check('asistenteTecnico').custom(helpersParcela.validarAsistenteTecnico),
     check('id_fincas').custom(helpersParcela.validarIdFincas),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpParcelas.putParcela);
 
 
 router.put('/activar/:id', [
     check('id', 'El ID de la parcela debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpParcelas.putParcelaActivar);
 
 
 router.put('/inactivar/:id', [
     check('id', 'El ID de la parcela debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpParcelas.putParcelaInactivar);
 
 export default router;

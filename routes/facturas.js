@@ -1,24 +1,33 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-datos.js";
-// import { validarJWT } from "../middlewares/validar-jwt";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 import httpFactura from "../controllers/facturas.js";
 import helpersFacturas from "../helpers/facturas.js";
 
 const router = Router();
 
-router.get("/", httpFactura.getFacturas);
+router.get("/", [
+    validarJWT
+], httpFactura.getFacturas);
+
 router.get("/id/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersFacturas.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFactura.getFacturasId);
-router.get("/total", httpFactura.getFacturasTotal);
+
+router.get("/total", [
+    validarJWT
+], httpFactura.getFacturasTotal);
+
 router.get("/fecha/:fechaInicio/:fechaFin", [
     check("fechaInicio").custom(helpersFacturas.validarFecha),
     check("fechaFin").custom(helpersFacturas.validarFecha),
     check(["fechaInicio", "fechaFin"]).custom(helpersFacturas.validarFechas),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFactura.getFacturasFechas);
 
 router.post("/", [
@@ -42,8 +51,10 @@ router.post("/", [
     check("comprador_id", "El compradro id no pued estar vacio").notEmpty(),
     check("comprador_id", "Ingrese un mongo id valido").isMongoId(),
     check("comprador_id").custom(helpersFacturas.validarIdComprador),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFactura.postFacturas);
+
 router.put("/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersFacturas.validarId),
@@ -67,7 +78,8 @@ router.put("/:id", [
     check("comprador_id", "El compradro id no pued estar vacio").notEmpty(),
     check("comprador_id", "Ingrese un mongo id valido").isMongoId(),
     check("comprador_id").custom(helpersFacturas.validarIdComprador),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFactura.putFacturas);
 
 export default router;

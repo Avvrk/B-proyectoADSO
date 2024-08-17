@@ -40,17 +40,24 @@ const httpMaquinariaHerramientas = {
 
     getMaquinariaHFechas: async (req, res) => {
         try {
-            const { fechaInicio, fechaFin } = req.body;
+            const { fechaInicio, fechaFin } = req.params;
             const fechaInicioObj = new Date(fechaInicio);
             const fechaFinObj = new Date(fechaFin);
+            
+            // Verifica si las fechas son válidas
+            if (isNaN(fechaInicioObj.getTime()) || isNaN(fechaFinObj.getTime())) {
+                return res.status(400).json({ error: 'Fechas no válidas.' });
+            }
+    
             const maquinariaH = await MaquinariaH.find({
-                fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
+                fechaCompra: { $gte: fechaInicioObj, $lte: fechaFinObj },
             });
+    
             res.json({ maquinariaH });
         } catch (error) {
-            res.json({ error });
+            res.status(500).json({ error: error.message });
         }
-    },
+    },    
 
     getMaquinariaHCantidad: async (req, res) => {
         try {
@@ -64,9 +71,9 @@ const httpMaquinariaHerramientas = {
 
     getMaquinariaHTotal: async (req, res) => {
         try {
-            const maquinariaHTotal = await MaquinariaH.find();
-            const total = maquinariaHTotal.reduce((acc, item) => { return acc + item.valor; }, 0);
-            res.json({ total: total });
+            const { id } = req.params;
+            const facturas = await MaquinariaH.find({ id }, { total: 1 });
+            res.json({ facturas });
         } catch (error) {
             res.json({ error });
         }
@@ -96,7 +103,7 @@ const httpMaquinariaHerramientas = {
         try {
             const { id } = req.params;
             const { ...info } = req.body;
-            const maquinariaH = await MaquinariaH.findByIdAndUpdate(id, ...info, { new: true });
+            const maquinariaH = await MaquinariaH.findByIdAndUpdate(id, info, { new: true });
             res.json({ maquinariaH });
         } catch (error) {
             res.json({ error });

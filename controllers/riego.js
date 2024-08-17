@@ -86,6 +86,8 @@ const httpRiegos = {
     postRiego: async (req, res) => {
         try {
             const { cultivo_id, empleado_id, fecha, dias_transplante, estado_fenologico, hora_inicio, hora_fin, dosis, cantidad_agua, estado } = req.body;
+    
+            // Crear una nueva instancia del modelo Riego
             const riego = new Riego({
                 cultivo_id,
                 empleado_id,
@@ -98,12 +100,17 @@ const httpRiegos = {
                 cantidad_agua,
                 estado
             });
-            await Riego.save();
-            res.json({ riego })
+    
+            // Guardar la instancia en la base de datos
+            await riego.save();
+    
+            // Responder con el riego guardado
+            res.json({ riego });
         } catch (error) {
-            res.json({ error });
+            res.status(500).json({ error: error.message });
         }
     },
+    
 
     putRiego: async (req, res) => {
         try {

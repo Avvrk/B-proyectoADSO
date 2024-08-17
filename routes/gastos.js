@@ -1,23 +1,29 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-datos.js";
-// import { validarJWT } from "../middlewares/validar-jwt";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 import httpGasto from "../controllers/gastos.js";
 import helpersGatos from "../helpers/gastos.js";
 
 const router = Router();
 
-router.get("/", httpGasto.getGastos);
+router.get("/", [
+    validarJWT
+], httpGasto.getGastos);
+
 router.get("/id/:id",[
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersGatos.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpGasto.getGastosId);
+
 router.get("/fecha/:fechaInicio/:fechaFin", [
     check("fechaInicio").custom(helpersGatos.validarFecha),
     check("fechaFin").custom(helpersGatos.validarFecha),
     check(["fechaInicio", "fechaFin"]).custom(helpersGatos.validarFechas),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpGasto.getGastosFechas);
 
 router.post("/",[
@@ -37,7 +43,8 @@ router.post("/",[
     check("mantenimiento_id", "El insumos_id no puede estar vacio").notEmpty(),
     check("mantenimiento_id", "Ingrese un mongo id valido").isMongoId(),
     check("mantenimiento_id").custom(helpersGatos.validarIdMantenimientos),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpGasto.postGastos);
 
 router.put("/:id",[
@@ -59,7 +66,8 @@ router.put("/:id",[
     check("mantenimiento_id", "El insumos_id no puede estar vacio").notEmpty(),
     check("mantenimiento_id", "Ingrese un mongo id valido").isMongoId(),
     check("mantenimiento_id").custom(helpersGatos.validarIdMantenimientos),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpGasto.putGastos);
 
 export default router;

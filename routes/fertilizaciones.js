@@ -1,28 +1,36 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-datos.js";
-// import { validarJWT } from "../middlewares/validar-jwt";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 import httpFertilizacion from "../controllers/fertilizaciones.js";
 import helpersFertilizaciones from "../helpers/fertilizaciones.js";
 
 const router = Router();
 
-router.get("/", httpFertilizacion.getFertilizaciones);
+router.get("/", [
+    validarJWT
+], httpFertilizacion.getFertilizaciones);
+
 router.get("/id/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersFertilizaciones.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFertilizacion.getFertilizacionesId);
+
 router.get("/empleado/:empleado_id", [
     check("empleado_id", "Ingrese un mongo id valido").isMongoId(),
     check("empleado_id").custom(helpersFertilizaciones.validarIdEmpleado),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFertilizacion.getFertilizacionesEmpleado);
+
 router.get("/fecha/:fechaInicio/:fechaFin", [
     check("fechaInicio").custom(helpersFertilizaciones.validarFecha),
     check("fechaFin").custom(helpersFertilizaciones.validarFecha),
     check(["fechaInicio", "fechaFin"]).custom(helpersFertilizaciones.validarFechas),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFertilizacion.getFertilizacionesFechas);
 
 router.post("/", [
@@ -42,7 +50,8 @@ router.post("/", [
     check("inventario_id", "El inventario id no puede estar vacio").notEmpty(),
     check("inventario_id", "Ingrese un mongo id valido").isMongoId(),
     check("inventario_id").custom(helpersFertilizaciones.validarIdInventario),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFertilizacion.postFertilizaciones);
 
 router.put("/:id", [
@@ -64,7 +73,8 @@ router.put("/:id", [
     check("inventario_id", "El inventario id no puede estar vacio").notEmpty(),
     check("inventario_id", "Ingrese un mongo id valido").isMongoId(),
     check("inventario_id").custom(helpersFertilizaciones.validarIdInventario),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFertilizacion.putFertilizaciones);
 
 export default router;

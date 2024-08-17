@@ -1,15 +1,15 @@
 {
-  "name": "bakend-bpa",
+  "name": "backend-jvlj",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/app.js"
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Víctor Alexander Ramírez Rangel, Luis Miguel Vargas Jaimes, Joshua, Jose Andres Eduardo Maldonado Vargas",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

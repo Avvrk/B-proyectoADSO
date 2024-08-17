@@ -1,26 +1,33 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-// import { validarJWT } from '../middlewares/validar-jwt.js';
+import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpProveedores from '../controllers/proveedores.js';
 import helpersProveedores from '../helpers/proveedores.js';
 
 const router = Router();
 
 
-router.get('/', httpProveedores.getProveedores);
+router.get('/', [
+    validarJWT
+], httpProveedores.getProveedores);
 
 
-router.get('/activos', httpProveedores.getProveedorActivos);
+router.get('/activos', [
+    validarJWT
+], httpProveedores.getProveedorActivos);
 
 
-router.get('/inactivos', httpProveedores.getProveedorInactivos);
+router.get('/inactivos', [
+    validarJWT
+], httpProveedores.getProveedorInactivos);
 
 
 router.get('/id/:id', [
     check('id', 'El ID del proveedor debe ser un mongoId válido.').isMongoId(),
     check('id').custom(helpersProveedores.validarProveedorID),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpProveedores.getProveedorId);
 
 
@@ -29,7 +36,8 @@ router.post('/', [
     check('direccion').optional().custom(helpersProveedores.validarDireccion),
     check('telefono').optional().custom(helpersProveedores.validarTelefono),
     check('email', 'El email debe ser válido.').isEmail().custom(helpersProveedores.validarEmail),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpProveedores.postProveedor);
 
 
@@ -40,21 +48,24 @@ router.put('/:id', [
     check('direccion').optional().custom(helpersProveedores.validarDireccion),
     check('telefono').optional().custom(helpersProveedores.validarTelefono),
     check('email').optional().isEmail().custom(helpersProveedores.validarEmail),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpProveedores.putProveedor);
 
 
 router.put('/activar/:id', [
     check('id', 'El ID del proveedor debe ser un mongoId válido.').isMongoId(),
     check('id').custom(helpersProveedores.validarProveedorID),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpProveedores.putProveedorActivar);
 
 
 router.put('/inactivar/:id', [
     check('id', 'El ID del proveedor debe ser un mongoId válido.').isMongoId(),
     check('id').custom(helpersProveedores.validarProveedorID),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpProveedores.putProveedorInactivar);
 
 export default router;

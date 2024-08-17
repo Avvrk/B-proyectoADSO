@@ -1,20 +1,23 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-// import { validarJWT } from '../middlewares/validar-jwt.js';
+import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpRiegos from '../controllers/riego.js';
 import helpersRiegos from '../helpers/riego.js';
 
 const router = Router();
 
 
-router.get('/', httpRiegos.getRiegos);
+router.get('/', [
+    validarJWT
+], httpRiegos.getRiegos);
 
 
 router.get('/id/:id', [
     check('id', 'El ID del riego debe ser un mongoId válido.').isMongoId(),
     check('id').custom(helpersRiegos.existeRiegoPorId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpRiegos.getRiegoId);
 
 
@@ -23,35 +26,43 @@ router.get('/fechas', [
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601(),
     check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
     check('fechaFin', 'La fecha de fin debe ser una fecha válida.').isISO8601(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpRiegos.getRiegosFechas);
 
 
 router.get('/empleado/:empleado_id', [
     check('empleado_id', 'El ID del empleado debe ser un mongoId válido.').isMongoId(),
     check('empleado_id').custom(helpersRiegos.validarEmpleadoId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpRiegos.getRiegosEmpleado);
 
 
 router.get('/cultivo/:cultivo_id', [
     check('cultivo_id', 'El ID del cultivo debe ser un mongoId válido.').isMongoId(),
     check('cultivo_id').custom(helpersRiegos.validarCultivoId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpRiegos.getRiegosPorCultivo);
 
 
 router.get('/cantidadAgua/:cultivo_id', [
     check('cultivo_id', 'El ID del cultivo debe ser un mongoId válido.').isMongoId(),
     check('cultivo_id').custom(helpersRiegos.validarCultivoId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpRiegos.getCantidadAguaPorCultivo);
 
 
-router.get('/activos', httpRiegos.getRiegosActivos);
+router.get('/activos', [
+    validarJWT
+], httpRiegos.getRiegosActivos);
 
 
-router.get('/inactivos', httpRiegos.getRiegosInactivos);
+router.get('/inactivos', [
+    validarJWT
+], httpRiegos.getRiegosInactivos);
 
 
 router.post('/', [
@@ -70,7 +81,8 @@ router.post('/', [
     check('dosis').optional().custom(helpersRiegos.validarDosis),
     check('cantidad_agua').optional().custom(helpersRiegos.validarCantidadAgua),
     check('estado').optional().custom(helpersRiegos.validarEstado),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpRiegos.postRiego);
 
 
@@ -87,21 +99,24 @@ router.put('/:id', [
     check('dosis').optional().custom(helpersRiegos.validarDosis),
     check('cantidad_agua').optional().custom(helpersRiegos.validarCantidadAgua),
     check('estado').optional().custom(helpersRiegos.validarEstado),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpRiegos.putRiego);
 
 
 router.put('/activar/:id', [
     check('id', 'El ID del riego debe ser un mongoId válido.').isMongoId(),
     check('id').custom(helpersRiegos.existeRiegoPorId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpRiegos.putRiegoActivar);
 
 
 router.put('/inactivar/:id', [
     check('id', 'El ID del riego debe ser un mongoId válido.').isMongoId(),
     check('id').custom(helpersRiegos.existeRiegoPorId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpRiegos.putRiegoInactivar);
 
 export default router;

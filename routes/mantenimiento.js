@@ -1,46 +1,52 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-// import { validarJWT } from '../middlewares/validar-jwt.js';
+import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpMantenimientos from '../controllers/mantenimiento.js';
 import helpersMantenimiento from '../helpers/mantenimiento.js';
 
 const router = Router();
 
 
-router.get('/', httpMantenimientos.getMantenimientos);
+router.get('/', [
+    validarJWT
+], httpMantenimientos.getMantenimientos);
 
 
 router.get('/id/:id', [
     check('id', 'El ID del mantenimiento debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMantenimientos.getMantenimientosId);
 
+router.get('/activos', [
+    validarJWT
+], httpMantenimientos.getMantenimientosActivos);
 
-router.get('/activos', httpMantenimientos.getMantenimientosActivos);
+router.get('/inactivos', [
+    validarJWT
+], httpMantenimientos.getMantenimientosInactivos);
 
-
-router.get('/inactivos', httpMantenimientos.getMantenimientosInactivos);
-
-
-router.get('/fechas', [
+router.get("/fechas/:fechaInicio/:fechaFin", [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
     check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
-    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().isDate(),
-    validarCampos
+    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').isISO8601().toDate(),
+    validarCampos,
+    validarJWT
 ], httpMantenimientos.getMantenimientosFechas);
-
 
 router.get('/herramienta/:id', [
     check('id', 'El ID de la herramienta debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMantenimientos.getMantenimientosHerramientas);
 
 
 router.get('/responsable/:persona', [
     check('persona', 'El nombre del responsable es requerido.').notEmpty(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMantenimientos.getMantenimientosResponsable);
 
 
@@ -57,7 +63,8 @@ router.post('/', [
     check('observaciones', 'Las observaciones son requeridas.').notEmpty(),
     check('estado', 'El estado es requerido.').notEmpty(),
     check('estado', 'El estado debe ser un número válido.').isNumeric(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMantenimientos.postMantenimiento);
 
 
@@ -72,19 +79,22 @@ router.put('/:id', [
     check('estado').custom(helpersMantenimiento.validarEstado),
     check('gastos_id').custom(helpersMantenimiento.validarIdGastos),
     check('id_herramienta').custom(helpersMantenimiento.validarIdHerramienta),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMantenimientos.putMantenimiento);
 
 
 router.put('/activar/:id', [
     check('id', 'El ID del mantenimiento debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMantenimientos.putMantenimientoActivar);
 
 
 router.put('/inactivar/:id', [
     check('id', 'El ID del mantenimiento debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpMantenimientos.putMantenimientoInactivar);
 
 export default router;

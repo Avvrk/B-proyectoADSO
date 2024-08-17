@@ -1,20 +1,30 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-datos.js";
-// import { validarJWT } from "../middlewares/validar-jwt";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 import httpFinca from "../controllers/fincas.js";
 import helpersFincas from "../helpers/fincas.js";
 
 const router = Router();
 
-router.get("/", httpFinca.getFincas);
+router.get("/", [
+    validarJWT
+], httpFinca.getFincas);
+
 router.get("/id/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersFincas.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFinca.getFincasId);
-router.get("/activos", httpFinca.getFincasActivos);
-router.get("/inactivos", httpFinca.getFincasInactivos);
+
+router.get("/activos", [
+    validarJWT
+], httpFinca.getFincasActivos);
+
+router.get("/inactivos", [
+    validarJWT
+], httpFinca.getFincasInactivos);
 
 router.post("/", [
     check("_idAdmin", "El id admin no puede estar vacio").notEmpty(),
@@ -28,7 +38,8 @@ router.post("/", [
     check("ciudad", "La ciudad no puede estar vacia").notEmpty(),
     check("limites", "El limite no puede estar vacio").notEmpty(),
     check("area", "El area no puede estar vacio").notEmpty(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFinca.postFincas);
 
 router.put("/:id", [
@@ -45,17 +56,22 @@ router.put("/:id", [
     check("limites", "El limite no puede estar vacio").notEmpty(),
     check("area", "El area no puede estar vacio").notEmpty(),
     check("area", "El area no puede estar vacio").isNumeric(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFinca.putFincas);
+
 router.put("/activar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersFincas.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFinca.putFincasActivar);
+
 router.put("/desactivar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersFincas.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpFinca.putFincasInactivar);
 
 export default router;

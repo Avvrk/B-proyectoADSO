@@ -1,44 +1,55 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-// import { validarJWT } from '../middlewares/validar-jwt.js';
+import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpNominas from '../controllers/nomina.js';
 import helpersNomina from '../helpers/nomina.js';
 
 const router = Router();
 
 
-router.get('/', httpNominas.getNomina);
+router.get('/', [
+    validarJWT
+], httpNominas.getNomina);
 
 
 router.get('/id/:id', [
     check('id', 'El ID de la nómina debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpNominas.getNominaId);
 
 
-router.get('/activos', httpNominas.getNominaActivos);
+router.get('/activos', [
+    validarJWT
+], httpNominas.getNominaActivos);
 
 
-router.get('/inactivos', httpNominas.getNominaInactivos);
+router.get('/inactivos', [
+    validarJWT
+], httpNominas.getNominaInactivos);
 
 
-router.get('/fechas', [
+router.get("/fechas/:fechaInicio/:fechaFin", [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
     check('fechaFin', 'La fecha de fin es requerida.').notEmpty(),
-    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().isDate(),
-    validarCampos
+    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').not().toDate(),
+    validarCampos,
+    validarJWT
 ], httpNominas.getNominaFechas);
 
 
 router.get('/empleados/:id', [
     check('id', 'El ID del empleado debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpNominas.getNominaEmpleados);
 
 
-router.get('/total', httpNominas.getNominaTotal);
+router.get('/total', [
+    validarJWT
+], httpNominas.getNominaTotal);
 
 
 router.post('/', [
@@ -51,7 +62,8 @@ router.post('/', [
     check('valor', 'El valor debe ser un número positivo.').isNumeric().toFloat().isFloat({ min: 0 }),
     check('estado', 'El estado es requerido.').notEmpty(),
     check('estado', 'El estado debe ser un número válido.').isNumeric(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpNominas.postNomina);
 
 
@@ -63,19 +75,22 @@ router.put('/:id', [
     check('tipo').custom(helpersNomina.validarTipo),
     check('valor').custom(helpersNomina.validarValor),
     check('estado').custom(helpersNomina.validarEstado),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpNominas.putNomina);
 
 
 router.put('/activar/:id', [
     check('id', 'El ID de la nómina debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpNominas.putNominaActivar);
 
 
 router.put('/inactivar/:id', [
     check('id', 'El ID de la nómina debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpNominas.putNominaInactivar);
 
 export default router;

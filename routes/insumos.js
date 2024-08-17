@@ -1,17 +1,21 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-datos.js";
-// import { validarJWT } from "../middlewares/validar-jwt";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 import httpInsumos from "../controllers/insumos.js";
 import helpersInsumos from "../helpers/insumos.js";
 
 const router = Router();
 
-router.get("/", httpInsumos.getInsumos);
+router.get("/", [
+    validarJWT
+], httpInsumos.getInsumos);
+
 router.get("/id/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersInsumos.validarId),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpInsumos.getInsumos);
 
 router.post("/", [
@@ -27,8 +31,10 @@ router.post("/", [
     check("observaciones", "La observacion no puede estar vacia").notEmpty(),
     check("total", "El total no puede estar vacio").notEmpty(),
     check("total", "El total debe ser numerico").isNumeric(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpInsumos.postInsumos);
+
 router.put("/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersInsumos.validarId),
@@ -40,11 +46,12 @@ router.put("/:id", [
     check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
     check("cantidad", "La cantidad debe ser numerica").isNumeric(),
     check("unidad", "La unidad no puede estar vacia").notEmpty(),
-    check("respondable", "El respondable no puede estar vacio").notEmpty(),
+    check("responsable", "El respondable no puede estar vacio").notEmpty(),
     check("observaciones", "La observacion no puede estar vacia").notEmpty(),
     check("total", "El total no puede estar vacio").notEmpty(),
     check("total", "El total debe ser numerico").isNumeric(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpInsumos.putInsumos);
 
 export default router;

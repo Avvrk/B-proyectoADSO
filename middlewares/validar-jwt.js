@@ -46,7 +46,7 @@ const validarJWT = async (req, res, next) => {
         req.usuariobdtoken = usuario
 
         next();
-        
+
     } catch (error) {
 
 

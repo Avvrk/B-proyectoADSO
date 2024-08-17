@@ -1,33 +1,37 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-// import { validarJWT } from '../middlewares/validar-jwt.js';
+import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpInventarios from '../controllers/inventario.js';
 import helpersInventario from '../helpers/inventario.js';
 
 const router = Router();
 
 
-router.get('/', httpInventarios.getInventario);
+router.get('/', [
+    validarJWT
+], httpInventarios.getInventario);
 
 
 router.get('/id/:id', [
     check('id', 'El ID del inventario debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpInventarios.getInventarioId);
 
+router.get('/activos', [
+    validarJWT
+], httpInventarios.getInventarioActivos);
 
-router.get('/activos', httpInventarios.getInventarioActivos);
-
-
-router.get('/inactivos', httpInventarios.getInventarioInactivos);
-
+router.get('/inactivos', [
+    validarJWT
+], httpInventarios.getInventarioInactivos);
 
 router.get('/cantidad/:id', [
     check('id', 'El ID del inventario debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpInventarios.getInventarioCantidades);
-
 
 router.post('/', [
     check('tipo', 'El tipo es requerido.').notEmpty(),
@@ -38,9 +42,9 @@ router.post('/', [
     check('semillas_id').custom(helpersInventario.validarIdSemillas),
     check('insumos_id').custom(helpersInventario.validarIdInsumos),
     check('maquinaria_id').custom(helpersInventario.validarIdMaquinaria),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpInventarios.postInventario);
-
 
 router.put('/:id', [
     check('id', 'El ID del inventario es requerido.').notEmpty(),
@@ -52,19 +56,22 @@ router.put('/:id', [
     check('semillas_id').custom(helpersInventario.validarIdSemillas),
     check('insumos_id').custom(helpersInventario.validarIdInsumos),
     check('maquinaria_id').custom(helpersInventario.validarIdMaquinaria),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpInventarios.putInventario);
 
 
 router.put('/activar/:id', [
     check('id', 'El ID del inventario debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpInventarios.putInventarioActivar);
 
 
 router.put('/inactivar/:id', [
     check('id', 'El ID del inventario debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpInventarios.putInventarioInactivar);
 
 export default router;

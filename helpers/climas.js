@@ -2,6 +2,17 @@ import Clima from "../models/climas.js";
 import Finca from "../models/fincas.js";
 import Empleado from "../models/empleados.js";
 
+function dateValido(dateString) {
+    const registroTiempo = Date.parse(dateString);
+    if (isNaN(registroTiempo)) {
+        return false;
+    }
+
+    const fecha = new Date(dateString);
+    const formatoFecha = fecha.toISOString().split('T')[0];
+    return dateString === formatoFecha;
+}
+
 const helpersClimas = {
     validarId: async (id) => {
         if (id != undefined) {
@@ -63,6 +74,14 @@ const helpersClimas = {
         } else {
             return true;
         }
+    },
+    validarFecha: (fecha) => {
+        if (fecha !== undefined) {
+            if (!dateValido(fecha)) {
+                throw new Error("Ingrese una fecha válida.");
+            }
+        }
+        return true;
     },
 };
 
