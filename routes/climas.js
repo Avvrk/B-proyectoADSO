@@ -28,8 +28,12 @@ router.get("/desactivados", [
 
 router.get("/fechas/:fecha", [
     check("fecha").custom(helpersClimas.validarFecha),
+<<<<<<< HEAD
     validarCampos,
     validarJWT
+=======
+    validarCampos
+>>>>>>> 5c35d1f1ef52d9626b04b689a6609b3e512dbd33
 ], httpClimas.getClimasFecha);
 
 router.get("/temperatura", [
