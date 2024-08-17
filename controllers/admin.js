@@ -1,5 +1,6 @@
 import Admin from "../models/admin.js";
 import bcryptjs from "bcryptjs";
+import { generarJWT } from "../middlewares/validar-jwt.js";
 
 const httpAdmins = {
     getAdmins: async (req, res) => {
@@ -37,14 +38,15 @@ const httpAdmins = {
     },
     postLogin: async (req, res) => {
         try {
-            const { email, password } = req.body;
-            const user = await Usuario.findOne({ email });
+            const { correo, password } = req.body;
+            const user = await Admin.findOne({ correo });
             if (!user) {
                 return res.status(401).json({
                     msg: "Usuario / Password no son correctos.",
                 });
             }
-
+            console.log(password, user);
+            
             const validPassword = bcryptjs.compareSync(password, user.password);
             if (!validPassword) {
                 return res.status(401).json({
@@ -81,6 +83,7 @@ const httpAdmins = {
             res.json({ admins });
         } catch (error) {
             res.json({ error });
+            console.log(error);
         }
     },
     putAdmins: async (req, res) => {

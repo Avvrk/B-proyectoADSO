@@ -1,14 +1,14 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-datos.js";
-import { validarJWT } from "../middlewares/validar-jwt.js";
+// import { validarJWT } from "../middlewares/validar-jwt.js";
 import httpAdmin from "../controllers/admin.js";
 import helpersAdmin from "../helpers/admin.js";
 
 const router = Router();
 
 router.get("/", [
-    validarJWT
+    // validarJWT
 ], httpAdmin.getAdmins);
 
 router.get("/id/:id", [
@@ -16,11 +16,11 @@ router.get("/id/:id", [
     check("id", "Ingrese un mongo id valido"),
     check("id").custom(helpersAdmin.validarId),
     validarCampos,
-    validarJWT
+    // validarJWT
 ], httpAdmin.getAdminsId);
 
 router.get("/activos", [
-    validarJWT
+    // validarJWT
 ], httpAdmin.getAdminsActivos);
 
 router.get("/desactivados", [], httpAdmin.getAdminsInactivos);
@@ -29,22 +29,22 @@ router.post("/ingresar", [
     check("correo", "El correo no puede estar vacio").notEmpty(),
     check("correo", "Ingrese un correo valido").isEmail(),
     check("password", "La contraseña no puede estar vacia").notEmpty(),
-    check("password", "La contraseña debe tener minimo 8 caracteres").isLength({ min: 8 }),
     validarCampos,
-    validarJWT
+    // validarJWT
 ], httpAdmin.postLogin);
 
 router.post("/", [
-    check("nombre", "El nombre no puede estar vacio").notEmpty(), 
+    check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("direccion", "La direccion no puede estar vacia").notEmpty(),
     check("correo", "El correo no puede estar vacio").notEmpty(),
     check("correo", "Ingrese una direccion de correo valida").isEmail(),
     check("telefono", "El telefono no puede estar vacio").notEmpty(),
     check("telefono", "El telefono solo pueden tener numeros").isNumeric(),
     check("telefono", "El telefono debe tener minimo 10 caracteres").isLength({ min: 10 }),
-    check("municipio", "El municipio no puede estar vacio").notEmpty(), 
-    validarCampos,
-    validarJWT
+    check("municipio", "El municipio no puede estar vacio").notEmpty(),
+    check("password", "La contraseña no puede estar vacia").notEmpty(),
+    validarCampos
+    // validarJWT
 ], httpAdmin.postLog);
 
 router.put("/:id", [
@@ -59,7 +59,7 @@ router.put("/:id", [
     check("telefono", "El telefono debe tener minimo 10 caracteres").isLength({ min: 10 }),
     check("municipio", "El municipio no puede estar vacio").notEmpty(), 
     validarCampos,
-    validarJWT
+    // validarJWT
 ], httpAdmin.putAdmins);
 
 router.put("/activar/:id", [
@@ -67,7 +67,7 @@ router.put("/activar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersAdmin.validarId),
     validarCampos,
-    validarJWT
+    // validarJWT
 ], httpAdmin.putAdminsActivar);
 
 router.put("/desactivar/:id", [
@@ -75,7 +75,7 @@ router.put("/desactivar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersAdmin.validarId),
     validarCampos,
-    validarJWT
+    // validarJWT
 ], httpAdmin.putAdminsInactivar);
 
 export default router;

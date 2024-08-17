@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-// import Usuario from '../models/usuarios.js';
+import Admin from '../models/admin.js';
 
 const generarJWT = (uid) => {
     return new Promise((resolve, reject) => {
@@ -9,7 +9,7 @@ const generarJWT = (uid) => {
             expiresIn: "30d"
         }, (err, token) => {
             if (err) {
-                reject("No se pudo generar el token")
+                reject("No se pudo generar el token", err)
             } else {
                 resolve(token)
             }
@@ -28,7 +28,7 @@ const validarJWT = async (req, res, next) => {
     try {
         const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY)
 
-        let usuario = await Usuario.findById(uid);
+        let usuario = await Admin.findById(uid);
 
 
         if (!usuario) {
@@ -51,7 +51,7 @@ const validarJWT = async (req, res, next) => {
 
 
         res.status(401).json({
-            msg: "Token no valido"
+            msg: "Token no valido" , error
         })
     }
 }
