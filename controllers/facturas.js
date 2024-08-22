@@ -3,7 +3,7 @@ import Factura from "../models/factura.js";
 const httpFacturas = {
     getFacturas: async (req, res) => {
         try {
-            const facturas = await Factura.find().populate("comprador_id", "nombre").populate("inventario_id", "observacion");
+            const facturas = await Factura.find().populate("comprador_id", "nombre").populate("inventario_id", "tipo");
             res.json({ facturas });
         } catch (error) {
             res.json({ error });
