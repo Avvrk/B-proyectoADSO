@@ -3,7 +3,7 @@ import Inventario from "../models/inventario.js";
 const httpInventarios = {
     getInventario: async (req, res) => {
         try {
-            const inventario = await Inventario.find();
+            const inventario = await Inventario.find().populate("semillas_id", "especieVariedad").populate("insumos_id", "nombre").populate("maquinaria_id", "nombre tipo");
             res.json({ inventario });
         } catch (error) {
             res.json({ error });
@@ -24,7 +24,7 @@ const httpInventarios = {
             const { fechaInicio, fechaFin } = req.body;
             const fechaInicioObj = new Date(fechaInicio);
             const fechaFinObj = new Date(fechaFin);
-            const inventarios = await Inventario.find({ fecha: { $gte: fechaInicioObj, $lte: fechaFinObj } });
+            const inventarios = await Inventario.find({ fecha: { $gte: fechaInicioObj, $lte: fechaFinObj } }).populate("semillas_id", "especieVariedad").populate("insumos_id", "nombre").populate("maquinaria_id", "nombre tipo");;
             res.json({ inventarios })
         } catch (error) {
             res.json({ error });
@@ -42,7 +42,7 @@ const httpInventarios = {
 
     getInventarioActivos: async (req, res) => {
         try {
-            const inventario = await Inventario.find({ estado: 1 });
+            const inventario = await Inventario.find({ estado: 1 }).populate("semillas_id", "especieVariedad").populate("insumos_id", "nombre").populate("maquinaria_id", "nombre tipo");;
             res.json({ inventario });
         } catch (error) {
             res.json({ error });
@@ -51,7 +51,7 @@ const httpInventarios = {
 
     getInventarioInactivos: async (req, res) => {
         try {
-            const inventario = await Inventario.find({ estado: 0 });
+            const inventario = await Inventario.find({ estado: 0 }).populate("semillas_id", "especieVariedad").populate("insumos_id", "nombre").populate("maquinaria_id", "nombre tipo");;
             res.json({ inventario });
         } catch (error) {
             res.json({ error });

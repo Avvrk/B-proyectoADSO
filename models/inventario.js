@@ -8,7 +8,7 @@ const inventarioSchema = new mongoose.Schema({
   fecha: { type: Date, required: true },
   semillas_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Semilla' },
   insumos_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Insumo' },
-  maquinaria_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Maquinaria' }
+  maquinaria_id: { type: mongoose.Schema.Types.ObjectId, ref: 'MaquinariaHerramienta' }
 }, {
   timestamps: true
 });
