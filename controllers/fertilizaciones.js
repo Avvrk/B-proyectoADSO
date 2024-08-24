@@ -3,7 +3,27 @@ import Fertilizacion from "../models/fertilizacion.js";
 const httpFertilizaciones = {
     getFertilizaciones: async (req, res) => {
         try {
-            const fertilizaciones = await Fertilizacion.find();
+            const fertilizaciones = await Fertilizacion.find()
+                .populate("id_cultivo", "nombre tipo")
+                .populate("empleado_id", "nombre documento")
+                .populate({
+                    path: "inventario_id",
+                    select: "semillas_id",
+                    populate: {
+                        path: "semillas_id",
+                        select: "especieVariedad",
+                    },
+                })
+                .populate({
+                    path: "inventario_id",
+                    select: "insumos_id",
+                    populate: { path: "insumos_id", select: "nombre" },
+                })
+                .populate({
+                    path: "inventario_id",
+                    select: "maquinaria_id",
+                    populate: { path: "maquinaria_id", select: "nombre tipo" },
+                });
             res.json({ fertilizaciones });
         } catch (error) {
             res.json({ error });
@@ -42,7 +62,16 @@ const httpFertilizaciones = {
     },
     postFertilizaciones: async (req, res) => {
         try {
-            const { id_cultivo, empleado_id, fecha, estadoFenologico, tipo, nombreFertilizante, cantidad, invetario_id } = req.body;
+            const {
+                id_cultivo,
+                empleado_id,
+                fecha,
+                estadoFenologico,
+                tipo,
+                nombreFertilizante,
+                cantidad,
+                inventario_id,
+            } = req.body;
             const fertilizaciones = new Fertilizacion({
                 id_cultivo,
                 empleado_id,
@@ -51,7 +80,7 @@ const httpFertilizaciones = {
                 tipo,
                 nombreFertilizante,
                 cantidad,
-                invetario_id,
+                inventario_id,
             });
             await fertilizaciones.save();
             res.json({ fertilizaciones });
@@ -63,7 +92,11 @@ const httpFertilizaciones = {
         try {
             const { id } = req.params;
             const { ...info } = req.body;
-            const fertilizaciones = await Fertilizacion.findByIdAndUpdate(id, info, { new: true });
+            const fertilizaciones = await Fertilizacion.findByIdAndUpdate(
+                id,
+                info,
+                { new: true }
+            );
             res.json({ fertilizaciones });
         } catch (error) {
             res.json({ error });

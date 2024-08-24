@@ -5,10 +5,10 @@ const fertilizacionSchema = new mongoose.Schema({
   empleado_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Empleado', required: true },
   fecha: { type: Date, required: true },
   estadoFenologico: { type: String, enum: ['inicial', 'floracion', 'cosecha'] },
-  tipo: { type: String, enum: ['antes', 'despues de siembra'], required: true },
+  tipo: { type: String, enum: ['antes de siembra', 'después de siembra'], required: true },
   nombreFertilizante: { type: String, required: true },
   cantidad: { type: Number, required: true },
-  inventario_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Inventario', required: true }
+  inventario_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Inventario' }
 }, {
   timestamps: true
 });
