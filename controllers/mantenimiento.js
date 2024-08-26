@@ -1,13 +1,12 @@
 import Mantenimiento from "../models/mantenimiento.js";
 
-
 const httpMantenimientos = {
     getMantenimientos: async (req, res) => {
         try {
-            const mantenimientos = await Mantenimiento.find();
+            const mantenimientos = await Mantenimiento.find().populate("id_herramienta", "nombre tipo").populate("gastos_id", "nombre numeroFactura");
             res.json({ mantenimientos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
 
@@ -21,24 +20,6 @@ const httpMantenimientos = {
         }
     },
 
-    getMantenimientosActivos: async (req, res) => {
-        try {
-            const mantenimientos = await Mantenimiento.find({ estado: 1 });
-            res.json({ mantenimientos });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-
-    getMantenimientosInactivos: async (req, res) => {
-        try {
-            const mantenimientos = await Mantenimiento.find({ estado: 0 });
-            res.json({ mantenimientos });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-
     getMantenimientosFechas: async (req, res) => {
         try {
             const { fechaInicio, fechaFin } = req.params;
@@ -46,7 +27,7 @@ const httpMantenimientos = {
             const fechaFinObj = new Date(fechaFin);
             const mantenimiento = await Mantenimiento.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            });
+            }).populate("id_herramienta", "nombre tipo").populate("gastos_id", "nombre numeroFactura");
             res.json({ mantenimiento });
         } catch (error) {
             res.json({ error });
@@ -56,7 +37,7 @@ const httpMantenimientos = {
     getMantenimientosHerramientas: async (req, res) => {
         try {
             const { id } = req.params;
-            const herramienta = await Mantenimiento.find({ id_herramienta: id });
+            const herramienta = await Mantenimiento.find({ id_herramienta: id }).populate("id_herramienta", "nombre tipo").populate("gastos_id", "nombre numeroFactura");
             res.json({ herramienta });
         } catch (error) {
             res.json({ error });
@@ -66,7 +47,7 @@ const httpMantenimientos = {
     getMantenimientosResponsable: async (req, res) => {
         try {
             const { persona } = req.params;
-            const responsable = await Mantenimiento.find({ responsable: persona });
+            const responsable = await Mantenimiento.find({ responsable: persona }).populate("id_herramienta", "nombre tipo").populate("gastos_id", "nombre numeroFactura");
             res.json({ responsable });
         } catch (error) {
             res.json({ error });
@@ -103,25 +84,6 @@ const httpMantenimientos = {
         }
     },
 
-    putMantenimientoActivar: async (req, res) => {
-        try {
-            const { id } = req.params;
-            const mantenimientos = await Mantenimiento.findByIdAndUpdate(id, { estado: 1 }, { new: true });
-            res.json({ mantenimientos });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-
-    putMantenimientoInactivar: async (req, res) => {
-        try {
-            const { id } = req.params;
-            const mantenimientos = await Mantenimiento.findByIdAndUpdate(id, { estado: 0 }, { new: true });
-            res.json({ mantenimientos });
-        } catch (error) {
-            res.json({ error });
-        }
-    }
 };
 
 export default httpMantenimientos;

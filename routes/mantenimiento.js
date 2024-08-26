@@ -19,14 +19,6 @@ router.get('/id/:id', [
     validarJWT
 ], httpMantenimientos.getMantenimientosId);
 
-router.get('/activos', [
-    validarJWT
-], httpMantenimientos.getMantenimientosActivos);
-
-router.get('/inactivos', [
-    validarJWT
-], httpMantenimientos.getMantenimientosInactivos);
-
 router.get("/fechas/:fechaInicio/:fechaFin", [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
     check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isISO8601().toDate(),
@@ -82,19 +74,5 @@ router.put('/:id', [
     validarCampos,
     validarJWT
 ], httpMantenimientos.putMantenimiento);
-
-
-router.put('/activar/:id', [
-    check('id', 'El ID del mantenimiento debe ser un mongoId válido.').isMongoId(),
-    validarCampos,
-    validarJWT
-], httpMantenimientos.putMantenimientoActivar);
-
-
-router.put('/inactivar/:id', [
-    check('id', 'El ID del mantenimiento debe ser un mongoId válido.').isMongoId(),
-    validarCampos,
-    validarJWT
-], httpMantenimientos.putMantenimientoInactivar);
 
 export default router;
