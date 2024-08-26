@@ -67,7 +67,7 @@ router.put("/activar/:id", [
     validarJWT
 ], httpFinca.putFincasActivar);
 
-router.put("/desactivar/:id", [
+router.put("/inactivar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersFincas.validarId),
     validarCampos,

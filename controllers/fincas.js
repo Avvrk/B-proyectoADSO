@@ -3,7 +3,8 @@ import Finca from "../models/fincas.js";
 const httpFincas = {
     getFincas: async (req, res) => {
         try {
-            const fincas = await Finca.find();
+            const fincas = await Finca.find()
+            .populate("_idAdmin", "nombre")
             res.json({ fincas });
         } catch (error) {
             res.json({ error });
