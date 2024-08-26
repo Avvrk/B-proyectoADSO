@@ -3,7 +3,7 @@ import Comprador from "../models/comprador.js";
 const httpCompradores = {
     getCompradores: async (req, res) => {
         try {
-            const compradores = await Comprador.find();
+            const compradores = await Comprador.find().populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
             res.json({ error });
@@ -25,7 +25,7 @@ const httpCompradores = {
             const fechaFinObj = new Date(fechaFin);
             const compradores = await Comprador.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            });
+            }).populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
             res.json({ error });
@@ -34,7 +34,7 @@ const httpCompradores = {
     getCompradoresCompras: async (req, res) => {
         try {
             const { documento } = req.params;
-            const compradores = await Comprador.find({ documento });
+            const compradores = await Comprador.find({ documento }).populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
             res.json({ error });
@@ -42,7 +42,7 @@ const httpCompradores = {
     },
     getCompradoresActivos: async (req, res) => {
         try {
-            const compradores = await Comprador.find({ estado: 1 });
+            const compradores = await Comprador.find({ estado: 1 }).populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
             res.json({ error });
@@ -50,7 +50,7 @@ const httpCompradores = {
     },
     getCompradoresInactivos: async (req, res) => {
         try {
-            const compradores = await Comprador.find({ estado: 0 });
+            const compradores = await Comprador.find({ estado: 0 }).populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
             res.json({ error });

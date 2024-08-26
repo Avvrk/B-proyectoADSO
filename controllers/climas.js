@@ -3,7 +3,7 @@ import Clima from "../models/climas.js";
 const httpClimas = {
     getClimas: async (req, res) => {
         try {
-            const climas = await Clima.find();
+            const climas = await Clima.find().populate("empleado_id", "nombre documento").populate("finca_id", "nombre rut");
             res.json({ climas });
         } catch (error) {
             res.json({ error });
@@ -21,7 +21,7 @@ const httpClimas = {
     getClimasPorClima: async (req, res) => {
         try {
             const { clima } = req.params;
-            const climas = await Clima.findById({ tipoClima: clima });
+            const climas = await Clima.find({ tipoClima: clima }).populate("empleado_id", "nombre documento").populate("finca_id", "nombre rut");
             res.json({ climas });
         } catch (error) {
             res.json({ error });
@@ -30,7 +30,7 @@ const httpClimas = {
     getClimasFecha: async (req, res) => {
         try {
             const { fecha } = req.params;
-            const climas = await Clima.find({ fecha });
+            const climas = await Clima.find({ fecha }).populate("empleado_id", "nombre documento").populate("finca_id", "nombre rut");
             res.json({ climas });
         } catch (error) {
             res.json({ error });
@@ -66,22 +66,6 @@ const httpClimas = {
             res.json({ error });
         }
     },
-    getClimasActivos: async (req, res) => {
-        try {
-            const climas = await Clima.find({ estado: 1 });
-            res.json({ climas });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-    getClimasInactivos: async (req, res) => {
-        try {
-            const climas = await Clima.find({ estado: 1 });
-            res.json({ climas });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
     postClimas: async (req, res) => {
         try {
             const { finca_id, empleado_id, fecha, tipoClima, horaInicio, horaFinal, temperaturaMaxima, temperaturaMinima } = req.body;
@@ -106,24 +90,6 @@ const httpClimas = {
             const { id } = req.params;
             const { ...info } = req.body;
             const climas = await Clima.findByIdAndUpdate(id, info, { new: true });
-            res.json({ climas });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-    putClimasActivar: async (req, res) => {
-        try {
-            const { id } = req.params;
-            const climas = await Clima.findByIdAndUpdate(id, { estado: 1 }, { new: true });
-            res.json({ climas });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-    putClimasInactivar: async (req, res) => {
-        try {
-            const { id } = req.params;
-            const climas = await Clima.findByIdAndUpdate(id, { estado: o }, { new: true });
             res.json({ climas });
         } catch (error) {
             res.json({ error });

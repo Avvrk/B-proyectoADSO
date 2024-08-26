@@ -1,14 +1,14 @@
 import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos } from "../middlewares/validar-datos.js";
-// import { validarJWT } from "../middlewares/validar-jwt.js";
+import { validarJWT } from "../middlewares/validar-jwt.js";
 import httpAdmin from "../controllers/admin.js";
 import helpersAdmin from "../helpers/admin.js";
 
 const router = Router();
 
 router.get("/", [
-    // validarJWT
+    validarJWT
 ], httpAdmin.getAdmins);
 
 router.get("/id/:id", [
@@ -16,11 +16,11 @@ router.get("/id/:id", [
     check("id", "Ingrese un mongo id valido"),
     check("id").custom(helpersAdmin.validarId),
     validarCampos,
-    // validarJWT
+    validarJWT
 ], httpAdmin.getAdminsId);
 
 router.get("/activos", [
-    // validarJWT
+    validarJWT
 ], httpAdmin.getAdminsActivos);
 
 router.get("/desactivados", [], httpAdmin.getAdminsInactivos);
@@ -29,8 +29,7 @@ router.post("/ingresar", [
     check("correo", "El correo no puede estar vacio").notEmpty(),
     check("correo", "Ingrese un correo valido").isEmail(),
     check("password", "La contraseña no puede estar vacia").notEmpty(),
-    validarCampos,
-    // validarJWT
+    validarCampos
 ], httpAdmin.postLogin);
 
 router.post("/", [
@@ -59,7 +58,7 @@ router.put("/:id", [
     check("telefono", "El telefono debe tener minimo 10 caracteres").isLength({ min: 10 }),
     check("municipio", "El municipio no puede estar vacio").notEmpty(), 
     validarCampos,
-    // validarJWT
+    validarJWT
 ], httpAdmin.putAdmins);
 
 router.put("/activar/:id", [
@@ -67,7 +66,7 @@ router.put("/activar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersAdmin.validarId),
     validarCampos,
-    // validarJWT
+    validarJWT
 ], httpAdmin.putAdminsActivar);
 
 router.put("/desactivar/:id", [
@@ -75,7 +74,7 @@ router.put("/desactivar/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersAdmin.validarId),
     validarCampos,
-    // validarJWT
+    validarJWT
 ], httpAdmin.putAdminsInactivar);
 
 export default router;

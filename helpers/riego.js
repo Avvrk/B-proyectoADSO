@@ -53,20 +53,20 @@ const helpersRiego = {
     },
 
     validarEstadoFenologico: (estado) => {
-        const estadosValidos = ['inicial', 'floracion', 'cosecha'];
+        const estadosValidos = ['Inicial', 'Floracion', 'Cosecha'];
         if (!estadosValidos.includes(estado)) {
             throw new Error("El estado fenológico debe ser uno de los siguientes: Inicial, Floracion o Cosecha");
         }
         return true
     },
 
-    validarHora: (hora) => {
-        const horaRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
-        if (!horaRegex.test(hora)) {
-            throw new Error('La hora no es válida. Debe estar en el formato HH:MM.');
-        }
-        return true
-    },
+    // validarHora: (hora) => {
+    //     const horaRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+    //     if (!horaRegex.test(hora)) {
+    //         throw new Error('La hora no es válida. Debe estar en el formato HH:MM.');
+    //     }
+    //     return true
+    // },
     
 
     validarDosis : (dosis) => {

@@ -4,7 +4,7 @@ const httpProducciones = {
 
     getProducciones: async (req, res) => {
         try {
-            const producciones = await Produccion.find();
+            const producciones = await Produccion.find().populate("cultivo_id", "nombre tipo");
             res.json({ producciones });
         } catch (error) {
             res.json({ error });
@@ -15,7 +15,7 @@ const httpProducciones = {
     getProduccionId: async (req, res) => {
         try {
             const { id } = req.params;
-            const produccion = await Produccion.findById(id);
+            const produccion = await Produccion.findById(id).populate("cultivo_id", "nombre tipo");
             res.json({ produccion });
         } catch (error) {
             res.json({ error });
@@ -29,7 +29,7 @@ const httpProducciones = {
             const fechaFinObj = new Date(fechaFin);
             const producciones = await Produccion.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            });
+            }).populate("cultivo_id", "nombre tipo");
             res.json({ producciones });
         } catch (error) {
             res.json({ error });
@@ -39,7 +39,7 @@ const httpProducciones = {
     getProduccionesPorCultivo: async (req, res) => {
         try {
             const { cultivo_id } = req.params;
-            const producciones = await Produccion.find({ cultivo_id });
+            const producciones = await Produccion.find({ cultivo_id }).populate("cultivo_id", "nombre tipo");
             let totalCantidad = 0;
             producciones.forEach((produccion) => {
                 totalCantidad += produccion.cantidad;
@@ -53,7 +53,7 @@ const httpProducciones = {
 
     getProduccionesTotal: async (req, res) => {
         try {
-            const totalProducciones = await Produccion.countDocuments();
+            const totalProducciones = await Produccion.countDocuments().populate("cultivo_id", "nombre tipo");
             res.json({ totalProducciones });
         } catch (error) {
             res.json({ error });
@@ -63,7 +63,7 @@ const httpProducciones = {
 
     getProduccionesActivas: async (req, res) => {
         try {
-            const producciones = await Produccion.find({ estado: 1 });
+            const producciones = await Produccion.find({ estado: 1 }).populate("cultivo_id", "nombre tipo");
             res.json({ producciones });
         } catch (error) {
             res.json({ error });
@@ -73,7 +73,7 @@ const httpProducciones = {
 
     getProduccionesInactivas: async (req, res) => {
         try {
-            const producciones = await Produccion.find({ estado: 0 });
+            const producciones = await Produccion.find({ estado: 0 }).populate("cultivo_id", "nombre tipo");
             res.json({ producciones });
         } catch (error) {
             res.json({ error });

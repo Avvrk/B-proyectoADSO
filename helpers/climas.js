@@ -64,7 +64,10 @@ const helpersClimas = {
     },
     validarTemperatura: (temperaturas) => {
         if (temperaturas != undefined) {
-            if (temperaturas[0] < temperaturas[1]) {
+            const temperaturaMaxima = Number(temperaturas[0]);
+            const temperaturaMinima = Number(temperaturas[1]);
+
+            if (temperaturaMaxima < temperaturaMinima) {
                 throw new Error(
                     "La temperatura maxima no puede ser menor a la temperatura minima"
                 );

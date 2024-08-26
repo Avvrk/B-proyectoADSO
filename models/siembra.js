@@ -14,4 +14,3 @@ const siembraSchema = new mongoose.Schema({
 });
 
 export default mongoose.model('Siembra', siembraSchema);
-

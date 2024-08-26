@@ -60,8 +60,6 @@ router.post('/', [
     check('tipo', 'El tipo es requerido.').notEmpty(),
     check('valor', 'El valor es requerido.').notEmpty(),
     check('valor', 'El valor debe ser un número positivo.').isNumeric().toFloat().isFloat({ min: 0 }),
-    check('estado', 'El estado es requerido.').notEmpty(),
-    check('estado', 'El estado debe ser un número válido.').isNumeric(),
     validarCampos,
     validarJWT
 ], httpNominas.postNomina);

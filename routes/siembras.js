@@ -1,68 +1,58 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-import { validarJWT } from '../middlewares/validar-jwt.js';
+// import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpSiembras from '../controllers/siembra.js';
 import helpersSiembras from '../helpers/siembras.js';
 
 const router = Router();
 
 
-router.get('/', [
-    validarJWT
-], httpSiembras.getSiembras);
+router.get('/', httpSiembras.getSiembras);
 
 
 router.get('/id/:id', [
     check('id', 'El ID de la siembra debe ser un mongoId válido.').isMongoId(),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpSiembras.getSiembraId);
 
 
-router.post('/fechas', [
+router.get('/fechas', [
     check('fechaInicio', 'La fecha de inicio es requerida y debe ser válida.').isISO8601().toDate(),
     check('fechaFin', 'La fecha de fin es requerida y debe ser válida.').isISO8601().toDate(),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpSiembras.getSiembrasFechas);
 
 
 router.get('/empleado/:empleadoId', [
     check('empleadoId', 'El ID del empleado debe ser un mongoId válido.').isMongoId(),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpSiembras.getSiembraEmpleado);
 
 
 router.get('/cultivoAnterior/:id', [
     check('id', 'Ingrese un mongoId valido').isMongoId(),
-    validarCampos,
-    validarJWT
+    
+    validarCampos
 ], httpSiembras.getSiembraCultivoAnterior);
 
 
-router.get('/activos', [
-    validarJWT
-], httpSiembras.getSiembrasActivas);
+router.get('/activos', httpSiembras.getSiembrasActivas);
 
 
-router.get('/inactivos', [
-    validarJWT
-], httpSiembras.getSiembrasInactivas);
+router.get('/inactivos', httpSiembras.getSiembrasInactivas);
 
 
 router.post('/', [
-    check('id_cultivo', 'El ID del cultivo es requerido y debe ser un mongoId válido.').isMongoId(),
-    check('empleado_id', 'El ID del empleado es requerido y debe ser un mongoId válido.').isMongoId(),
-    check('fechaSiembra').custom(helpersSiembras.validarFecha),
-    check('fechaCosecha').custom(helpersSiembras.validarFecha),
-    check('transplante', 'El campo transplante debe ser un booleano.').optional().isBoolean(),
-    check('id_cultivo').custom(helpersSiembras.validarIdCultivo),
-    check('empleado_id').custom(helpersSiembras.validarIdEmpleado),
-    check('inventario_id').optional().custom(helpersSiembras.validarIdInventario),
-    validarCampos,
-    validarJWT
+    // check('id_cultivo', 'El ID del cultivo es requerido y debe ser un mongoId válido.').isMongoId(),
+    // check('empleado_id', 'El ID del empleado es requerido y debe ser un mongoId válido.').isMongoId(),
+    // check('fechaSiembra').custom(helpersSiembras.validarFecha),
+    // check('fechaCosecha').custom(helpersSiembras.validarFecha),
+    // check('transplante', 'El campo transplante debe ser un booleano.').optional().isBoolean(),
+    // check('id_cultivo').custom(helpersSiembras.validarIdCultivo),
+    // check('empleado_id').custom(helpersSiembras.validarIdEmpleado),
+    // check('inventario_id').optional().custom(helpersSiembras.validarIdInventario),
+    validarCampos
 ], httpSiembras.postSiembra);
 
 
@@ -71,22 +61,19 @@ router.put('/:id', [
     check('id_cultivo').optional().custom(helpersSiembras.validarIdCultivo),
     check('empleado_id').optional().custom(helpersSiembras.validarIdEmpleado),
     check('inventario_id').optional().custom(helpersSiembras.validarIdInventario),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpSiembras.putSiembra);
 
 
 router.put('/activar/:id', [
     check('id', 'El ID de la siembra debe ser un mongoId válido.').isMongoId(),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpSiembras.putSiembraActivar);
 
 
 router.put('/inactivar/:id', [
     check('id', 'El ID de la siembra debe ser un mongoId válido.').isMongoId(),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpSiembras.putSiembraInactivar);
 
 export default router;

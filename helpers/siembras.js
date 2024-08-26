@@ -1,6 +1,6 @@
 import Cultivo from '../models/cultivos.js';
 import Empleado from '../models/empleados.js';
-// import Inventario from '../Models/Inventario.js'; 
+import Inventario from '../models/inventario.js'; 
 
 //Falta terminar unas cosas
 

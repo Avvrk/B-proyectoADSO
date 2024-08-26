@@ -18,14 +18,6 @@ router.get("/id/:id", [
     validarJWT
 ], httpClimas.getClimasId);
 
-router.get("/activos", [
-    validarJWT
-], httpClimas.getClimasActivos);
-
-router.get("/desactivados", [
-    validarJWT
-], httpClimas.getClimasInactivos);
-
 router.get("/fechas/:fecha", [
     check("fecha").custom(helpersClimas.validarFecha),
     validarCampos,
@@ -93,20 +85,6 @@ router.put("/:id", [
     check("temperaturaMinima", "La temperatura minia no puede estar vacia").notEmpty(),
     check("temperaturaMinima", "La temperatura minima solo puede tener numeros").isNumeric(),
     check(["temperaturaMaxima", "temperaturaMinima"]).custom(helpersClimas.validarTemperatura),
-    validarCampos,
-    validarJWT
-], httpClimas.putClimas);
-
-router.put("/activar/:id", [
-    check("id", "Ingrese un mongo id valido").isMongoId(),
-    check("id").custom(helpersClimas.validarId),
-    validarCampos,
-    validarJWT
-], httpClimas.putClimas);
-
-router.put("/desactivar/:id", [
-    check("id", "Ingrese un mongo id valido").isMongoId(),
-    check("id").custom(helpersClimas.validarId),
     validarCampos,
     validarJWT
 ], httpClimas.putClimas);

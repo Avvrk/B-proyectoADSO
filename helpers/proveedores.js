@@ -49,20 +49,57 @@ const helpersproveedores = {
         }
     },
 
-    validarDireccion : (direccion) =>{
-        if (direccion == undefined ){
-            throw new Error ("El campo dirección es obligatorio.");
+    validarEmailPut : async (email = '', id) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        // Validar que el campo email no esté vacío
+        if (!email.trim()) {
+            throw new Error("El campo email no puede estar vacío.");
         }
-    },
+        
+        // Validar el formato del email
+        if (!emailRegex.test(email)) {
+            throw new Error('El email no es válido');
+        }
+        
+        // Buscar un proveedor con el mismo email pero con un ID diferente al que se está editando
+        const emailExistente = await Proveedor.findOne({
+            email,
+            _id: { $ne: id }  // Excluye el proveedor con el ID actual de la búsqueda
+        });
+        
+        if (emailExistente) {
+            throw new Error(`El email ${email} ya se encuentra registrado.`);
+        }
+    },    
 
-    validarTelefono : (telefono) => {
-        if (unidad !== undefined){
-            if(typeof telefono !== 'number' || telefono.trim() === ""){
-                throw new Error ("El campo teléfono debe ser válido.");
+    validarDireccion: (direccion) => {
+        if (direccion === undefined || direccion === null || typeof direccion !== 'string' || direccion.trim() === "") {
+            throw new Error("El campo dirección es obligatorio y debe ser una cadena de texto no vacía.");
+        }
+    
+        // Verificar que la dirección tenga al menos 5 caracteres
+        if (direccion.trim().length < 5) {
+            throw new Error("La dirección debe tener al menos 5 caracteres.");
+        }
+    
+        // Verificar que la dirección no sea solo números
+        if (/^\d+$/.test(direccion.trim())) {
+            throw new Error("La dirección no puede ser solo un número.");
+        }
+    
+        return true; // Si pasa todas las validaciones
+    },    
+
+    validarTelefono: (telefono) => {
+        if (telefono !== undefined && telefono !== null) {
+            // Verificar si el teléfono es un número o una cadena numérica
+            if (typeof telefono !== 'string' || !/^\d+$/.test(telefono.trim())) {
+                throw new Error("El campo teléfono debe ser un número válido.");
             } else {
                 return true;
             }
-        } else {
+        } else {    
             return true;
         }
     },

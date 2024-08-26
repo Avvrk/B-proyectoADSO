@@ -3,7 +3,7 @@ import Parcela from '../models/parcelas.js';
 const httpParcelas = {
     getParcelas: async (req, res) => {
         try {
-            const parcelas = await Parcela.find();
+            const parcelas = await Parcela.find().populate("id_fincas", "nombre rut");
             res.json({ parcelas });
         } catch (error) {
             res.json({ error });

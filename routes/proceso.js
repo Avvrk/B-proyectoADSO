@@ -1,40 +1,32 @@
 import express from 'express';
 import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-import { validarJWT } from '../middlewares/validar-jwt.js';
+// import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpProcesos from '../controllers/procesos.js';
 import helpersProcesos from '../helpers/procesos.js';
 
 const router = express.Router();
 
 
-router.get('/', [
-    validarJWT
-], httpProcesos.getProcesos);
+router.get('/', httpProcesos.getProcesos);
 
 
-router.get('/activos', [
-    validarJWT
-], httpProcesos.getProcesosActivos);
+router.get('/activos', httpProcesos.getProcesosActivos);
 
 
-router.get('/inactivos', [
-    validarJWT
-], httpProcesos.getProcesosInactivos);
+router.get('/inactivos', httpProcesos.getProcesosInactivos);
 
 
 router.get('/fechas/:fechaInicio/:fechaFin', [
     check('fechaInicio').custom(helpersProcesos.validarFecha),
     check('fechaFin').custom(helpersProcesos.validarFecha),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpProcesos.getProcesosEntreFechas);
 
 
 router.get('/empleado/:id', [
     check('id', 'Ingrese un mongo id valido').isMongoId(),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpProcesos.getProcesoEmpleadoID);
 
 
@@ -58,8 +50,7 @@ router.post('/', [
     check('observaciones', 'Las observaciones son requeridas.').notEmpty(),
     check('estado', 'El estado es requerido.').notEmpty(),
     check('estado', 'El estado debe ser 0 (inactivo) o 1 (activo).').isIn(['0', '1']),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpProcesos.postProcesos);
 
 
@@ -77,22 +68,19 @@ router.put('/:id', [
     check('responsable').optional().custom(helpersProcesos.validarResponsable),
     check('observaciones').optional().custom(helpersProcesos.validarObservaciones),
     check('estado').optional().custom(helpersProcesos.validarEstado),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpProcesos.putProcesos);
 
 
 router.put('/activar/:id', [
     check('id', 'El ID del proceso debe ser un mongoId válido.').isMongoId(),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpProcesos.putProcesosActivar);
 
 
 router.put('/inactivar/:id', [
     check('id', 'El ID del proceso debe ser un mongoId válido.').isMongoId(),
-    validarCampos,
-    validarJWT
+    validarCampos
 ], httpProcesos.putProcesoInactivar);
 
 export default router;
