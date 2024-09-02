@@ -1,27 +1,32 @@
 import { Router } from 'express';
-import { check, validationResult } from 'express-validator';
+import { check } from 'express-validator';
 import { validarCampos } from '../middlewares/validar-datos.js';
-// import { validarJWT } from '../middlewares/validar-jwt.js';
+import { validarJWT } from '../middlewares/validar-jwt.js';
 import httpSemillas from '../controllers/semillas.js';
 import helpersSemillas from '../helpers/semillas.js';
 
 const router = Router();
 
-
-router.get('/', httpSemillas.getSemillas);
-
+router.get('/', [
+    validarCampos,
+    validarJWT
+], httpSemillas.getSemillas);
 
 router.get('/id/:id', [
     check('id', 'El ID de la semilla debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpSemillas.getSemillaId);
 
+router.get('/activos', [
+    validarCampos,
+    validarJWT
+], httpSemillas.getSemillasActivas);
 
-router.get('/activos', httpSemillas.getSemillasActivas);
-
-
-router.get('/inactivos', httpSemillas.getSemillasInactivas);
-
+router.get('/inactivos', [
+    validarCampos,
+    validarJWT
+], httpSemillas.getSemillasInactivas);
 
 router.post('/', [
     check('proveedor_id', 'El ID del proveedor es requerido y debe ser un mongoId válido.').notEmpty().isMongoId(),
@@ -37,9 +42,9 @@ router.post('/', [
     check('unidad', 'La unidad es requerida.').optional().notEmpty(),
     check('total', 'El total es requerido y debe ser un número válido.').optional().isNumeric(),
     // check('estado', 'El estado es requerido y debe ser un número válido.').optional().isNumeric().custom(helpersSemillas.validarEstado),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpSemillas.postSemilla);
-
 
 router.put('/:id', [
     check('id', 'El ID de la semilla es requerido y debe ser un mongoId válido.').notEmpty().isMongoId(),
@@ -56,19 +61,20 @@ router.put('/:id', [
     check('unidad', 'La unidad debe ser un valor válido.').optional(),
     check('total', 'El total debe ser un número válido.').optional().isNumeric(),
     check('estado', 'El estado debe ser un número válido.').optional().isNumeric().custom(helpersSemillas.validarEstado),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpSemillas.putSemilla);
-
 
 router.put('/activar/:id', [
     check('id', 'El ID de la semilla debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpSemillas.putSemillaActivar);
-
 
 router.put('/inactivar/:id', [
     check('id', 'El ID de la semilla debe ser un mongoId válido.').isMongoId(),
-    validarCampos
+    validarCampos,
+    validarJWT
 ], httpSemillas.putSemillaInactivar);
 
 export default router;

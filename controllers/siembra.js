@@ -94,7 +94,7 @@ const httpSiembras = {
     putSiembra: async (req, res) => {
         try {
             const { id } = req.params;
-            const info = req.body;
+            const { ...info } = req.body;
             const siembra = await Siembra.findByIdAndUpdate(id, info, { new: true });
             res.json({ siembra });
         } catch (error) {

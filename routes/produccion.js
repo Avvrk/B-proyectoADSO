@@ -7,21 +7,20 @@ import helpersProducciones from '../helpers/produccion.js';
 
 const router = Router();
 
-
 router.get('/', [
+    validarCampos,
     validarJWT
 ], httpProducciones.getProducciones);
 
-
 router.get('/activos', [
+    validarCampos,
     validarJWT
 ], httpProducciones.getProduccionesActivas);
 
-
 router.get('/inactivos', [
+    validarCampos,
     validarJWT
 ], httpProducciones.getProduccionesInactivas);
-
 
 router.get('/fechas/:fechaInicio/:fechaFin', [
     check('fechaInicio', 'La fecha de inicio es requerida.').notEmpty(),
@@ -32,16 +31,16 @@ router.get('/fechas/:fechaInicio/:fechaFin', [
     validarJWT
 ], httpProducciones.getProduccionesFechas);
 
-
 router.get('/cultivo/:cultivo_id', [
     check('cultivo_id', 'El ID del cultivo debe ser un MongoID válido.').isMongoId(),
     validarCampos,
     validarJWT
 ], httpProducciones.getProduccionesPorCultivo);
 
-
-router.get('/total', httpProducciones.getProduccionesTotal);
-
+router.get('/total', [
+    validarCampos,
+    validarJWT
+], httpProducciones.getProduccionesTotal);
 
 router.post('/', [
     check('cultivo_id', 'El ID del cultivo es requerido.').notEmpty(),
@@ -55,7 +54,6 @@ router.post('/', [
     validarCampos,
     validarJWT
 ], httpProducciones.postProduccion);
-
 
 router.put('/:id', [
     check('id', 'El ID de la producción es requerido.').notEmpty(),
@@ -71,13 +69,11 @@ router.put('/:id', [
     validarJWT
 ], httpProducciones.putProduccion);
 
-
 router.put('/activar/:id', [
     check('id', 'El ID de la producción debe ser un MongoID válido.').isMongoId(),
     validarCampos,
     validarJWT
 ], httpProducciones.putProduccionActivar);
-
 
 router.put('/inactivar/:id', [
     check('id', 'El ID de la producción debe ser un MongoID válido.').isMongoId(),

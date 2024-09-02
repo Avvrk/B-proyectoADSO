@@ -104,7 +104,7 @@ const httpProducciones = {
     putProduccion: async (req, res) => {
         try {
             const { id } = req.params;
-            const info = req.body;
+            const { ...info } = req.body;
             const produccion = await Produccion.findByIdAndUpdate(id, info, { new: true });
             res.json({ produccion });
         } catch (error) {

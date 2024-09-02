@@ -22,7 +22,7 @@ const httpParcelas = {
 
     getParcelaActivos: async (req, res) => {
         try {
-            const parcelas = await Parcela.find({ estado: 1 });
+            const parcelas = await Parcela.find({ estado: 1 }).populate("id_fincas", "nombre rut");
             res.json({ parcelas });
         } catch (error) {
             res.json({ error });
@@ -31,7 +31,7 @@ const httpParcelas = {
 
     getParcelaInactivos: async (req, res) => {
         try {
-            const parcelas = await Parcela.find({ estado: 0 });
+            const parcelas = await Parcela.find({ estado: 0 }).populate("id_fincas", "nombre rut");
             res.json({ parcelas });
         } catch (error) {
             res.json({ error });
@@ -43,7 +43,7 @@ const httpParcelas = {
     getParcelaCultivoActual: async (req, res) => {
         try {
             const { cultivo } = req.params;
-            const parcelas = await Parcela.find({ cultivoActual: cultivo });
+            const parcelas = await Parcela.find({ cultivoActual: cultivo }).populate("id_fincas", "nombre rut");
             res.json({ parcelas });
         } catch (error) {
             res.json({ error });
@@ -57,7 +57,7 @@ const httpParcelas = {
            .toLowerCase()
            .replace("-", " ")
            .replace(/(?:^|\s|[-])\S/g, (char) => char.toUpperCase());
-            const parcelas = await Parcela.find({ asistenteTecnico:resultado });
+            const parcelas = await Parcela.find({ asistenteTecnico:resultado }).populate("id_fincas", "nombre rut");
             res.json({ parcelas });
         } catch (error) {
             res.json({ error });
@@ -88,7 +88,7 @@ const httpParcelas = {
     putParcela: async (req, res) => {
         try {
             const { id } = req.params;
-            const info = req.body;
+            const { ...info } = req.body;
             const parcela = await Parcela.findByIdAndUpdate(id, info, { new: true });
             res.json({ parcela });
         } catch (error) {

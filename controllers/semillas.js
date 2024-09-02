@@ -88,7 +88,7 @@ const httpSemillas = {
     putSemilla: async (req, res) => {
         try {
             const { id } = req.params;
-            const info = req.body;
+            const { ...info } = req.body;
             const semilla = await Semilla.findByIdAndUpdate(id, info, { new: true });
             res.json({ semilla });
         } catch (error) {

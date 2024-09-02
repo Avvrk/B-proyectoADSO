@@ -107,7 +107,7 @@ const httpProcesos = {
   putProcesos: async (req, res) => {
     try {
       const { id } = req.params;
-      const { info } = req.body;
+      const { ...info } = req.body;
       const procesos = await Proceso.findByIdAndUpdate(id, info, {
         new: true,
       });
