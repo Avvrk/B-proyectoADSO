@@ -1,37 +1,32 @@
 import Proceso from "../models/procesos.js";
 
 const httpProcesos = {
-
   getProcesos: async (req, res) => {
     try {
-      const procesos = await Proceso.find();
+      const procesos = await Proceso.find().populate("cultivo_id", "nombre").populate("empleado_id", "nombre")
       res.json({ procesos });
     } catch (error) {
       res.json({ error });
     }
   },
-
-
   getProcesoID: async (req, res) => {
     try {
       const { id } = req.params;
-      const procesos = await Proceso.findById(id);
+      const procesos = await Proceso.findById(id).populate("cultivo_id", "nombre").populate("empleado_id", "nombre")
       res.json({ procesos });
     } catch (error) {
       res.json({ error });
     }
   },
-
   getProcesoEmpleadoID: async (req, res) => {
     try {
       const { id } = req.params;
-      const empleado = await Proceso.find({ empleado_id: id });
+      const empleado = await Proceso.find({ empleado_id: id }).populate("cultivo_id", "nombre").populate("empleado_id", "nombre")
       res.json({ empleado });
     } catch (error) {
       res.json({ error });
     }
   },
-
   getProcesosEntreFechas: async (req, res) => {
     try {
       const { fechaInicio, fechaFin } = req.params;
@@ -39,43 +34,37 @@ const httpProcesos = {
       const fechaFinObj = new Date(fechaFin);
       const procesos = await Proceso.find({
         fecha_inicio: { $gte: fechaInicioObj, $lte: fechaFinObj },
-      });
+      }).populate("cultivo_id", "nombre").populate("empleado_id", "nombre")
       res.json({ procesos });
     } catch (error) {
       res.json({ error });
     }
   },
-
-
   getProcesosTipo: async (req, res) => {
     try {
       const { tipo } = req.params;
-      const procesos = await Proceso.find({ tipo: tipo });
+      const procesos = await Proceso.find({ tipo: tipo }).populate("cultivo_id", "nombre").populate("empleado_id", "nombre")
       res.json({ procesos });
     } catch (error) {
       res.json({ error });
     }
   },
-
-
   getProcesosActivos: async (req, res) => {
     try {
-      const procesos = await Proceso.find({ estado: 1 });
+      const procesos = await Proceso.find({ estado: 1 }).populate("cultivo_id", "nombre").populate("empleado_id", "nombre")
       res.json({ procesos });
     } catch (error) {
       res.json({ error });
     }
   },
-
   getProcesosInactivos: async (req, res) => {
     try {
-      const procesos = await Proceso.find({ estado: 0 });
+      const procesos = await Proceso.find({ estado: 0 }).populate("cultivo_id", "nombre").populate("empleado_id", "nombre")
       res.json({ procesos });
     } catch (error) {
       res.json({ error });
     }
   },
-
   postProcesos: async (req, res) => {
     try {
       const {
@@ -102,8 +91,6 @@ const httpProcesos = {
       res.json(error);
     }
   },
-
-
   putProcesos: async (req, res) => {
     try {
       const { id } = req.params;
@@ -117,8 +104,6 @@ const httpProcesos = {
       res.json({ error });
     }
   },
-
-
   putProcesosActivar: async (req, res) => {
     try {
       const { id } = req.params;
@@ -132,8 +117,6 @@ const httpProcesos = {
       res.json({ error });
     }
   },
-
-
   putProcesoInactivar: async (req, res) => {
     try {
       const { id } = req.params;

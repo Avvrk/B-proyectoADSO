@@ -1,76 +1,68 @@
 import Siembra from '../models/siembra.js';
 
 const httpSiembras = {
-
     getSiembras: async (req, res) => {
         try {
-            const siembras = await Siembra.find();
+            const siembras = await Siembra.find().populate("id_cultivo", "nombre").populate("empleado_id", "nombre").populate("inventario_id", "tipo");
             res.json({ siembras });
         } catch (error) {
             res.json({ error });
         }
     },
-
     getSiembraId: async (req, res) => {
         try {
             const { id } = req.params;
-            const siembra = await Siembra.findById(id);
+            const siembra = await Siembra.findById(id).populate("id_cultivo", "nombre").populate("empleado_id", "nombre").populate("inventario_id", "tipo");
             res.json({ siembra });
         } catch (error) {
             res.json({ error });
         }
     },
-
     getSiembrasFechas: async (req, res) => {
         try {
             const { fechaInicio, fechaFin } = req.body;
             const siembras = await Siembra.find({
                 fechaSiembra: { $gte: fechaInicio, $lte: fechaFin }
-            });
+            }).populate("id_cultivo", "nombre").populate("empleado_id", "nombre").populate("inventario_id", "tipo");
             res.json({ siembras });
         } catch (error) {
             res.json({ error });
         }
     },
-
     getSiembraEmpleado: async (req, res) => {
         try {
             const { empleadoId } = req.params;
-            const siembras = await Siembra.find({ empleado_id: empleadoId });
+            const siembras = await Siembra.find({ empleado_id: empleadoId }).populate("id_cultivo", "nombre").populate("empleado_id", "nombre").populate("inventario_id", "tipo");
             res.json({ siembras });
         } catch (error) {
             res.json({ error });
         }
     },
-
     getSiembraCultivoAnterior: async (req, res) => {
         try {
             const { id} = req.params;
-            const siembras = await Siembra.findById(id,{ cultivoAnterior: 1 });
+            const siembras = await Siembra.findById(id,{ cultivoAnterior: 1 }).populate("id_cultivo", "nombre").populate("empleado_id", "nombre").populate("inventario_id", "tipo");
             res.json({ siembras });
         } catch (error) {
             res.json({ error });
         }
     },
-
     getSiembrasActivas: async (req, res) => {
         try {
-            const siembras = await Siembra.find({ estado: 1 });
+            const siembras = await Siembra.find({ estado: 1 }).populate("id_cultivo", "nombre").populate("empleado_id", "nombre").populate("inventario_id", "tipo");
             res.json({ siembras });
         } catch (error) {
             res.json({ error });
         }
     },
-
     getSiembrasInactivas: async (req, res) => {
         try {
-            const siembras = await Siembra.find({ estado: 0 });
+            const siembras = await Siembra.find({ estado: 0 }).populate("id_cultivo", "nombre").populate("empleado_id", "nombre").populate("inventario_id", "tipo");
             res.json({ siembras });
         } catch (error) {
             res.json({ error });
         }
     },
-
     postSiembra: async (req, res) => {
         try {
             const { id_cultivo, empleado_id, fechaSiembra, fechaCosecha, transplante, cultivoAnterior, inventario_id, estado } = req.body;
@@ -90,7 +82,6 @@ const httpSiembras = {
             res.json({ error });
         }
     },
-
     putSiembra: async (req, res) => {
         try {
             const { id } = req.params;
@@ -101,7 +92,6 @@ const httpSiembras = {
             res.json({ error });
         }
     },
-
     putSiembraActivar: async (req, res) => {
         try {
             const { id } = req.params;
@@ -111,7 +101,6 @@ const httpSiembras = {
             res.json({ error });
         }
     },
-
     putSiembraInactivar: async (req, res) => {
         try {
             const { id } = req.params;

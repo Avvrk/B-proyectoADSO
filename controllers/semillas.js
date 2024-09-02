@@ -3,7 +3,7 @@ import Semilla from '../models/semillas.js';
 const httpSemillas = {
     getSemillas: async (req, res) => {
         try {
-            const semillas = await Semilla.find();
+            const semillas = await Semilla.find().populate("proveedor_id", "nombre");
             res.json({ semillas });
         } catch (error) {
             res.json({ error });
@@ -12,7 +12,7 @@ const httpSemillas = {
     getSemillaId: async (req, res) => {
         try {
             const { id } = req.params;
-            const semilla = await Semilla.findById(id);
+            const semilla = await Semilla.findById(id).populate("proveedor_id", "nombre");
             res.json({ semilla });
         } catch (error) {
             res.json({ error });
@@ -23,7 +23,7 @@ const httpSemillas = {
             const { fechaInicio, fechaFin } = req.body;
             const semillas = await Semilla.find({
                 fechaCompra: { $gte: fechaInicio, $lte: fechaFin }
-            });
+            }).populate("proveedor_id", "nombre");
             res.json({ semillas });
         } catch (error) {
             res.json({ error });
@@ -32,7 +32,7 @@ const httpSemillas = {
     getSemillasProveedor: async (req, res) => {
         try {
             const { proveedor_id } = req.params;
-            const semillas = await Semilla.find({ proveedor_id });
+            const semillas = await Semilla.find({ proveedor_id }).populate("proveedor_id", "nombre");
             res.json({ semillas });
         } catch (error) {
             res.json({ error });
@@ -40,7 +40,7 @@ const httpSemillas = {
     },
     getSemillasActivas: async (req, res) => {
         try {
-            const semillas = await Semilla.find({ estado: 1 });
+            const semillas = await Semilla.find({ estado: 1 }).populate("proveedor_id", "nombre");
             res.json({ semillas });
         } catch (error) {
             res.json({ error });
@@ -48,7 +48,7 @@ const httpSemillas = {
     },
     getSemillasInactivas: async (req, res) => {
         try {
-            const semillas = await Semilla.find({ estado: 0 });
+            const semillas = await Semilla.find({ estado: 0 }).populate("proveedor_id", "nombre");
             res.json({ semillas });
         } catch (error) {
             res.json({ error });
@@ -84,7 +84,6 @@ const httpSemillas = {
             res.status(500).json({ error: error.message });
         }
     },
-    
     putSemilla: async (req, res) => {
         try {
             const { id } = req.params;

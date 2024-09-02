@@ -1,7 +1,6 @@
 import Proveedor from '../models/proveedores.js';
 
 const httpProveedores = {
-
     getProveedores: async (req, res) => {
         try {
             const proveedores = await Proveedor.find();
@@ -10,8 +9,6 @@ const httpProveedores = {
             res.json({ error });
         }
     },
-
-
     getProveedorId: async (req, res) => {
         try {
             const { id } = req.params;
@@ -21,8 +18,6 @@ const httpProveedores = {
             res.json({ error });
         }
     },
-
-
     getProveedorActivos: async (req, res) => {
         try {
             const proveedores = await Proveedor.find({ estado: 1 });
@@ -31,8 +26,6 @@ const httpProveedores = {
             res.json({ error });
         }
     },
-
-
     getProveedorInactivos: async (req, res) => {
         try {
             const proveedores = await Proveedor.find({ estado: 0 });
@@ -41,8 +34,6 @@ const httpProveedores = {
             res.json({ error });
         }
     },
-
-
     postProveedor: async (req, res) => {
         try {
             const { nombre, direccion, telefono, email } = req.body;
@@ -58,8 +49,6 @@ const httpProveedores = {
             res.json({ error });
         }
     },
-
-
     putProveedor: async (req, res) => {
         try {
             const { id } = req.params;
@@ -75,8 +64,6 @@ const httpProveedores = {
             res.json({ error });
         }
     },
-
-
     putProveedorActivar: async (req, res) => {
         try {
             const { id } = req.params;
@@ -86,8 +73,6 @@ const httpProveedores = {
             res.json({ error });
         }
     },
-
-
     putProveedorInactivar: async (req, res) => {
         try {
             const { id } = req.params;
