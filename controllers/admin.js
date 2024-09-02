@@ -8,7 +8,7 @@ const httpAdmins = {
             const admins = await Admin.find();
             res.json({ admins });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getAdminsId: async (req, res) => {
@@ -17,7 +17,7 @@ const httpAdmins = {
             const admins = await Admin.findById(id);
             res.json({ admins });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getAdminsActivos: async (req, res) => {
@@ -25,7 +25,7 @@ const httpAdmins = {
             const admins = await Admin.find({ estado: 1 });
             res.json({ admins });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getAdminsInactivos: async (req, res) => {
@@ -33,7 +33,7 @@ const httpAdmins = {
             const admins = await Admin.find({ estado: 0 });
             res.json({ admins });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     postLogin: async (req, res) => {
@@ -82,8 +82,7 @@ const httpAdmins = {
             await admins.save();
             res.json({ admins });
         } catch (error) {
-            res.json({ error });
-            console.log(error);
+            res.json({ err: error.message });
         }
     },
     putAdmins: async (req, res) => {
@@ -93,7 +92,7 @@ const httpAdmins = {
             const admins = await Admin.findByIdAndUpdate(id, info, { new: true });
             res.json({ admins });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     putAdminsActivar: async (req, res) => {
@@ -102,7 +101,7 @@ const httpAdmins = {
             const admins = await Admin.findByIdAndUpdate(id, { estado: 1 }, { new: true });
             res.json({ admins });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     putAdminsInactivar: async (req, res) => {
@@ -111,7 +110,7 @@ const httpAdmins = {
             const admins = await Admin.findByIdAndUpdate(id, { estado: 0 }, { new: true });
             res.json({ admins });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
 };

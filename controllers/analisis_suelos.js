@@ -15,7 +15,7 @@ const httpSuelos = {
             const suelos = await Suelo.findById(id);
             res.json({ suelos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getSualosFechas: async (req, res) => {
@@ -28,7 +28,7 @@ const httpSuelos = {
             }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre documento");
             res.json({ suelos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getSuelosResponsables: async (req, res) => {
@@ -37,7 +37,7 @@ const httpSuelos = {
             const suelos = await Suelo.find({ empleado_id }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre documento");
             res.json({ suelos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getSuelosActivos: async (req, res) => {
@@ -45,7 +45,7 @@ const httpSuelos = {
             const suelos = await Suelo.find({ estado: 1 }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre documento");
             res.json({ suelos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getSuelosInactivos: async (req, res) => {
@@ -53,7 +53,7 @@ const httpSuelos = {
             const suelos = await Suelo.find({ estado: 0 }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre documento");
             res.json({ suelos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     postSuelos: async (req, res) => {
@@ -72,7 +72,7 @@ const httpSuelos = {
             await suelos.save();
             res.json({ suelos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     putSuelos: async (req, res) => {
@@ -82,7 +82,7 @@ const httpSuelos = {
             const suelos = await Suelo.findByIdAndUpdate(id, info, { new: true });
             res.json({ suelos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     putSuelosActivar: async (req, res) => {
@@ -91,7 +91,7 @@ const httpSuelos = {
             const suelos = await Suelo.findByIdAndUpdate(id, { estado: 1 }, { new: true });
             res.json({ suelos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     putSuelosInactivar: async (req, res) => {
@@ -100,7 +100,7 @@ const httpSuelos = {
             const suelos = await Suelo.findByIdAndUpdate(id, { estado: 0 }, { new: true });
             res.json({ suelos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
 };

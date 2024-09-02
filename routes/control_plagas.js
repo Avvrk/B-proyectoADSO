@@ -18,14 +18,6 @@ router.get("/id/:id", [
     validarJWT
 ], httpControlPlagas.getPlagasId);
 
-router.get("/activos", [
-    validarJWT
-], httpControlPlagas.getPlagasActivos);
-
-router.get("/inactivos", [
-    validarJWT
-], httpControlPlagas.getPlagasInactivos);
-
 router.get("/fechas/:fechaInicio/:fechaFin", [
     check("fechaInicio").custom(herlpersControlPlagas.validarFecha),
     check("fechaFin").custom(herlpersControlPlagas.validarFecha),
@@ -83,19 +75,5 @@ router.put("/:id", [
     validarCampos,
     validarJWT
 ], httpControlPlagas.putPlagas);
-
-router.put("/activar/:id", [
-    check("id", "Ingrese un mongo id valido").isMongoId(),
-    check("id").custom(herlpersControlPlagas.validarId),
-    validarCampos,
-    validarJWT
-], httpControlPlagas.putPlagasActivar);
-
-router.put("/desactivar/:id", [
-    check("id", "Ingrese un mongo id valido").isMongoId(),
-    check("id").custom(herlpersControlPlagas.validarId),
-    validarCampos,
-    validarJWT
-], httpControlPlagas.putPlagasInactivar);
 
 export default router;

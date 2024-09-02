@@ -6,7 +6,7 @@ const httpClimas = {
             const climas = await Clima.find().populate("empleado_id", "nombre documento").populate("finca_id", "nombre rut");
             res.json({ climas });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getClimasId: async (req, res) => {
@@ -15,7 +15,7 @@ const httpClimas = {
             const climas = await Clima.findById(id);
             res.json({ climas });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getClimasPorClima: async (req, res) => {
@@ -24,7 +24,7 @@ const httpClimas = {
             const climas = await Clima.find({ tipoClima: clima }).populate("empleado_id", "nombre documento").populate("finca_id", "nombre rut");
             res.json({ climas });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getClimasFecha: async (req, res) => {
@@ -33,7 +33,7 @@ const httpClimas = {
             const climas = await Clima.find({ fecha }).populate("empleado_id", "nombre documento").populate("finca_id", "nombre rut");
             res.json({ climas });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getClimasPromedio: async (req, res) => {
@@ -45,7 +45,7 @@ const httpClimas = {
             const promedioMinima = temperaturaMinima.reduce((a, c) => a + c) / temperaturaMinima.length;
             res.json({ promedioMaxima, promedioMinima });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getClimasDuracion: async (req, res) => {
@@ -63,7 +63,7 @@ const httpClimas = {
 
             res.json({ horas, minutos, segundos });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     postClimas: async (req, res) => {
@@ -82,7 +82,7 @@ const httpClimas = {
             await climas.save();
             res.json({ climas });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     putClimas: async (req, res) => {
@@ -92,7 +92,7 @@ const httpClimas = {
             const climas = await Clima.findByIdAndUpdate(id, info, { new: true });
             res.json({ climas });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
 };

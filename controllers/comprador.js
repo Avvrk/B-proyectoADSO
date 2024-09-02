@@ -6,7 +6,7 @@ const httpCompradores = {
             const compradores = await Comprador.find().populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getCompradoresId: async (req, res) => {
@@ -15,7 +15,7 @@ const httpCompradores = {
             const compradores = await Comprador.findById(id);
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getCompradoresFechas: async (req, res) => {
@@ -28,7 +28,7 @@ const httpCompradores = {
             }).populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getCompradoresCompras: async (req, res) => {
@@ -37,7 +37,7 @@ const httpCompradores = {
             const compradores = await Comprador.find({ documento }).populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getCompradoresActivos: async (req, res) => {
@@ -45,7 +45,7 @@ const httpCompradores = {
             const compradores = await Comprador.find({ estado: 1 }).populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     getCompradoresInactivos: async (req, res) => {
@@ -53,7 +53,7 @@ const httpCompradores = {
             const compradores = await Comprador.find({ estado: 0 }).populate({ path: "_id_produccion", select: "cultivo_id", populate: { path: "cultivo_id", select: "nombre tipo"} });
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     postCompradores: async (req, res) => {
@@ -75,7 +75,7 @@ const httpCompradores = {
             await compradores.save();
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     putCompradores: async (req, res) => {
@@ -85,7 +85,7 @@ const httpCompradores = {
             const compradores = await Comprador.findByIdAndUpdate(id, info, { new: true });
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     putCompradoresActivar: async (req, res) => {
@@ -94,7 +94,7 @@ const httpCompradores = {
             const compradores = await Comprador.findByIdAndUpdate(id, { estado: 1 }, { new: true });
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
     putCompradoresInactivar: async (req, res) => {
@@ -103,7 +103,7 @@ const httpCompradores = {
             const compradores = await Comprador.findByIdAndUpdate(id, { estado: 0 }, { new: true });
             res.json({ compradores });
         } catch (error) {
-            res.json({ error });
+            res.json({ err: error.message });
         }
     },
 };

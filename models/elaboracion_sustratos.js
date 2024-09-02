@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const sustratoSchema = new mongoose.Schema({
-  id_proceso: { type: mongoose.Schema.Types.ObjectId, ref: 'Proceso', required: true },
+  id_proceso: { type: mongoose.Schema.Types.ObjectId, ref: 'Procesos', required: true },
   fecha: { type: Date, required: true },
   productoComercial: { type: String },
   ingredienteActivo: { type: String },

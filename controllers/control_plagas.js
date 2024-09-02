@@ -3,7 +3,7 @@ import Plagas from "../models/control_plagas.js";
 const httpPlagas = {
     getPlagas: async (req, res) => {
         try {
-            const plagas = await Plagas.find();
+            const plagas = await Plagas.find().populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre documento");
             res.json({ plagas });
         } catch (error) {
             res.json({ error });
@@ -25,7 +25,7 @@ const httpPlagas = {
             const fechaFinObj = new Date(fechaFin);
             const plagas = await Plagas.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            });
+            }).populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre documento");
             res.json({ plagas });
         } catch (error) {
             res.json({ error });
@@ -34,7 +34,7 @@ const httpPlagas = {
     getPlagasTipo: async (req, res) => {
         try {
             const { tipo } = req.params;
-            const plagas = await Plagas.find({ tipo });
+            const plagas = await Plagas.find({ tipo }).populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre documento");
             res.json({ plagas });
         } catch (error) {
             res.json({ error });
@@ -42,24 +42,8 @@ const httpPlagas = {
     },
     getPlagasOperario: async (req, res) => {
         try {
-            const { operario_id } = req.params;
-            const plagas = await Plagas.find({ operario_id });
-            res.json({ plagas });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-    getPlagasActivos: async (req, res) => {
-        try {
-            const plagas = await Plagas.find({ estado: 1 });
-            res.json({ plagas });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-    getPlagasInactivos: async (req, res) => {
-        try {
-            const plagas = await Plagas.find({ estado: 0 });
+            const { operario } = req.params;
+            const plagas = await Plagas.find({ operario }).populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre documento");
             res.json({ plagas });
         } catch (error) {
             res.json({ error });
@@ -91,24 +75,6 @@ const httpPlagas = {
             const { id } = req.params;
             const { ...info } = req.body;
             const plagas = await Plagas.findByIdAndUpdate(id, info, { new: true });
-            res.json({ plagas });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-    putPlagasActivar: async (req, res) => {
-        try {
-            const { id } = req.params;
-            const plagas = await Plagas.findByIdAndUpdate(id, { estado: 1 }, { new: true });
-            res.json({ plagas });
-        } catch (error) {
-            res.json({ error });
-        }
-    },
-    putPlagasInactivar: async (req, res) => {
-        try {
-            const { id } = req.params;
-            const plagas = await Plagas.findByIdAndUpdate(id, { estado: 0 }, { new: true });
             res.json({ plagas });
         } catch (error) {
             res.json({ error });
