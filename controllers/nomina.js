@@ -3,7 +3,7 @@ import Nomina from '../models/nomina.js'
 const httpNominas = {
     getNomina: async (req, res) => {
         try {
-            const nomina = await Nomina.find();
+            const nomina = await Nomina.find().populate('id_empleado', 'nombre documento');
             res.json({ nomina });
         } catch (error) {
             res.json({ error });
@@ -45,7 +45,7 @@ const httpNominas = {
             const fechaFinObj = new Date(fechaFin);
             const nomina = await Nomina.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            });
+            }).populate('id_empleado', 'nombre documento');
             res.json({ nomina });
         } catch (error) {
             res.json({ error });
@@ -55,8 +55,8 @@ const httpNominas = {
     getNominaEmpleados: async (req, res) => {
         try {
             const { id } = req.params;
-            const empleado = await Nomina.find({ id_empleado: id });
-            res.json({ empleado });
+            const nomina = await Nomina.find({ id_empleado: id }).populate('id_empleado', 'nombre documento');
+            res.json({ nomina });
         } catch (error) {
             res.json({ error });
         }

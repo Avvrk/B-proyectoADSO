@@ -59,7 +59,10 @@ router.post('/', [
     check('id_empleado', 'El ID del empleado debe ser un mongoId válido.').isMongoId(),
     check('tipo', 'El tipo es requerido.').notEmpty(),
     check('valor', 'El valor es requerido.').notEmpty(),
-    check('valor', 'El valor debe ser un número positivo.').isNumeric().toFloat().isFloat({ min: 0 }),
+    check("valor", "El valor solo pueden tener numeros").isNumeric(),
+    check("valor", "El valor debe ser positivo").isLength({ min: 1 }),
+    check('estado', 'El estado es requerido.').notEmpty(),
+    check('estado', 'El estado debe ser un número válido.').isNumeric(),
     validarCampos,
     validarJWT
 ], httpNominas.postNomina);
@@ -71,7 +74,9 @@ router.put('/:id', [
     check('fecha').custom(helpersNomina.validarFecha),
     check('id_empleado').custom(helpersNomina.validarIdEmpleado),
     check('tipo').custom(helpersNomina.validarTipo),
-    check('valor').custom(helpersNomina.validarValor),
+    check('valor', 'El valor es requerido.').notEmpty(),
+    check("valor", "El valor solo pueden tener numeros").isNumeric(),
+    check("valor", "El valor debe ser positivo").isLength({ min: 1 }),
     check('estado').custom(helpersNomina.validarEstado),
     validarCampos,
     validarJWT

@@ -65,18 +65,6 @@ const helpersNomina = {
         }
     },
 
-    validarValor: (valor) => {
-        if (valor !== undefined) {
-            if (typeof valor !== 'number' || valor <= 0) {
-                throw new Error("El campo valor debe ser un número positivo.");
-            } else {
-                return true;
-            }
-        } else {
-            throw new Error("El valor es obligatorio.");
-        }
-    },
-
     validarEstado: (estado) => {
         if (estado !== undefined) {
             if (![0, 1].includes(Number(estado))) {
