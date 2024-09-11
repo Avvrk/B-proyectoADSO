@@ -1,6 +1,7 @@
 import validator from "validator";
-import Inventario from "../models/inventario.js";
+import Semilla from "../models/semillas.js";
 import Insumo from "../models/insumos.js";
+import Maquina from "../models/maquinaria_herramientas.js"
 
 const { isMongoId } = validator;
 
@@ -72,7 +73,7 @@ const helpersInventario = {
 				throw new Error("El campo semillas_id debe ser un mongoId válido.");
 			}
 			try {
-				const buscarSemilla = await Inventario.findById(semillas_id);
+				const buscarSemilla = await Semilla.findById(semillas_id);
 				if (buscarSemilla == undefined) {
 					throw new Error("La semilla no existe.");
 				} else {
@@ -108,7 +109,8 @@ const helpersInventario = {
 				throw new Error("El campo maquinaria_id debe ser un mongoId válido");
 			}
 			try {
-				const buscarMaquinaria = await Inventario.findById(maquinaria_id);
+				const buscarMaquinaria = await Maquina.findById(maquinaria_id);
+				
 				if (buscarMaquinaria == undefined) {
 					throw new Error("La maquinaria no existe.");
 				} else {
