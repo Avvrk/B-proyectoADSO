@@ -53,8 +53,7 @@ router.post('/', [
     check('calibracion', 'La calibración es requerida.').notEmpty(),
     check('responsable', 'El responsable es requerido.').notEmpty(),
     check('observaciones', 'Las observaciones son requeridas.').notEmpty(),
-    check('estado', 'El estado es requerido.').notEmpty(),
-    check('estado', 'El estado debe ser un número válido.').isNumeric(),
+
     validarCampos,
     validarJWT
 ], httpMantenimientos.postMantenimiento);
