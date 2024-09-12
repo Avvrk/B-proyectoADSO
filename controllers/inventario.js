@@ -21,7 +21,7 @@ const httpInventarios = {
     },
     getInventarioFechas: async (req, res) => {
         try {
-            const { fechaInicio, fechaFin } = req.body;
+            const { fechaInicio, fechaFin } = req.params;
             const fechaInicioObj = new Date(fechaInicio);
             const fechaFinObj = new Date(fechaFin);
             const inventarios = await Inventario.find({ fecha: { $gte: fechaInicioObj, $lte: fechaFinObj } }).populate("semillas_id", "especieVariedad").populate("insumos_id", "nombre").populate("maquinaria_id", "nombre tipo");;
