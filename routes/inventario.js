@@ -33,6 +33,13 @@ router.get('/cantidad/:id', [
     validarJWT
 ], httpInventarios.getInventarioCantidades);
 
+router.get('/fechas/:fechaInicio/:fechaFin', [
+    validarJWT,  // Middleware para validar JWT si es necesario
+    check('fechaInicio', 'La fecha de inicio debe ser una fecha válida.').isDate(),
+    check('fechaFin', 'La fecha de fin debe ser una fecha válida.').isDate(),
+    validarCampos
+], httpInventarios.getInventarioFechas);
+
 router.post('/', [
     check('tipo', 'El tipo es requerido.').notEmpty(),
     check('observacion', 'La observación es requerida.').notEmpty(),
