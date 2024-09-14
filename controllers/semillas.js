@@ -56,7 +56,7 @@ const httpSemillas = {
     },
     postSemilla: async (req, res) => {
         try {
-            const { proveedor_id, numFactura, fechaCompra, fechaVencimiento, especieVariedad, proveedorSemilla, numeroLote, origen, poderGerminativo, observaciones, unidad, total, estado } = req.body;
+            const { proveedor_id, numFactura, fechaCompra, fechaVencimiento, especieVariedad, numeroLote, origen, poderGerminativo, observaciones, unidad, total, estado } = req.body;
             
             // Crear una nueva instancia del modelo Semilla
             const semilla = new Semilla({
@@ -65,7 +65,6 @@ const httpSemillas = {
                 fechaCompra,
                 fechaVencimiento,
                 especieVariedad,
-                proveedorSemilla,
                 numeroLote,
                 origen,
                 poderGerminativo,

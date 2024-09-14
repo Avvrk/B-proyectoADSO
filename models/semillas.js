@@ -6,7 +6,6 @@ const semillaSchema = new mongoose.Schema({
   fechaCompra: { type: Date },
   fechaVencimiento: { type: Date },
   especieVariedad: { type: String },
-  proveedorSemilla: { type: String },
   numeroLote: { type: String },
   origen: { type: String },
   poderGerminativo: { type: String },
