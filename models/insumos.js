@@ -5,7 +5,7 @@ const insumoSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   relacionNPK: { type: String },
   cantidad: { type: Number, required: true },
-  unidad: { type: String, enum: ['kg', 'litros'], required: true },
+  unidad: { type: String, required: true },
   responsable: { type: String },
   observaciones: { type: String },
   total: { type: Number, required: true }

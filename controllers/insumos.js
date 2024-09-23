@@ -3,7 +3,7 @@ import Insumo from "../models/insumos.js";
 const httpInsumos = {
     getInsumos: async (req, res) => {
         try {
-            const insumos = await Insumo.find();
+            const insumos = await Insumo.find().populate("proveedores_id", "nombre telefono email");
             res.json({ insumos });
         } catch (error) {
             res.json({ error });

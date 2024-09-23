@@ -3,7 +3,7 @@ import Gasto from "../models/gastos.js";
 const httpGastos = {
     getGastos: async (req, res) => {
         try {
-            const gastos = await Gasto.find();
+            const gastos = await Gasto.find().populate("insumos_id", "nombre").populate("semillas_id", "especieVariedad origen").populate({ path: "mantenimiento_id", select: "id_herramienta", populate: { path: "id_herramienta", select: "nombre tipo"}});
             res.json({ gastos });
         } catch (error) {
             res.json({ error });
