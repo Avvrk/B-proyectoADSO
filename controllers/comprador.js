@@ -58,18 +58,16 @@ const httpCompradores = {
     },
     postCompradores: async (req, res) => {
         try {
-            const { _id_produccion, fecha, especie, nombre, documento, telefono, cantidad, numeroGuiaTransporte, numeroLoteComercial, total, estado } = req.body;
+            const { _id_produccion, fecha, especie, nombre, telefono, cantidad, numeroGuiaTransporte, valor, estado } = req.body;
             const compradores = new Comprador({
                 _id_produccion,
                 fecha,
                 especie,
                 nombre,
-                documento,
                 telefono,
                 cantidad,
                 numeroGuiaTransporte,
-                numeroLoteComercial,
-                total,
+                valor,
                 estado
             });
             await compradores.save();

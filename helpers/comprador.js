@@ -1,5 +1,16 @@
 import Comprador from "../models/comprador.js"
 
+function dateValido(dateString) {
+    const registroTiempo = Date.parse(dateString);
+    if (isNaN(registroTiempo)) {
+        return false;
+    }
+
+    const fecha = new Date(dateString);
+    const formatoFecha = fecha.toISOString().split('T')[0];
+    return dateString === formatoFecha;
+}
+
 const herlpersComprador = {
     validarId: async (id) => {
         if (id != undefined) {
@@ -16,6 +27,14 @@ const herlpersComprador = {
         } else {
             return true;
         }
+    },
+    validarFecha: (fecha) => {
+        if (fecha !== undefined) {
+            if (!dateValido(fecha)) {
+                throw new Error("Ingrese una fecha válida.");
+            }
+        }
+        return true;
     },
     validarFechas: (fechas) => {
         if (Array.isArray(fechas) && fechas.length >= 2 && fechas[0] != undefined && fechas[1] != undefined) {

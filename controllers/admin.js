@@ -68,7 +68,7 @@ const httpAdmins = {
     },
     postLog: async (req, res) => {
         try {
-            const { nombre, direccion, correo, telefono, municipio, password } = req.body;
+            const { nombre, direccion, correo, telefono, municipio, password, rol } = req.body;
             const admins = new Admin({
                 nombre,
                 direccion,
@@ -76,6 +76,7 @@ const httpAdmins = {
                 telefono,
                 municipio,
                 password,
+                rol,
             });
             const salt = bcryptjs.genSaltSync();
             admins.password = bcryptjs.hashSync(password, salt);

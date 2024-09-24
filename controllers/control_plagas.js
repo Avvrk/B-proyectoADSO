@@ -51,7 +51,7 @@ const httpPlagas = {
     },
     postPlagas: async (req, res) => {
         try {
-            const { id_cultivo, empleado_id, fecha, tipoCultivo, nombre, tipo, ingredientesActivo, dosis, operario, observaciones } = req.body;
+            const { id_cultivo, empleado_id, fecha, tipoCultivo, nombre, tipo, ingredientesActivo, dosis, operario_id, observaciones } = req.body;
             const plagas = new Plagas({
                 id_cultivo,
                 fecha,
@@ -61,7 +61,7 @@ const httpPlagas = {
                 tipo,
                 ingredientesActivo,
                 dosis,
-                operario,
+                operario_id,
                 observaciones,
             });
             await plagas.save();

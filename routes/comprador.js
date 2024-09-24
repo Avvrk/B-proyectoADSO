@@ -27,8 +27,8 @@ router.get("/inactivos", [
 ], httpComprador.getCompradoresInactivos);
 
 router.get("/fecha/:fechaInicio/:fechaFin", [
-    check("fechaInicio", "Ingrese una fecha inicial valida").isISO8601().toDate(),
-    check("fechaFin", "Ingrese una fecha final valida").isISO8601().toDate(),
+    check("fechaInicio").custom(helpersComprador.validarFecha),
+    check("fechaFin").custom(helpersComprador.validarFecha),
     check(["fechaInicio", "fechaFin"]).custom(helpersComprador.validarFechas),
     validarCampos,
     validarJWT
@@ -42,7 +42,7 @@ router.post("/", [
     check("_id_produccion", "El id produccion no puede estar vacio").notEmpty(),
     check("_id_produccion", "Ingrese un mongo id de produccion valido").isMongoId(),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "Ingrese una fecha valida").isISO8601().toDate(),
+    check("fecha").custom(helpersComprador.validarFecha),
     check("especie", "La especie no puede estar vacia").notEmpty(),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("documento", "El documento no puede estar vacio"),
@@ -54,9 +54,8 @@ router.post("/", [
     check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
     check("cantidad", "La cantidad solo puede tener numeros").isNumeric(),
     check("numeroGuiaTransporte", "El numero guia transporte no puede estar vacio").notEmpty(),
-    check("numeroLoteComercial", "El numero lote comercial no puede estar vacio").notEmpty(),
-    check("total", "El total no puede estar vacio").notEmpty(),
-    check("total", "El total solo puede tener numeros").isNumeric(),
+    check("valor", "El valor no puede estar vacio").notEmpty(),
+    check("valor", "El valor solo puede tener numeros").isNumeric(),
     validarCampos,
     validarJWT
 ], httpComprador.postCompradores);
@@ -67,7 +66,7 @@ router.put("/:id", [
     check("_id_produccion", "El id produccion no puede estar vacio").notEmpty(),
     check("_id_produccion", "Ingrese un mongo id de produccion valido").isMongoId(),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha", "Ingrese una fecha valida").isISO8601().toDate(),
+    check("fecha").custom(helpersComprador.validarFecha),,
     check("especie", "La especie no puede estar vacia").notEmpty(),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("documento", "El documento no puede estar vacio"),
@@ -79,9 +78,8 @@ router.put("/:id", [
     check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
     check("cantidad", "La cantidad solo puede tener numeros").isNumeric(),
     check("numeroGuiaTransporte", "El numero guia transporte no puede estar vacio").notEmpty(),
-    check("numeroLoteComercial", "El numero lote comercial no puede estar vacio").notEmpty(),
-    check("total", "El total no puede estar vacio").notEmpty(),
-    check("total", "El total solo puede tener numeros").isNumeric(),
+    check("valor", "El valor no puede estar vacio").notEmpty(),
+    check("valor", "El valor solo puede tener numeros").isNumeric(),
     validarCampos,
     validarJWT
 ], httpComprador.putCompradores);

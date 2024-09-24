@@ -7,7 +7,8 @@ const adminSchema = new mongoose.Schema({
   telefono: { type: String, required: true },
   municipio: { type: String, required: true },
   password: { type: String, required: true },
-  estado: { type: Number, default: 1 }
+  rol: { type: String, anum: ['Administrador', 'Empleado'], required: true },
+  estado: { type: Number, default: 1 },
 }, {
   timestamps: true
 });

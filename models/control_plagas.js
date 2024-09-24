@@ -9,8 +9,8 @@ const controlPlagasSchema = new mongoose.Schema({
   tipo: { type: String, enum: ['fitosanitario', 'normal'], required: true },
   ingredientesActivo: { type: String },
   dosis: { type: Number },
-  operario: { type: String },
-  observaciones: { type: String }
+  operario_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Empleado', required: true },
+  observaciones: { type: String },
 }, {
   timestamps: true
 });

@@ -42,6 +42,7 @@ router.post("/", [
     check("telefono", "El telefono debe tener minimo 10 caracteres").isLength({ min: 10 }),
     check("municipio", "El municipio no puede estar vacio").notEmpty(),
     check("password", "La contraseña no puede estar vacia").notEmpty(),
+    check("rol", "El rol no puede estar vacio").notEmpty(),
     validarCampos
     // validarJWT
 ], httpAdmin.postLog);
@@ -56,7 +57,8 @@ router.put("/:id", [
     check("telefono", "El telefono no puede estar vacio").notEmpty(),
     check("telefono", "El telefono solo pueden tener numeros").isNumeric(),
     check("telefono", "El telefono debe tener minimo 10 caracteres").isLength({ min: 10 }),
-    check("municipio", "El municipio no puede estar vacio").notEmpty(), 
+    check("municipio", "El municipio no puede estar vacio").notEmpty(),
+    check("rol", "El rol no puede estar vacio").notEmpty(),
     validarCampos,
     validarJWT
 ], httpAdmin.putAdmins);
