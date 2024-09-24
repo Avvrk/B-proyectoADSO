@@ -66,7 +66,7 @@ router.put("/:id", [
     check("_id_produccion", "El id produccion no puede estar vacio").notEmpty(),
     check("_id_produccion", "Ingrese un mongo id de produccion valido").isMongoId(),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
-    check("fecha").custom(helpersComprador.validarFecha),,
+    check("fecha").custom(helpersComprador.validarFecha),
     check("especie", "La especie no puede estar vacia").notEmpty(),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("documento", "El documento no puede estar vacio"),
