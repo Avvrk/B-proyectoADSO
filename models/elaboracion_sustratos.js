@@ -7,8 +7,8 @@ const sustratoSchema = new mongoose.Schema({
   ingredienteActivo: { type: String },
   dosisUtilizada: { type: Number },
   metodoAplicacion: { type: String },
-  empleado_idOperario: { type: mongoose.Schema.Types.ObjectId, ref: 'Empleado', required: true },
-  empleado_idResponsable: { type: mongoose.Schema.Types.ObjectId, ref: 'Empleado', required: true },
+  empleado_idOperario: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true },
+  empleado_idResponsable: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true },
   observaciones: { type: String }
 }, {
   timestamps: true

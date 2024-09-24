@@ -5,12 +5,10 @@ const compradorSchema = new mongoose.Schema({
   fecha: { type: Date, required: true },
   especie: { type: String },
   nombre: { type: String, required: true },
-  documento: { type: String, required: true, unique: true },
   telefono: { type: String, required: true },
   cantidad: { type: Number, required: true },
   numeroGuiaTransporte: { type: String },
-  numeroLoteComercial: { type: String },
-  total: { type: Number },
+  valor: { type: Number },
   estado: { type: Number, default: 1 }
 }, {
   timestamps: true

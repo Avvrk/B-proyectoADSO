@@ -48,7 +48,7 @@ router.post("/", [
     check("tipo", "El tipo no puede estar vacio").notEmpty(),
     check("ingredientesActivo", "El ingrediente activo no puede estar vacio").notEmpty(),
     check("dosis", "La dosis no puede estar vacia").notEmpty(),
-    check("operario", "El operario no puede estar vacio").notEmpty(),
+    check("operario_id", "El operario no puede estar vacio").notEmpty(),
     check("observaciones", "La observaciones no puede estar vacia").notEmpty(),
     validarCampos,
     validarJWT
@@ -70,7 +70,7 @@ router.put("/:id", [
     check("tipo", "El tipo no puede estar vacio").notEmpty(),
     check("ingredientesActivo", "El ingrediente activo no puede estar vacio").notEmpty(),
     check("dosis", "La dosis no puede estar vacia").notEmpty(),
-    check("operario", "El operario no puede estar vacio").notEmpty(),
+    check("operario_id", "El operario no puede estar vacio").notEmpty(),
     check("observaciones", "La observaciones no puede estar vacia").notEmpty(),
     validarCampos,
     validarJWT
