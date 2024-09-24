@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const climaSchema = new mongoose.Schema({
   finca_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Finca', required: true },
-  empleado_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Empleado', required: true },
+  empleado_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true },
   fecha: { type: Date, required: true },
   tipoClima: { type: String, required: true },
   promedio: { type: Number, required: true },
