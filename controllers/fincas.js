@@ -4,7 +4,7 @@ const httpFincas = {
     getFincas: async (req, res) => {
         try {
             const fincas = await Finca.find()
-            .populate("_idAdmin", "nombre")
+            .populate("_idUsuario", "nombre")
             res.json({ fincas });
         } catch (error) {
             res.json({ error });
@@ -36,23 +36,26 @@ const httpFincas = {
         }
     },
     postFincas: async (req, res) => {
+        console.log('here');
+        
         try {
-            const { _idAdmin, nombre, rut, direccion, ubicacionGeografica, departamento, ciudad, limites, area } = req.body;
+            const { _idUsuario, nombre, rut, direccion, ubicacionGeografica, departamento, ciudad, area, documentos, limites } = req.body;
             const fincas = new Finca({
-                _idAdmin,
+                _idUsuario,
                 nombre,
                 rut,
                 direccion,
                 ubicacionGeografica,
                 departamento,
                 ciudad,
-                limites,
                 area,
+                documentos,
+                limites
             });
             await fincas.save();
             res.json({ fincas });
         } catch (error) {
-            res.json({ error });
+            res.json({ error: error.message });
         }
     },
     putFincas: async (req, res) => {
