@@ -8,88 +8,60 @@ function dateValido(dateString) {
     if (isNaN(registroTiempo)) {
         return false;
     }
-
     const fecha = new Date(dateString);
     const formatoFecha = fecha.toISOString().split('T')[0];
     return dateString === formatoFecha;
 }
 
+// Función genérica para validar IDs
+async function validarIdGenerico(id, modelo, nombreEntidad) {
+    if (id !== undefined) {
+        try {
+            const res = await modelo.findById(id);
+            if (!res) {
+                throw new Error(`El/La ${nombreEntidad} no existe`);
+            }
+            return true;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+    return true;
+}
+
 const helpersGastos = {
     validarId: async (id) => {
-        if (id !== undefined) {
-            try {
-                const res = await Gasto.findById(id);
-                if (!res) {
-                    throw new Error("El gasto no existe");
-                }
-                return true;
-            } catch (error) {
-                throw new Error(error.message);
-            }
-        }
-        return true;
+        return await validarIdGenerico(id, Gasto, 'gasto');
     },
     validarIdInsumos: async (id) => {
-        if (id !== undefined) {
-            try {
-                const res = await Insumo.findById(id);
-                if (!res) {
-                    throw new Error("El insumo no existe");
-                }
-                return true;
-            } catch (error) {
-                throw new Error(error.message);
-            }
-        }
-        return true;
+        return await validarIdGenerico(id, Insumo, 'insumo');
     },
     validarIdSemillas: async (id) => {
-        if (id !== undefined) {
-            try {
-                const res = await Semilla.findById(id);
-                if (!res) {
-                    throw new Error("La semilla no existe");
-                }
-                return true;
-            } catch (error) {
-                throw new Error(error.message);
-            }
-        }
-        return true;
+        return await validarIdGenerico(id, Semilla, 'semilla');
     },
     validarIdMantenimientos: async (id) => {
-        if (id !== undefined) {
-            try {
-                const res = await Mantenimiento.findById(id);
-                if (!res) {
-                    throw new Error("El mantenimiento no existe");
-                }
-                return true;
-            } catch (error) {
-                throw new Error(error.message);
-            }
-        }
-        return true;
+        return await validarIdGenerico(id, Mantenimiento, 'mantenimiento');
     },
     validarFecha: (fecha) => {
-        if (fecha !== undefined) {
-            if (!dateValido(fecha)) {
-                throw new Error("Ingrese una fecha válida.");
-            }
+        if (!fecha) {
+            throw new Error("Ingrese una fecha válida.");
+        }
+        if (!dateValido(fecha)) {
+            throw new Error("El formato de fecha no es válido.");
         }
         return true;
     },
     validarFechas: (fechas) => {
-        if (Array.isArray(fechas) && fechas.length >= 2 && fechas[0] != undefined && fechas[1] != undefined) {
+        if (Array.isArray(fechas) && fechas.length >= 2 && fechas[0] && fechas[1]) {
             const inicio = new Date(fechas[0]);
             const final = new Date(fechas[1]);
             if (inicio > final) {
                 throw new Error("La fecha de inicio no puede ser mayor que la fecha final");
             }
-                return true;
+            return true;
         }
         return true;
     },
-}
+};
 
 export default helpersGastos;

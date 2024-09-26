@@ -18,6 +18,10 @@ router.get("/id/:id",[
     validarJWT
 ], httpGasto.getGastosId);
 
+router.get("/proveedores", [
+    validarJWT 
+], httpGasto.getProveedores);
+
 router.get("/fecha/:fechaInicio/:fechaFin", [
     check("fechaInicio").custom(helpersGatos.validarFecha),
     check("fechaFin").custom(helpersGatos.validarFecha),
