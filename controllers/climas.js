@@ -68,7 +68,7 @@ const httpClimas = {
     },
     postClimas: async (req, res) => {
         try {
-            const { finca_id, empleado_id, fecha, tipoClima, promedio, horaInicio, horaFinal, temperaturaMaxima, temperaturaMinima } = req.body;
+            const { finca_id, empleado_id, fecha, tipoClima, promedio, horaInicio, horaFinal, temperaturaMaxima, temperaturaMinima, pluviometria } = req.body;
             const climas = new Clima({
                 finca_id,
                 empleado_id,
@@ -79,6 +79,7 @@ const httpClimas = {
                 horaFinal,
                 temperaturaMaxima,
                 temperaturaMinima,
+                pluviometria,
             });
             await climas.save();
             res.json({ climas });

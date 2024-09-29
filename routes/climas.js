@@ -61,6 +61,8 @@ router.post("/", [
     check("temperaturaMinima", "La temperatura minia no puede estar vacia").notEmpty(),
     check("temperaturaMinima", "La temperatura minima solo puede tener numeros").isNumeric(),
     check(["temperaturaMaxima", "temperaturaMinima"]).custom(helpersClimas.validarTemperatura),
+    check("pluviometria", "La pluviometria esta vacia").notEmpty(),
+    check("pluviometria6", "La pluviometria solo puede tener numeros").isDecimal(),
     validarCampos,
     validarJWT
 ], httpClimas.postClimas);

@@ -10,6 +10,7 @@ const climaSchema = new mongoose.Schema({
   horaFinal: { type: String, required: true },
   temperaturaMaxima: { type: Number, required: true },
   temperaturaMinima: { type: Number, required: true },
+  pluviometria: { type: Number, required: true },
 }, {
   timestamps: true
 });
