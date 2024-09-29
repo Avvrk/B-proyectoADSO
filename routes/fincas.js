@@ -27,17 +27,18 @@ router.get("/inactivos", [
 ], httpFinca.getFincasInactivos);
 
 router.post("/", [
-    check("_idAdmin", "El id admin no puede estar vacio").notEmpty(),
-    check("_idAdmin", "Ingrese un mongo id valido").isMongoId(),
-    check("_idAdmin").custom(helpersFincas.validarIdAdmin),
+    check("_idUsuario", "El id admin no puede estar vacio").notEmpty(),
+    check("_idUsuario", "Ingrese un mongo id valido").isMongoId(),
+    check("_idUsuario").custom(helpersFincas.validarIdAdmin),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("rut", "El rut no puede estar vacio").notEmpty(),
     check("direccion", "La direccion no puede estar vacia").notEmpty(),
     check("ubicacionGeografica", "La ubcacion geografica no puede estar vacia").notEmpty(),
     check("departamento", "El departamento no puede estar vacio").notEmpty(),
     check("ciudad", "La ciudad no puede estar vacia").notEmpty(),
-    check("limites", "El limite no puede estar vacio").notEmpty(),
     check("area", "El area no puede estar vacio").notEmpty(),
+    check("documentos", "El campo documentos no puede estar vacio").notEmpty(),
+    check('limites', 'Límites son requeridos').notEmpty(),
     validarCampos,
     validarJWT
 ], httpFinca.postFincas);
@@ -45,8 +46,8 @@ router.post("/", [
 router.put("/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersFincas.validarId),
-    check("_idAdmin", "Ingrese un mongo id valido").isMongoId(),
-    check("_idAdmin").custom(helpersFincas.validarIdAdmin),
+    check("_idUsuario", "Ingrese un mongo id valido").isMongoId(),
+    check("_idUsuario").custom(helpersFincas.validarIdAdmin),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
     check("rut", "El rut no puede estar vacio").notEmpty(),
     check("direccion", "La direccion no puede estar vacia").notEmpty(),
@@ -56,6 +57,7 @@ router.put("/:id", [
     check("limites", "El limite no puede estar vacio").notEmpty(),
     check("area", "El area no puede estar vacio").notEmpty(),
     check("area", "El area no puede estar vacio").isNumeric(),
+    check("documentos", "El campo documentos no puede estar vacio").notEmpty(),
     validarCampos,
     validarJWT
 ], httpFinca.putFincas);
