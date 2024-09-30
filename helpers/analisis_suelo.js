@@ -1,6 +1,6 @@
 import Analisis_suelos from "../models/analisis_suelos.js";
 import Parcela from '../models/parcelas.js';
-import Empleado from "../models/empleados.js";
+import Empleado from "../models/admin.js";
 
 function dateValido(dateString) {
     const registroTiempo = Date.parse(dateString);

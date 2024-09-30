@@ -1,6 +1,6 @@
 import Sustrato from "../models/elaboracion_sustratos.js";
 import Proceso from "../models/procesos.js";
-import Empleado from "../models/empleados.js";
+import Empleado from "../models/admin.js";
 
 function dateValido(dateString) {
     const registroTiempo = Date.parse(dateString);

@@ -1,6 +1,6 @@
 import Clima from "../models/climas.js";
 import Finca from "../models/fincas.js";
-import Empleado from "../models/empleados.js";
+import Empleado from "../models/admin.js";
 
 function dateValido(dateString) {
     const registroTiempo = Date.parse(dateString);
@@ -63,19 +63,21 @@ const helpersClimas = {
         }
     },
     validarTemperatura: (temperaturas) => {
-        if (temperaturas != undefined) {
+        console.log("Temperaturas recibidas:", temperaturas); // Añade esto para depuración
+    
+        if (temperaturas && temperaturas.length === 2) { // Asegúrate de que hay dos temperaturas
             const temperaturaMaxima = Number(temperaturas[0]);
             const temperaturaMinima = Number(temperaturas[1]);
-
+    
             if (temperaturaMaxima < temperaturaMinima) {
                 throw new Error(
                     "La temperatura maxima no puede ser menor a la temperatura minima"
                 );
-            } else {
-                return true;
             }
+            return true; // Si todo está bien
         } else {
-            return true;
+            // Puedes lanzar un error si las temperaturas no son válidas
+            throw new Error("Las temperaturas no son válidas");
         }
     },
     validarFecha: (fecha) => {

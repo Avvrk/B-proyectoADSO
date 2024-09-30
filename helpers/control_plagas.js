@@ -1,6 +1,6 @@
 import ControlPlagas from "../models/control_plagas.js"
 import Cultivo from "../models/cultivos.js"
-import Empleado from "../models/empleados.js";
+import Empleado from "../models/admin.js";
 
 function dateValido(dateString) {
     const registroTiempo = Date.parse(dateString);

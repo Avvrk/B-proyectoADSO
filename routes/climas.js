@@ -60,9 +60,18 @@ router.post("/", [
     check("temperaturaMaxima", "La temperatura maxina solo puede tener numeros").isNumeric(),
     check("temperaturaMinima", "La temperatura minia no puede estar vacia").notEmpty(),
     check("temperaturaMinima", "La temperatura minima solo puede tener numeros").isNumeric(),
-    check(["temperaturaMaxima", "temperaturaMinima"]).custom(helpersClimas.validarTemperatura),
+    check("temperaturaMaxima").custom((value, { req }) => {
+        const temperaturaMaxima = Number(value);
+        const temperaturaMinima = Number(req.body.temperaturaMinima);
+
+        if (temperaturaMaxima < temperaturaMinima) {
+            throw new Error("La temperatura maxima no puede ser menor a la temperatura minima");
+        }
+
+        return true;
+    }),
     check("pluviometria", "La pluviometria esta vacia").notEmpty(),
-    check("pluviometria6", "La pluviometria solo puede tener numeros").isDecimal(),
+    check("pluviometria", "La pluviometria solo puede tener numeros").isDecimal(),
     validarCampos,
     validarJWT
 ], httpClimas.postClimas);
@@ -88,7 +97,18 @@ router.put("/:id", [
     check("temperaturaMaxima", "La temperatura maxina solo puede tener numeros").isNumeric(),
     check("temperaturaMinima", "La temperatura minia no puede estar vacia").notEmpty(),
     check("temperaturaMinima", "La temperatura minima solo puede tener numeros").isNumeric(),
-    check(["temperaturaMaxima", "temperaturaMinima"]).custom(helpersClimas.validarTemperatura),
+    check("temperaturaMaxima").custom((value, { req }) => {
+        const temperaturaMaxima = Number(value);
+        const temperaturaMinima = Number(req.body.temperaturaMinima);
+
+        if (temperaturaMaxima < temperaturaMinima) {
+            throw new Error("La temperatura maxima no puede ser menor a la temperatura minima");
+        }
+
+        return true;
+    }),
+    check("pluviometria", "La pluviometria esta vacia").notEmpty(),
+    check("pluviometria", "La pluviometria solo puede tener numeros").isDecimal(),
     validarCampos,
     validarJWT
 ], httpClimas.putClimas);
