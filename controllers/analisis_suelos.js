@@ -3,7 +3,7 @@ import Suelo from "../models/analisis_suelos.js";
 const httpSuelos = {
     getSuelos: async (req, res) => {
         try {
-            const suelos = await Suelo.find().populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre documento");
+            const suelos = await Suelo.find().populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre correo");
             res.json({ suelos });
         } catch (error) {
             res.json({ err: error.message });
@@ -25,7 +25,7 @@ const httpSuelos = {
             const fechaFinObj = new Date(fechaFin);
             const suelos = await Suelo.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre documento");
+            }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre correo");
             res.json({ suelos });
         } catch (error) {
             res.json({ err: error.message });
@@ -34,7 +34,7 @@ const httpSuelos = {
     getSuelosResponsables: async (req, res) => {
         try {
             const { empleado_id } = req.params;
-            const suelos = await Suelo.find({ empleado_id }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre documento");
+            const suelos = await Suelo.find({ empleado_id }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre correo");
             res.json({ suelos });
         } catch (error) {
             res.json({ err: error.message });
@@ -42,7 +42,7 @@ const httpSuelos = {
     },
     getSuelosActivos: async (req, res) => {
         try {
-            const suelos = await Suelo.find({ estado: 1 }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre documento");
+            const suelos = await Suelo.find({ estado: 1 }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre correo");
             res.json({ suelos });
         } catch (error) {
             res.json({ err: error.message });
@@ -50,7 +50,7 @@ const httpSuelos = {
     },
     getSuelosInactivos: async (req, res) => {
         try {
-            const suelos = await Suelo.find({ estado: 0 }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre documento");
+            const suelos = await Suelo.find({ estado: 0 }).populate({ path: "id_parcela", select: "numero id_fincas", populate: { path: "id_fincas", select: "nombre"}}).populate("empleado_id", "nombre correo");
             res.json({ suelos });
         } catch (error) {
             res.json({ err: error.message });

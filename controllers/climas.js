@@ -3,7 +3,7 @@ import Clima from "../models/climas.js";
 const httpClimas = {
     getClimas: async (req, res) => {
         try {
-            const climas = await Clima.find().populate("empleado_id", "nombre documento").populate("finca_id", "nombre rut");
+            const climas = await Clima.find().populate("empleado_id", "nombre correo").populate("finca_id", "nombre rut");
             res.json({ climas });
         } catch (error) {
             res.json({ err: error.message });
@@ -21,7 +21,7 @@ const httpClimas = {
     getClimasPorClima: async (req, res) => {
         try {
             const { clima } = req.params;
-            const climas = await Clima.find({ tipoClima: clima }).populate("empleado_id", "nombre documento").populate("finca_id", "nombre rut");
+            const climas = await Clima.find({ tipoClima: clima }).populate("empleado_id", "nombre correo").populate("finca_id", "nombre rut");
             res.json({ climas });
         } catch (error) {
             res.json({ err: error.message });
@@ -30,7 +30,7 @@ const httpClimas = {
     getClimasFecha: async (req, res) => {
         try {
             const { fecha } = req.params;
-            const climas = await Clima.find({ fecha }).populate("empleado_id", "nombre documento").populate("finca_id", "nombre rut");
+            const climas = await Clima.find({ fecha }).populate("empleado_id", "nombre correo").populate("finca_id", "nombre rut");
             res.json({ climas });
         } catch (error) {
             res.json({ err: error.message });

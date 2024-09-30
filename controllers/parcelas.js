@@ -66,13 +66,13 @@ const httpParcelas = {
 
     postParcela: async (req, res) => {
         try {
-            const { numero, ubicacionGeografica, cultivoAnterior, cultivoActual, detalle, estado, area, asistenteTecnico, id_fincas } = req.body; // Obtiene los datos de la parcela del cuerpo de la solicitud
+            const { numero, ubicacionGeografica, cultivoAnterior, cultivoActual, descripcion, estado, area, asistenteTecnico, id_fincas } = req.body; // Obtiene los datos de la parcela del cuerpo de la solicitud
             const parcela = new Parcela({
                 numero,
                 ubicacionGeografica,
                 cultivoAnterior,
                 cultivoActual,
-                detalle,
+                descripcion,
                 estado,
                 area,
                 asistenteTecnico,

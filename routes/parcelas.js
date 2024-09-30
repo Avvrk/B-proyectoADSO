@@ -7,7 +7,6 @@ import helpersParcela from '../helpers/parcelas.js';
 
 const router = Router();
 
-
 router.get('/', [
     validarJWT
 ], httpParcelas.getParcelas);
@@ -28,10 +27,6 @@ router.get('/activos', [
 router.get('/inactivos', [
     validarJWT
 ], httpParcelas.getParcelaInactivos);
-
-
-
-
 
 router.get('/cultivo/:cultivo', [
     check('id_cultivo', 'El ID del cultivo debe ser un mongoId válido.').isMongoId(),
@@ -66,7 +61,7 @@ router.put('/:id', [
     check('numero').custom(helpersParcela.validarNumero),
     check('ubicacionGeografica').custom(helpersParcela.validarUbicacionGeografica),
     check('cultivoActual').custom(helpersParcela.validarCultivoActual),
-    check('detalle').custom(helpersParcela.validarDetalle),
+    check('descripcion').custom(helpersParcela.validarDetalle),
     check('estado').custom(helpersParcela.validarEstado),
     check('area').custom(helpersParcela.validarArea),
     check('asistenteTecnico').custom(helpersParcela.validarAsistenteTecnico),

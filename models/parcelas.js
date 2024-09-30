@@ -5,7 +5,7 @@ const parcelaSchema = new mongoose.Schema({
   ubicacionGeografica: { type: String, required: true },
   cultivoAnterior: { type: String },
   cultivoActual: { type: String, required: true },
-  detalle: { type: String },
+  descripcion: { type: String },
   area: { type: Number, required: true },
   asistenteTecnico: { type: String },
   id_fincas: { type: mongoose.Schema.Types.ObjectId, ref: 'Finca', required: true },

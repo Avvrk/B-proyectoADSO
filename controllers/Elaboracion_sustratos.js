@@ -3,7 +3,7 @@ import Sustrato from "../models/elaboracion_sustratos.js";
 const httpSustratos = {
     getSustratos: async (req, res) => {
         try {
-            const sustratos = await Sustrato.find().populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre documento").populate("empleado_idResponsable", "nombre documento");
+            const sustratos = await Sustrato.find().populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre correo").populate("empleado_idResponsable", "nombre correo");
             res.json({ sustratos });
         } catch (error) {
             res.json({ err: error.message });
@@ -25,7 +25,7 @@ const httpSustratos = {
             const fechaFinObj = new Date(fechaFin);
             const sustratos = await Sustrato.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            }).populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre documento").populate("empleado_idResponsable", "nombre documento");
+            }).populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre correo").populate("empleado_idResponsable", "nombre correo");
             res.json({ sustratos });
         } catch (error) {
             res.json({ err: error.message });
@@ -35,7 +35,7 @@ const httpSustratos = {
         try {
             const { id_proceso } = req.params;
             const sustratos = await Sustrato.find({ id_proceso });
-            res.json({ sustratos }).populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre documento").populate("empleado_idResponsable", "nombre documento");
+            res.json({ sustratos }).populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre correo").populate("empleado_idResponsable", "nombre correo");
         } catch (error) {
             res.json({ err: error.message });
         }
@@ -43,7 +43,7 @@ const httpSustratos = {
     getSustratosOperario: async (req, res) => {
         try {
             const { empleado_idOperario } = req.params;
-            const sustratos = await Sustrato.find({ empleado_idOperario }).populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre documento").populate("empleado_idResponsable", "nombre documento");
+            const sustratos = await Sustrato.find({ empleado_idOperario }).populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre correo").populate("empleado_idResponsable", "nombre correo");
             res.json({ sustratos });
         } catch (error) {
             res.json({ err: error.message });
@@ -52,7 +52,7 @@ const httpSustratos = {
     getSustratosResponsable: async (req, res) => {
         try {
             const { empleado_idResponsable } = req.params;
-            const sustratos = await Sustrato.find({ empleado_idResponsable }).populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre documento").populate("empleado_idResponsable", "nombre documento");
+            const sustratos = await Sustrato.find({ empleado_idResponsable }).populate("id_proceso", "tipo").populate("empleado_idOperario", "nombre correo").populate("empleado_idResponsable", "nombre correo");
             res.json({ sustratos });
         } catch (error) {
             res.json({ err: error.message });

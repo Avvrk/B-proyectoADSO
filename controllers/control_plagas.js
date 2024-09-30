@@ -3,7 +3,7 @@ import Plagas from "../models/control_plagas.js";
 const httpPlagas = {
     getPlagas: async (req, res) => {
         try {
-            const plagas = await Plagas.find().populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre documento");
+            const plagas = await Plagas.find().populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre correo");
             res.json({ plagas });
         } catch (error) {
             res.json({ error });
@@ -25,7 +25,7 @@ const httpPlagas = {
             const fechaFinObj = new Date(fechaFin);
             const plagas = await Plagas.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            }).populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre documento");
+            }).populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre correo");
             res.json({ plagas });
         } catch (error) {
             res.json({ error });
@@ -34,7 +34,7 @@ const httpPlagas = {
     getPlagasTipo: async (req, res) => {
         try {
             const { tipo } = req.params;
-            const plagas = await Plagas.find({ tipo }).populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre documento");
+            const plagas = await Plagas.find({ tipo }).populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre correo");
             res.json({ plagas });
         } catch (error) {
             res.json({ error });
@@ -43,7 +43,7 @@ const httpPlagas = {
     getPlagasOperario: async (req, res) => {
         try {
             const { operario } = req.params;
-            const plagas = await Plagas.find({ operario }).populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre documento");
+            const plagas = await Plagas.find({ operario }).populate("id_cultivo", "nombre tipo").populate("empleado_id", "nombre correo");
             res.json({ plagas });
         } catch (error) {
             res.json({ error });
