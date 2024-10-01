@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const parcelaSchema = new mongoose.Schema({
-  numero: { type: Number, required: true },
+  numero: { type: Number, required: true, unique: true },
   ubicacionGeografica: { type: String, required: true },
   cultivoAnterior: { type: String },
   cultivoActual: { type: String, required: true },
