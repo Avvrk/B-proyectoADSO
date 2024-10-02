@@ -47,7 +47,7 @@ router.post('/', [
     check('ubicacionGeografica', 'La ubicación geográfica es requerida.').notEmpty(),
     check('cultivoActual', 'El cultivo actual es requerido.').notEmpty(),
     check('area', 'El área es requerida.').notEmpty(),
-    check('area', 'El área debe ser un número positivo.').isNumeric().toFloat().isFloat({ min: 0 }),
+    check('area', 'El area debe ser positivo.').isLength({ min: 0 }),
     check('id_fincas', 'El ID de la finca es requerido.').notEmpty(),
     check('id_fincas', 'El ID de la finca debe ser un mongoId válido.').isMongoId(),
     validarCampos,

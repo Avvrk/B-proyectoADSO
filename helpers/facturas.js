@@ -1,5 +1,5 @@
 import Factura from "../models/factura.js";
-import Inventario from "../models/inventario.js";
+import Produccion from "../models/produccion.js";
 import Comprador from "../models/comprador.js";
 
 function dateValido(dateString) {
@@ -28,12 +28,12 @@ const helpersFacturas = {
         }
         return true;
     },
-    validarIdInventario: async (id) => {
+    validarIdProduccion: async (id) => {
         if (id !== undefined) {
             try {
-                const res = await Inventario.findById(id);
+                const res = await Produccion.findById(id);
                 if (!res) {
-                    throw new Error("El inventario no existe");
+                    throw new Error("La produccion no existe");
                 }
                 return true;
             } catch (error) {
