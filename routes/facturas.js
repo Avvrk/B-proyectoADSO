@@ -43,7 +43,9 @@ router.post("/", [
     validarJWT
 ], httpFactura.postFacturas);
 
-router.post("/detalles/:id" [
+router.post("/detalles/:id", [
+    check("id", "Ingrese un mongo id valido").isMongoId(),
+    check("id").custom(helpersFacturas.validarId),
     check("id_produccion", "Ingrese un mongo id valido").isMongoId(),
     check("id_produccion").custom(helpersFacturas.validarIdProduccion),
     check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
@@ -73,7 +75,7 @@ router.put("/:id", [
     validarJWT
 ], httpFactura.putFacturas);
 
-router.get("/detalles/:id", [
+router.put("/detalles/:id", [
     check("id_produccion", "Ingrese un mongo id valido").isMongoId(),
     check("id_produccion").custom(helpersFacturas.validarIdProduccion),
     check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
