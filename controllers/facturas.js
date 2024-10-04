@@ -3,7 +3,7 @@ import Factura from "../models/factura.js";
 const httpFacturas = {
     getFacturas: async (req, res) => {
         try {
-            const facturas = await Factura.find().populate("comprador_id", "nombre").populate("inventario_id", "tipo");
+            const facturas = await Factura.find().populate("comprador_id", "nombre").populate("inventario_id", "tipo").populate({path: "detalle.id_produccion", select: "cultivo_id", populate: "nombre" });
             res.json({ facturas });
         } catch (error) {
             res.json({ error: error.message });
@@ -25,7 +25,7 @@ const httpFacturas = {
             const fechaFinObj = new Date(fechaFin);
             const facturas = await Factura.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            });
+            }).populate("comprador_id", "nombre").populate("inventario_id", "tipo").populate({path: "detalle.id_produccion", select: "cultivo_id", populate: "nombre" });
             res.json({ facturas });
         } catch (error) {
             res.json({ error: error.message });
@@ -42,13 +42,12 @@ const httpFacturas = {
     },
     postFacturas: async (req, res) => {
         try {
-            const { fecha, valor, detalles, comprador_id, numeroLoteComercial } = req.body;
+            const { fecha, numFactura, comprador_id, total } = req.body;
             const facturas = new Factura({
                 fecha,
-                valor,
-                detalles,
+                numFactura,
                 comprador_id,
-                numeroLoteComercial,
+                total,
             });
             await facturas.save();
             res.json({ facturas });
@@ -76,7 +75,7 @@ const httpFacturas = {
             res.json({ error: error.message });
         }
     },
-    putFacturasDetalles: async (req, res) => {
+/*     putFacturasDetalles: async (req, res) => {
         try {
             const { id } = req.params;
             const { detalle } = req.body;
@@ -85,7 +84,7 @@ const httpFacturas = {
         } catch (error) {
             res.json({ error: error.message });
         }
-    },
+    }, */
 };
 
 export default httpFacturas;

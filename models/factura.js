@@ -1,9 +1,9 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const facturaSchema = new mongoose.Schema(
     {
         fecha: { type: Date, required: true },
-        valor: { type: Number, required: true },
+        numFactura: { type: Number, required: true, unique: true },
         detalles: [
             {
                 id_produccion: {
