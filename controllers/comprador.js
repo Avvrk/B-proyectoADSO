@@ -58,7 +58,7 @@ const httpCompradores = {
     },
     postCompradores: async (req, res) => {
         try {
-            const { _id_produccion, fecha, especie, nombre, telefono, cantidad, numeroGuiaTransporte, valor, estado } = req.body;
+            const { _id_produccion, fecha, especie, nombre, telefono, cantidad, numeroGuiaTransporte, valor } = req.body;
             const compradores = new Comprador({
                 _id_produccion,
                 fecha,
@@ -67,8 +67,7 @@ const httpCompradores = {
                 telefono,
                 cantidad,
                 numeroGuiaTransporte,
-                valor,
-                estado
+                valor
             });
             await compradores.save();
             res.json({ compradores });
