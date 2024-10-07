@@ -43,7 +43,7 @@ router.post("/", [
     validarJWT
 ], httpFactura.postFacturas);
 
-router.post("/detalles/:id", [
+/* router.post("/detalles/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersFacturas.validarId),
     check("id_produccion", "Ingrese un mongo id valido").isMongoId(),
@@ -59,7 +59,7 @@ router.post("/detalles/:id", [
     check("total", "El total solo puede ser numerico").isNumeric(),
     validarCampos,
     validarJWT
-], httpFactura.postFacturasDetalles);
+], httpFactura.postFacturasDetalles); */
 
 router.put("/:id", [
     check("id", "Ingrese un mongo id valido").isMongoId(),
@@ -68,20 +68,21 @@ router.put("/:id", [
     check("fecha").custom(helpersFacturas.validarFecha),
     check("numFactura", "El numero de factura no puede estar vacio").notEmpty(),
     check("numFactura", "El numero de factura solo puede ser numerico").isNumeric(),
-    check("id_produccion", "Ingrese un mongo id valido").isMongoId(),
-    check("id_produccion").custom(helpersFacturas.validarIdProduccion),
-    check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
-    check("cantidad", "La cantidad solo puede ser numerica").isNumeric(),
-    check("nombreProducto", "El nombre producto no puede estar vacio").notEmpty(),
-    check("subtotal", "El subtotal no puede estar vacio").notEmpty(),
-    check("subtotal", "El subtotal solo puede ser numerico").isNumeric(),
-    check("iva", "El iva no puede estar vacio").notEmpty(),
-    check("iva", "El iva solo puede ser numerico").isNumeric(),
     check("total", "El total no puede estar vacio").notEmpty(),
     check("total", "El total solo puede ser numerico").isNumeric(),
     check("comprador_id", "El compradro id no pued estar vacio").notEmpty(),
     check("comprador_id", "Ingrese un mongo id valido").isMongoId(),
     check("comprador_id").custom(helpersFacturas.validarIdComprador),
+    check("detalles.*.codigo", "El código no puede estar vacío").notEmpty(),
+    check("detalles.*.id_produccion", "Ingrese un mongo id valido").isMongoId(),
+    check("detalles.*.id_produccion").custom(helpersFacturas.validarIdProduccion),
+    check("detalles.*.cantidad", "La cantidad no puede estar vacía").notEmpty(),
+    check("detalles.*.cantidad", "La cantidad solo puede ser numérica").isNumeric(),
+    check("detalles.*.nombreProducto", "El nombre del producto no puede estar vacío").notEmpty(),
+    check("detalles.*.subtotal", "El subtotal no puede estar vacío").notEmpty(),
+    check("detalles.*.subtotal", "El subtotal solo puede ser numérico").isNumeric(),
+    check("detalles.*.iva", "El IVA no puede estar vacío").notEmpty(),
+    check("detalles.*.iva", "El IVA solo puede ser numérico").isNumeric(),
     validarCampos,
     validarJWT
 ], httpFactura.putFacturas);
