@@ -6,6 +6,7 @@ const facturaSchema = new mongoose.Schema(
         numFactura: { type: Number, required: true, unique: true },
         detalles: [
             {
+                codigo: { type: String },
                 id_produccion: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: "Produccion",
