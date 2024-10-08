@@ -1,6 +1,6 @@
 import Riego from '../models/riego.js';
 import Cultivo from '../models/cultivos.js';
-import Empleado from '../models/empleados.js';
+import Empleado from '../models/admin.js';
 import validator from 'validator';
 
 const { isMongoId } = validator;
@@ -60,17 +60,17 @@ const helpersRiego = {
         return true
     },
 
-    // validarHora: (hora) => {
-    //     const horaRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
-    //     if (!horaRegex.test(hora)) {
-    //         throw new Error('La hora no es válida. Debe estar en el formato HH:MM.');
-    //     }
-    //     return true
-    // },
+    validarHora: (hora) => {
+        const horaRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+        if (!horaRegex.test(hora)) {
+            throw new Error('La hora no es válida. Debe estar en el formato HH:MM.');
+        }
+        return true
+    },
     
 
     validarDosis : (dosis) => {
-        if (dosis < 0) {
+        if (Number(dosis) < 0) {
             throw new Error('La dosis debe ser un número positivo.');
 
         }
@@ -78,7 +78,7 @@ const helpersRiego = {
     },
 
     validarCantidadAgua: (cantidad) => {
-        if (cantidad< 0) {
+        if (Number(cantidad) < 0) {
             throw new Error('La cantidad de agua debe ser un número positivo.');
         }
 

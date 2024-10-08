@@ -68,28 +68,27 @@ router.post('/', [
     check('empleado_id', 'El ID del empleado debe ser un mongoId válido.').isMongoId(),
     check('empleado_id').custom(helpersRiegos.validarEmpleadoId),
     check('fecha', 'La fecha es requerida.').notEmpty(),
-    // check('fecha').custom(helpersRiegos.validarFecha),
-    check('dias_transplante').optional().isInt({ min: 0 }),
-    // check('estado_fenologico').optional().custom(helpersRiegos.validarEstadoFenologico),
-    // check('hora_inicio').optional().custom(helpersRiegos.validarHora),
-    // check('hora_fin').optional().custom(helpersRiegos.validarHora),
-    // check('dosis').optional().custom(helpersRiegos.validarDosis),
-    // check('cantidad_agua').optional().custom(helpersRiegos.validarCantidadAgua),
-    // check('estado').optional().custom(helpersRiegos.validarEstado),
+    check('fecha').custom(helpersRiegos.validarFecha),
+    check('dias_transplante').isInt({ min: 0 }),
+    check('estado_fenologico').custom(helpersRiegos.validarEstadoFenologico),
+    check('hora_inicio').custom(helpersRiegos.validarHora),
+    check('hora_fin').custom(helpersRiegos.validarHora),
+    check('dosis').custom(helpersRiegos.validarDosis),
+    check('cantidad_agua').custom(helpersRiegos.validarCantidadAgua),
     validarCampos,
     validarJWT
 ], httpRiegos.postRiego);
 
 router.put('/:id', [
     check('id', 'El ID del riego debe ser un mongoId válido.').isMongoId(),
-    // check('id').custom(helpersRiegos.existeRiegoPorId),
+    check('id').custom(helpersRiegos.existeRiegoPorId),
     check('cultivo_id').optional().isMongoId().custom(helpersRiegos.validarCultivoId),
     check('empleado_id').optional().isMongoId().custom(helpersRiegos.validarEmpleadoId),
-    // check('fecha').optional().custom(helpersRiegos.validarFecha),
+    check('fecha').optional().custom(helpersRiegos.validarFecha),
     check('dias_transplante').optional().isInt({ min: 0 }),
     check('estado_fenologico').optional().custom(helpersRiegos.validarEstadoFenologico),
-    // check('hora_inicio').optional().custom(helpersRiegos.validarHora),
-    // check('hora_fin').optional().custom(helpersRiegos.validarHora),
+    check('hora_inicio').optional().custom(helpersRiegos.validarHora),
+    check('hora_fin').optional().custom(helpersRiegos.validarHora),
     check('dosis').optional().custom(helpersRiegos.validarDosis),
     check('cantidad_agua').optional().custom(helpersRiegos.validarCantidadAgua),
     check('estado').optional().custom(helpersRiegos.validarEstado),
@@ -99,14 +98,14 @@ router.put('/:id', [
 
 router.put('/activar/:id', [
     check('id', 'El ID del riego debe ser un mongoId válido.').isMongoId(),
-    // check('id').custom(helpersRiegos.existeRiegoPorId),
+    check('id').custom(helpersRiegos.existeRiegoPorId),
     validarCampos,
     validarJWT
 ], httpRiegos.putRiegoActivar);
 
 router.put('/inactivar/:id', [
     check('id', 'El ID del riego debe ser un mongoId válido.').isMongoId(),
-    // check('id').custom(helpersRiegos.existeRiegoPorId),
+    check('id').custom(helpersRiegos.existeRiegoPorId),
     validarCampos,
     validarJWT
 ], httpRiegos.putRiegoInactivar);

@@ -44,8 +44,8 @@ router.post('/', [
     check('cultivo_id', 'El ID del cultivo debe ser un mongoId válido.').isMongoId(),
     check('empleado_id', 'El ID del empleado es requerido.').notEmpty(),
     check('empleado_id', 'El ID del empleado debe ser un mongoId válido.').isMongoId(),
-    check('estado', 'El estado es requerido.').notEmpty(),
-    check('estado', 'El estado debe ser 0 (inactivo) o 1 (activo).').isIn(['0', '1']),
+    check('estado', 'El estado es requerido.').optional().notEmpty(),
+    check('estado', 'El estado debe ser 0 (inactivo) o 1 (activo).').optional().isIn(['0', '1']),
     validarCampos,
     validarJWT
 ], httpProcesos.postProcesos);
