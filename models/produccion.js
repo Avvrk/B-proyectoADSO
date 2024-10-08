@@ -8,6 +8,7 @@ const produccionSchema = new mongoose.Schema({
   cantidad: { type: Number, required: true },
   cantidadTrabajadores: { type: Number },
   observaciones: { type: String },
+  precioUnitario: { type: Number },
   estado: {type: Number, default: 1},
 }, {
   timestamps: true

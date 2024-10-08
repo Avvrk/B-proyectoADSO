@@ -51,6 +51,8 @@ router.post('/', [
     check('cantidad', 'La cantidad es requerida.').notEmpty(),
     check('cantidad', 'La cantidad debe ser un número positivo.').isFloat({ min: 0 }),
     check('cantidadTrabajadores', 'La cantidad de trabajadores debe ser un número no negativo.').optional().isInt({ min: 0 }),
+    check('precioUnitario', 'El precio unitario es requerido').notEmpty(),
+    check('precioUnitario', 'El precio unitario debe ser numerico').isNumeric(),
     validarCampos,
     validarJWT
 ], httpProducciones.postProduccion);
@@ -64,7 +66,8 @@ router.put('/:id', [
     check('cantidad').optional().custom(helpersProducciones.validarCantidad),
     check('cantidadTrabajadores').optional().custom(helpersProducciones.validarCantidadTrabajadores),
     check('observaciones').optional().custom(helpersProducciones.validarObservaciones),
-    check('estado').optional().custom(helpersProducciones.validarEstado),
+    check('precioUnitario', 'El precio unitario es requerido').notEmpty(),
+    check('precioUnitario', 'El precio unitario debe ser numerico').isNumeric(),
     validarCampos,
     validarJWT
 ], httpProducciones.putProduccion);

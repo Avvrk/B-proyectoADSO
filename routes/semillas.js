@@ -58,7 +58,6 @@ router.put('/:id', [
     check('observaciones', 'Las observaciones deben ser un valor válido.').optional(),
     check('unidad', 'La unidad debe ser un valor válido.').optional(),
     check('total', 'El total debe ser un número válido.').optional().isNumeric(),
-    check('estado', 'El estado debe ser un número válido.').optional().isNumeric().custom(helpersSemillas.validarEstado),
     validarCampos,
     validarJWT
 ], httpSemillas.putSemilla);
