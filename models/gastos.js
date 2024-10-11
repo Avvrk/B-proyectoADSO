@@ -4,7 +4,7 @@ const gastoSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   fincas_id: { type: mongoose.Schema.Types.ObjectId, ref: 'fincas' },
   fecha: { type: Date, required: true },
-  numeroFactura: { type: String },
+  codigo: { type: String, required: true, unique: true },
   descripcion: { type: String },
   total: { type: Number, required: true },
   insumos: [
