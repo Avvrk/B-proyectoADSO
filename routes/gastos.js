@@ -37,12 +37,6 @@ router.post("/",[
     check("descripcion", "La descripcion no puede estar vacio").notEmpty(),
     check("total", "El total no puede estar vacio").notEmpty(),
     check("total", "El total debe ser numerico").isNumeric(),
-    check("insumos_id", "El insumos_id no puede estar vacio").notEmpty(),
-    check("insumos_id", "Ingrese un mongo id valido").isMongoId(),
-    check("insumos_id").custom(helpersGatos.validarIdInsumos),
-    check("semillas_id", "El semillas_id no puede estar vacio").notEmpty(),
-    check("semillas_id", "Ingrese un mongo id valido").isMongoId(),
-    check("semillas_id").custom(helpersGatos.validarIdSemillas),
     validarCampos,
     validarJWT
 ], httpGasto.postGastos);
@@ -60,12 +54,6 @@ router.put("/:id",[
     check("descripcion", "La descripcion no puede estar vacio").notEmpty(),
     check("total", "El total no puede estar vacio").notEmpty(),
     check("total", "El total debe ser numerico").isNumeric(),
-    check("insumos_id", "El insumos_id no puede estar vacio").notEmpty(),
-    check("insumos_id", "Ingrese un mongo id valido").isMongoId(),
-    check("insumos_id").custom(helpersGatos.validarIdInsumos),
-    check("semillas_id", "El semillas_id no puede estar vacio").notEmpty(),
-    check("semillas_id", "Ingrese un mongo id valido").isMongoId(),
-    check("semillas_id").custom(helpersGatos.validarIdSemillas),
     validarCampos,
     validarJWT
 ], httpGasto.putGastos);
