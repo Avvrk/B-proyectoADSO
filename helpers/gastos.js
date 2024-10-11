@@ -1,7 +1,7 @@
 import Gasto from "../models/gastos.js";
 import Insumo from "../models/insumos.js";
 import Semilla from "../models/semillas.js";
-import Mantenimiento from "../models/mantenimiento.js";
+import Finca from "../models/fincas.js";
 
 function dateValido(dateString) {
     const registroTiempo = Date.parse(dateString);
@@ -39,8 +39,8 @@ const helpersGastos = {
     validarIdSemillas: async (id) => {
         return await validarIdGenerico(id, Semilla, 'semilla');
     },
-    validarIdMantenimientos: async (id) => {
-        return await validarIdGenerico(id, Mantenimiento, 'mantenimiento');
+    validarIdFincas: async (id) => {
+        return await validarIdGenerico(id, Finca, 'finca');
     },
     validarFecha: (fecha) => {
         if (!fecha) {
