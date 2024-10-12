@@ -6,26 +6,20 @@ const gastoSchema = new mongoose.Schema({
   fecha: { type: Date, required: true },
   codigo: { type: String, required: true, unique: true },
   descripcion: { type: String },
-  total: { type: Number, required: true },
-  insumos: [
-    {
+  insumos: {
       Id_proveedor: { type: mongoose.Schema.Types.ObjectId, ref: 'proveedor' },
       Id_insumos: { type: mongoose.Schema.Types.ObjectId, ref: 'Insumo' },
       unidad: { type: Number },
       total: { type: Number },
       cantidad: { type: Number }
-    }
-  ],
-  semillas: [
-    {
+  },
+  semillas: {
       Id_proveedor: { type: mongoose.Schema.Types.ObjectId, ref: 'proveedor' },
       Id_semilla: { type: mongoose.Schema.Types.ObjectId, ref: 'semilla' },
       unidad: { type: Number },
       total: { type: Number },
       cantidad: { type: Number }
-    }
-  ],
-
+  },
 }, {
   timestamps: true
 });
