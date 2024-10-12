@@ -16,7 +16,7 @@ const httpGastos = {
                 });
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
     getGastosId: async (req, res) => {
@@ -25,7 +25,7 @@ const httpGastos = {
             const gastos = await Gasto.findById(id);
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
     getGastosFechas: async (req, res) => {
@@ -45,7 +45,7 @@ const httpGastos = {
                 });
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
     postGastos: async (req, res) => {
@@ -73,7 +73,7 @@ const httpGastos = {
             await gastos.save();
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
     putGastos: async (req, res) => {
@@ -85,7 +85,7 @@ const httpGastos = {
             });
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
 };
