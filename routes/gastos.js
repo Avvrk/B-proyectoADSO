@@ -35,8 +35,6 @@ router.post("/",[
     check("fecha").custom(helpersGatos.validarFecha),
     check("codigo", "El numero factura no puede estar vacio").notEmpty(),
     check("descripcion", "La descripcion no puede estar vacio").notEmpty(),
-    check("total", "El total no puede estar vacio").notEmpty(),
-    check("total", "El total debe ser numerico").isNumeric(),
     validarCampos,
     validarJWT
 ], httpGasto.postGastos);
@@ -52,8 +50,6 @@ router.put("/:id",[
     check("fecha").custom(helpersGatos.validarFecha),
     check("codigo", "El numero factura no puede estar vacio").notEmpty(),
     check("descripcion", "La descripcion no puede estar vacio").notEmpty(),
-    check("total", "El total no puede estar vacio").notEmpty(),
-    check("total", "El total debe ser numerico").isNumeric(),
     validarCampos,
     validarJWT
 ], httpGasto.putGastos);
