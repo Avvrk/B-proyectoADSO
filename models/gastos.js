@@ -6,6 +6,7 @@ const gastoSchema = new mongoose.Schema({
   fecha: { type: Date, required: true },
   codigo: { type: String, required: true, unique: true },
   descripcion: { type: String },
+  total: { type: Number },
   insumos: {
       Id_proveedor: { type: mongoose.Schema.Types.ObjectId, ref: 'proveedor' },
       Id_insumos: { type: mongoose.Schema.Types.ObjectId, ref: 'Insumo' },
