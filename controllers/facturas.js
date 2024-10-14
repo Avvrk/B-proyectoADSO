@@ -4,14 +4,11 @@ const httpFacturas = {
 	getFacturas: async (req, res) => {
 		try {
 			const facturas = await Factura.find()
-				.populate(
-					"comprador_id",
-					"nombre"
-				) /* .populate("id_produccion", "tipo") */
+				.populate("comprador_id", "nombre")
 				.populate({
 					path: "detalles.id_produccion",
 					select: "cultivo_id",
-					populate: "nombre",
+					populate: { path: "cultivo_id", select: "nombre" },
 				});
 			res.json({ facturas });
 		} catch (error) {
@@ -36,11 +33,10 @@ const httpFacturas = {
 				fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
 			})
 				.populate("comprador_id", "nombre")
-				.populate("inventario_id", "tipo")
 				.populate({
-					path: "detalle.id_produccion",
+					path: "detalles.id_produccion",
 					select: "cultivo_id",
-					populate: "nombre",
+					populate: { path: "cultivo_id", select: "nombre" },
 				});
 			res.json({ facturas });
 		} catch (error) {
@@ -87,6 +83,7 @@ const httpFacturas = {
 		try {
 			const { id } = req.params;
 			const { ...info } = req.body;
+
 			const facturas = await Factura.findByIdAndUpdate(id, info, {
 				new: true,
 			});
