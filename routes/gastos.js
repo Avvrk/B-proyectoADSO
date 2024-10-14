@@ -18,10 +18,6 @@ router.get("/id/:id",[
     validarJWT
 ], httpGasto.getGastosId);
 
-router.get("/proveedores", [
-    validarJWT 
-], httpGasto.getProveedores);
-
 router.get("/fecha/:fechaInicio/:fechaFin", [
     check("fechaInicio").custom(helpersGatos.validarFecha),
     check("fechaFin").custom(helpersGatos.validarFecha),
@@ -32,21 +28,13 @@ router.get("/fecha/:fechaInicio/:fechaFin", [
 
 router.post("/",[
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
+    check("fincas_id", "La finca no puede estar vacia").notEmpty(),
+    check("fincas_id", "La finca debe ser un mongoid valido").isMongoId(),
+    check("fincas_id").custom(helpersGatos.validarIdFincas),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
     check("fecha").custom(helpersGatos.validarFecha),
-    check("numeroFactura", "El numero factura no puede estar vacio").notEmpty(),
+    check("codigo", "El numero factura no puede estar vacio").notEmpty(),
     check("descripcion", "La descripcion no puede estar vacio").notEmpty(),
-    check("total", "El total no puede estar vacio").notEmpty(),
-    check("total", "El total debe ser numerico").isNumeric(),
-    check("insumos_id", "El insumos_id no puede estar vacio").notEmpty(),
-    check("insumos_id", "Ingrese un mongo id valido").isMongoId(),
-    check("insumos_id").custom(helpersGatos.validarIdInsumos),
-    check("semillas_id", "El semillas_id no puede estar vacio").notEmpty(),
-    check("semillas_id", "Ingrese un mongo id valido").isMongoId(),
-    check("semillas_id").custom(helpersGatos.validarIdSemillas),
-    check("mantenimiento_id", "El insumos_id no puede estar vacio").notEmpty(),
-    check("mantenimiento_id", "Ingrese un mongo id valido").isMongoId(),
-    check("mantenimiento_id").custom(helpersGatos.validarIdMantenimientos),
     validarCampos,
     validarJWT
 ], httpGasto.postGastos);
@@ -55,21 +43,13 @@ router.put("/:id",[
     check("id", "Ingrese un mongo id valido").isMongoId(),
     check("id").custom(helpersGatos.validarId),
     check("nombre", "El nombre no puede estar vacio").notEmpty(),
+    check("fincas_id", "La finca no puede estar vacia").notEmpty(),
+    check("fincas_id", "La finca debe ser un mongoid valido").isMongoId(),
+    check("fincas_id").custom(helpersGatos.validarIdFincas),
     check("fecha", "La fecha no puede estar vacia").notEmpty(),
     check("fecha").custom(helpersGatos.validarFecha),
-    check("numeroFactura", "El numero factura no puede estar vacio").notEmpty(),
+    check("codigo", "El numero factura no puede estar vacio").notEmpty(),
     check("descripcion", "La descripcion no puede estar vacio").notEmpty(),
-    check("total", "El total no puede estar vacio").notEmpty(),
-    check("total", "El total debe ser numerico").isNumeric(),
-    check("insumos_id", "El insumos_id no puede estar vacio").notEmpty(),
-    check("insumos_id", "Ingrese un mongo id valido").isMongoId(),
-    check("insumos_id").custom(helpersGatos.validarIdInsumos),
-    check("semillas_id", "El semillas_id no puede estar vacio").notEmpty(),
-    check("semillas_id", "Ingrese un mongo id valido").isMongoId(),
-    check("semillas_id").custom(helpersGatos.validarIdSemillas),
-    check("mantenimiento_id", "El insumos_id no puede estar vacio").notEmpty(),
-    check("mantenimiento_id", "Ingrese un mongo id valido").isMongoId(),
-    check("mantenimiento_id").custom(helpersGatos.validarIdMantenimientos),
     validarCampos,
     validarJWT
 ], httpGasto.putGastos);

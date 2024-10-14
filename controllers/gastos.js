@@ -1,22 +1,19 @@
 import Gasto from "../models/gastos.js";
-import Proveedor from "../models/proveedores.js"; // Asumiendo que tienes el modelo Proveedor
-import Semilla from "../models/semillas.js"; // Asumiendo que tienes el modelo Semilla
-import Insumo from "../models/insumos.js"; // Asumiendo que tienes el modelo Insumo
 
 const httpGastos = {
     getGastos: async (req, res) => {
         try {
             const gastos = await Gasto.find()
-                .populate("insumos_id", "nombre")
-                .populate("semillas_id", "especieVariedad origen")
-                .populate({ 
-                    path: "mantenimiento_id", 
-                    select: "id_herramienta", 
-                    populate: { path: "id_herramienta", select: "nombre tipo" }
-                });
+                .populate("fincas_id", "nombre") // Poblar fincas_id con el campo 'nombre' (opcional, si lo quieres)
+                .populate("insumos.id_proveedor", "nombre") // Poblar 'insumos.id_proveedor' con el campo 'nombre'
+                .populate("insumos.id_insumos", "nombre") // Poblar 'insumos.id_insumos' con el campo 'nombre'
+                .populate("semillas.id_proveedor", "nombre") // Poblar 'semillas.id_proveedor' con el campo 'nombre'
+                .populate("semillas.id_semilla", "especieVariedad origen") // Poblar 'semillas.id_semilla' con 'especieVariedad' y 'origen'
+                .exec();
+
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
     getGastosId: async (req, res) => {
@@ -25,7 +22,7 @@ const httpGastos = {
             const gastos = await Gasto.findById(id);
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
     getGastosFechas: async (req, res) => {
@@ -35,71 +32,59 @@ const httpGastos = {
             const fechaFinObj = new Date(fechaFin);
             const gastos = await Gasto.find({
                 fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-            });
+            })
+                .populate("fincas_id", "nombre") // Poblar fincas_id con el campo 'nombre' (opcional, si lo quieres)
+                .populate("insumos.id_proveedor", "nombre") // Poblar 'insumos.id_proveedor' con el campo 'nombre'
+                .populate("insumos.id_insumos", "nombre") // Poblar 'insumos.id_insumos' con el campo 'nombre'
+                .populate("semillas.id_proveedor", "nombre") // Poblar 'semillas.id_proveedor' con el campo 'nombre'
+                .populate("semillas.id_semilla", "especieVariedad origen") // Poblar 'semillas.id_semilla' con 'especieVariedad' y 'origen'
+                .exec();
+
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
     postGastos: async (req, res) => {
         try {
-            const { nombre, fecha, numeroFactura, descripcion, total, insumos_id, semillas_id, mantenimiento_id } = req.body;
-            const gastos = new Gasto({
+            const {
                 nombre,
+                fincas_id,
                 fecha,
-                numeroFactura,
+                codigo,
                 descripcion,
                 total,
-                insumos_id,
-                semillas_id,
-                mantenimiento_id,
+                insumos,
+                semillas,
+            } = req.body;
+            const gastos = new Gasto({
+                nombre,
+                fincas_id,
+                fecha,
+                codigo,
+                descripcion,
+                total,
+                insumos,
+                semillas,
             });
             await gastos.save();
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
     putGastos: async (req, res) => {
         try {
             const { id } = req.params;
             const { ...info } = req.body;
-            const gastos = await Gasto.findByIdAndUpdate(id, info, { new: true });
+            const gastos = await Gasto.findByIdAndUpdate(id, info, {
+                new: true,
+            });
             res.json({ gastos });
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ err: error.message });
         }
     },
-
-    // Nueva función para obtener los proveedores
-    getProveedores: async (req, res) => {
-        try {
-            const proveedores = await Proveedor.find();
-            res.json({ proveedores });
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    },
-
-    // Nueva función para obtener las semillas
-    getSemillas: async (req, res) => {
-        try {
-            const semillas = await Semilla.find();
-            res.json({ semillas });
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    },
-
-    // Nueva función para obtener los insumos
-    getInsumos: async (req, res) => {
-        try {
-            const insumos = await Insumo.find();
-            res.json({ insumos });
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
 };
 
 export default httpGastos;

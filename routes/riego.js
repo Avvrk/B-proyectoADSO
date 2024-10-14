@@ -92,7 +92,6 @@ router.put('/:id', [
     // check('hora_fin').optional().custom(helpersRiegos.validarHora),
     check('dosis').optional().custom(helpersRiegos.validarDosis),
     check('cantidad_agua').optional().custom(helpersRiegos.validarCantidadAgua),
-    check('estado').optional().custom(helpersRiegos.validarEstado),
     validarCampos,
     validarJWT
 ], httpRiegos.putRiego);
