@@ -4,19 +4,19 @@ const gastoSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   fincas_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Finca' },
   fecha: { type: Date, required: true },
-  codigo: { type: String, required: true, unique: true },
+  codigo: { type: String, required: true },
   descripcion: { type: String },
   total: { type: Number },
   insumos: {
-      id_proveedor: { type: mongoose.Schema.Types.ObjectId, ref: 'proveedor', set: (v) => (v === "" ? null : v) },
-      id_insumos: { type: mongoose.Schema.Types.ObjectId, ref: 'Insumo', set: (v) => (v === "" ? null : v) },
+      id_proveedor: { type: mongoose.Schema.Types.ObjectId, ref: 'Proveedor' },
+      id_insumos: { type: mongoose.Schema.Types.ObjectId, ref: 'Insumo' },
       unidad: { type: String },
       total: { type: Number },
       cantidad: { type: Number }
   },
   semillas: {
-      id_proveedor: { type: mongoose.Schema.Types.ObjectId, ref: 'proveedor', set: (v) => (v === "" ? null : v) },
-      id_semilla: { type: mongoose.Schema.Types.ObjectId, ref: 'semilla', set: (v) => (v === "" ? null : v) },
+      id_proveedor: { type: mongoose.Schema.Types.ObjectId, ref: 'Proveedor' },
+      id_semilla: { type: mongoose.Schema.Types.ObjectId, ref: 'Semilla' },
       unidad: { type: String },
       total: { type: Number },
       cantidad: { type: Number }

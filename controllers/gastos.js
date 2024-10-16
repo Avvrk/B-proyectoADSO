@@ -76,10 +76,20 @@ const httpGastos = {
     putGastos: async (req, res) => {
         try {
             const { id } = req.params;
-            const { ...info } = req.body;
+            const { insumos, semillas, ...info } = req.body;
+            if (insumos && insumos.id_proveedor != null) {
+                info.total = insumos.total;
+                info.insumos = insumos;
+            }
+            if (semillas && semillas.id_proveedor != null) {
+                info.total = semillas.total;
+                info.semillas = semillas;
+            }
+            
             const gastos = await Gasto.findByIdAndUpdate(id, info, {
                 new: true,
             });
+
             res.json({ gastos });
         } catch (error) {
             res.json({ err: error.message });
