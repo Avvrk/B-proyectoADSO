@@ -47,17 +47,14 @@ const helpersProducciones = {
     },
 
 
-    validarNumeroLote: (numeroLote) => {
-        if (numeroLote !== undefined) {
-            if (typeof numeroLote !== 'string' || numeroLote.trim() === "") {
-                throw new Error("El campo numeroLote no debe estar vacío.");
-            } else {
-                return true;
-            }
-        } else {
-            throw new Error("El campo numeroLote es obligatorio.");
-        }
-    },
+    // validarNumeroLote: (numeroLote) => {
+    //     if (numeroLote !== undefined) {
+    //             throw new Error("El campo numeroLote no debe estar vacío.");
+    //             return true;
+    //     } else {
+    //         throw new Error("El campo numeroLote es obligatorio.");
+    //     }
+    // },
 
 
     validarCantidad: (cantidad) => {

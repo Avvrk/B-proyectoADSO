@@ -35,6 +35,15 @@ router.get('/empleado/:id', [
     validarJWT
 ], httpProcesos.getProcesoEmpleadoID);
 
+router.get("/fechas/:fechaInicio/:fechaFin", [
+    validarCampos,
+    validarJWT
+], httpProcesos.getProcesosEntreFechas);
+
+router.get("/tipo/:tipo", [
+    validarJWT
+], httpProcesos.getProcesosTipo);
+
 // router.get('/porcentaje', httpProcesos.getProcesosPorcentaje);
 
 router.post('/', [

@@ -70,7 +70,7 @@ const httpProducciones = {
     },
     postProduccion: async (req, res) => {
         try {
-            const { cultivo_id, fecha, numeroLote, especie, cantidad, cantidadTrabajadores, observaciones } = req.body;
+            const { cultivo_id, fecha, numeroLote, especie, cantidad, cantidadTrabajadores, observaciones, precioUnitario } = req.body;
             const produccion = new Produccion({
                 cultivo_id,
                 fecha,
@@ -78,7 +78,8 @@ const httpProducciones = {
                 especie,
                 cantidad,
                 cantidadTrabajadores,
-                observaciones
+                observaciones,
+                precioUnitario
             });
             await produccion.save();
             res.json({ produccion });

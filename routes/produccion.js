@@ -60,7 +60,7 @@ router.put('/:id', [
     check('id', 'El ID de la producción debe ser un MongoID válido.').isMongoId(),
     check('cultivo_id').optional().custom(helpersProducciones.validarCultivoID),
     check('fecha').optional().custom(helpersProducciones.validarFecha),
-    check('numeroLote').optional().custom(helpersProducciones.validarNumeroLote),
+    // check('numeroLote').optional().custom(helpersProducciones.validarNumeroLote),
     check('cantidad').optional().custom(helpersProducciones.validarCantidad),
     check('cantidadTrabajadores').optional().custom(helpersProducciones.validarCantidadTrabajadores),
     check('observaciones').optional().custom(helpersProducciones.validarObservaciones),
