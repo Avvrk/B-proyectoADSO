@@ -48,10 +48,11 @@ const httpEmpleados = {
 	},
 	postEmpleados: async (req, res) => {
 		try {
-			const { nombre, direccion, telefono, estudios, descripcion } =
+			const { nombre, documento, direccion, telefono, estudios, descripcion } =
 				req.body;
 			const empleados = new Empleado({
 				nombre,
+				documento,
 				direccion,
 				telefono,
 				estudios,
