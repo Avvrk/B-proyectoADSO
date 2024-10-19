@@ -25,7 +25,7 @@ const gastoSchema = new mongoose.Schema(
 			},
 			id_semilla: {
 				type: mongoose.Schema.Types.ObjectId,
-				ref: "semilla",
+				ref: "Semilla",
 			},
 			unidad: { type: String },
 			total: { type: Number },
