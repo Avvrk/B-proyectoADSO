@@ -34,7 +34,7 @@ router.post(
 		check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
 		check("cantidad", "La cantidad debe ser numerica").isNumeric(),
 		check("unidad", "La unidad no puede estar vacia").notEmpty(),
-		check("respondable", "El respondable no puede estar vacio").notEmpty(),
+		check("responsable", "El respondable no puede estar vacio").notEmpty(),
 		check(
 			"observaciones",
 			"La observacion no puede estar vacia"
