@@ -65,7 +65,7 @@ const httpSiembras = {
     },
     postSiembra: async (req, res) => {
         try {
-            const { id_cultivo, empleado_id, fechaSiembra, fechaCosecha, transplante, cultivoAnterior, inventario_id, estado } = req.body;
+            const { id_cultivo, empleado_id, fechaSiembra, fechaCosecha, transplante, cultivoAnterior, estado } = req.body;
             const siembra = new Siembra({
                 id_cultivo,
                 empleado_id,
@@ -73,7 +73,6 @@ const httpSiembras = {
                 fechaCosecha,
                 transplante,
                 cultivoAnterior,
-                inventario_id,
                 estado
             });
             await siembra.save();

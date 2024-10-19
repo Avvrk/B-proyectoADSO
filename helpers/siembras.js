@@ -1,6 +1,5 @@
 import Cultivo from '../models/cultivos.js';
 import Empleado from '../models/empleados.js';
-import Inventario from '../models/inventario.js'; 
 
 //Falta terminar unas cosas
 
@@ -23,13 +22,6 @@ const helpersSiembras = {
         const empleado = await Empleado.findById(id);
         if (!empleado) {
             throw new Error('El ID del empleado no existe.');
-        }
-        return true;
-    },
-    validarIdInventario : async (id) => {
-        const inventario = await Inventario.findById(id);
-        if (!inventario) {
-            throw new Error('El ID del inventario no existe.');
         }
         return true;
     },

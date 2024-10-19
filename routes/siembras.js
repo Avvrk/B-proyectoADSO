@@ -64,7 +64,6 @@ router.put('/:id', [
     check('id', 'El ID de la siembra es requerido y debe ser un mongoId válido.').isMongoId(),
     check('id_cultivo').optional().custom(helpersSiembras.validarIdCultivo),
     check('empleado_id').optional().custom(helpersSiembras.validarIdEmpleado),
-    check('inventario_id').optional().custom(helpersSiembras.validarIdInventario),
     validarCampos,
     validarJWT
 ], httpSiembras.putSiembra);
