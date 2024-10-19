@@ -11,7 +11,7 @@ const gastoSchema = new mongoose.Schema(
 		insumos: {
 			id_proveedor: {
 				type: mongoose.Schema.Types.ObjectId,
-				ref: "proveedor",
+				ref: "Proveedor",
 			},
 			id_insumos: { type: mongoose.Schema.Types.ObjectId, ref: "Insumo" },
 			unidad: { type: String },
@@ -21,7 +21,7 @@ const gastoSchema = new mongoose.Schema(
 		semillas: {
 			id_proveedor: {
 				type: mongoose.Schema.Types.ObjectId,
-				ref: "proveedor",
+				ref: "Proveedor",
 			},
 			id_semilla: {
 				type: mongoose.Schema.Types.ObjectId,
