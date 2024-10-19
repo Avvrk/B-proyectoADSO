@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const proveedorSchema = new mongoose.Schema({
+  finca_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Finca', required: true },
   nombre: { type: String, required: true },
   direccion: { type: String },
   telefono: { type: String },

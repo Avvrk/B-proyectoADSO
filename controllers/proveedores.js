@@ -3,7 +3,7 @@ import Proveedor from '../models/proveedores.js';
 const httpProveedores = {
     getProveedores: async (req, res) => {
         try {
-            const proveedores = await Proveedor.find();
+            const proveedores = await Proveedor.find().populate("finca_id", "nombre");
             res.json({ proveedores });
         } catch (error) {
             res.json({ error });
@@ -12,7 +12,7 @@ const httpProveedores = {
     getProveedorId: async (req, res) => {
         try {
             const { id } = req.params;
-            const proveedor = await Proveedor.findById(id);
+            const proveedor = await Proveedor.findById(id).populate("finca_id", "nombre");
             res.json({ proveedor });
         } catch (error) {
             res.json({ error });
@@ -20,7 +20,7 @@ const httpProveedores = {
     },
     getProveedorActivos: async (req, res) => {
         try {
-            const proveedores = await Proveedor.find({ estado: 1 });
+            const proveedores = await Proveedor.find({ estado: 1 }).populate("finca_id", "nombre");
             res.json({ proveedores });
         } catch (error) {
             res.json({ error });
@@ -28,7 +28,7 @@ const httpProveedores = {
     },
     getProveedorInactivos: async (req, res) => {
         try {
-            const proveedores = await Proveedor.find({ estado: 0 });
+            const proveedores = await Proveedor.find({ estado: 0 }).populate("finca_id", "nombre");
             res.json({ proveedores });
         } catch (error) {
             res.json({ error });
@@ -36,8 +36,9 @@ const httpProveedores = {
     },
     postProveedor: async (req, res) => {
         try {
-            const { nombre, direccion, telefono, email } = req.body;
+            const { finca_id, nombre, direccion, telefono, email } = req.body;
             const proveedor = new Proveedor({
+                finca_id,
                 nombre,
                 direccion,
                 telefono,
@@ -52,8 +53,9 @@ const httpProveedores = {
     putProveedor: async (req, res) => {
         try {
             const { id } = req.params;
-            const { nombre, direccion, telefono, email } = req.body;
+            const { finca_id, nombre, direccion, telefono, email } = req.body;
             const proveedor = await Proveedor.findByIdAndUpdate(id, {
+                finca_id,
                 nombre,
                 direccion,
                 telefono,

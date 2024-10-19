@@ -35,6 +35,15 @@ router.get('/empleado/:id', [
     validarJWT
 ], httpProcesos.getProcesoEmpleadoID);
 
+router.get("/fechas/:fechaInicio/:fechaFin", [
+    validarCampos,
+    validarJWT
+], httpProcesos.getProcesosEntreFechas);
+
+router.get("/tipo/:tipo", [
+    validarJWT
+], httpProcesos.getProcesosTipo);
+
 // router.get('/porcentaje', httpProcesos.getProcesosPorcentaje);
 
 router.post('/', [
@@ -44,6 +53,8 @@ router.post('/', [
     check('cultivo_id', 'El ID del cultivo debe ser un mongoId válido.').isMongoId(),
     check('empleado_id', 'El ID del empleado es requerido.').notEmpty(),
     check('empleado_id', 'El ID del empleado debe ser un mongoId válido.').isMongoId(),
+    check('estado', 'El estado es requerido.').optional().notEmpty(),
+    check('estado', 'El estado debe ser 0 (inactivo) o 1 (activo).').optional().isIn(['0', '1']),
     validarCampos,
     validarJWT
 ], httpProcesos.postProcesos);
@@ -52,8 +63,9 @@ router.put('/:id', [
     check('id', 'El ID del proceso es requerido.').notEmpty(),
     check('id', 'El ID del proceso debe ser un mongoId válido.').isMongoId(),
     check('fecha').custom(helpersProcesos.validarFecha),
-    // check('id_parcela').optional().custom(helpersProcesos.validarIdParcela),
+    check('id_parcela').optional().custom(helpersProcesos.validarIdParcela),
     check('empleado_id').optional().custom(helpersProcesos.validarEmpleadoID),
+    check('estado').optional().custom(helpersProcesos.validarEstado),
     validarCampos,
     validarJWT
 ], httpProcesos.putProcesos);

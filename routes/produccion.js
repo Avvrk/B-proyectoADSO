@@ -51,8 +51,6 @@ router.post('/', [
     check('cantidad', 'La cantidad es requerida.').notEmpty(),
     check('cantidad', 'La cantidad debe ser un número positivo.').isFloat({ min: 0 }),
     check('cantidadTrabajadores', 'La cantidad de trabajadores debe ser un número no negativo.').optional().isInt({ min: 0 }),
-    check('precioUnitario', 'El precio unitario es requerido').notEmpty(),
-    check('precioUnitario', 'El precio unitario debe ser numerico').isNumeric(),
     validarCampos,
     validarJWT
 ], httpProducciones.postProduccion);
@@ -62,12 +60,11 @@ router.put('/:id', [
     check('id', 'El ID de la producción debe ser un MongoID válido.').isMongoId(),
     check('cultivo_id').optional().custom(helpersProducciones.validarCultivoID),
     check('fecha').optional().custom(helpersProducciones.validarFecha),
-    check('numeroLote').optional().custom(helpersProducciones.validarNumeroLote),
+    // check('numeroLote').optional().custom(helpersProducciones.validarNumeroLote),
     check('cantidad').optional().custom(helpersProducciones.validarCantidad),
     check('cantidadTrabajadores').optional().custom(helpersProducciones.validarCantidadTrabajadores),
     check('observaciones').optional().custom(helpersProducciones.validarObservaciones),
-    check('precioUnitario', 'El precio unitario es requerido').notEmpty(),
-    check('precioUnitario', 'El precio unitario debe ser numerico').isNumeric(),
+    check('estado').optional().custom(helpersProducciones.validarEstado),
     validarCampos,
     validarJWT
 ], httpProducciones.putProduccion);
