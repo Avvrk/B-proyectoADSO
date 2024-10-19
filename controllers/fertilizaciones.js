@@ -6,24 +6,6 @@ const httpFertilizaciones = {
 			const fertilizaciones = await Fertilizacion.find()
 				.populate("id_cultivo", "nombre tipo")
 				.populate("empleado_id", "nombre documento")
-				.populate({
-					path: "inventario_id",
-					select: "semillas_id",
-					populate: {
-						path: "semillas_id",
-						select: "especieVariedad",
-					},
-				})
-				.populate({
-					path: "inventario_id",
-					select: "insumos_id",
-					populate: { path: "insumos_id", select: "nombre" },
-				})
-				.populate({
-					path: "inventario_id",
-					select: "maquinaria_id",
-					populate: { path: "maquinaria_id", select: "nombre tipo" },
-				});
 			res.json({ fertilizaciones });
 		} catch (error) {
 			res.json({ error });
@@ -45,7 +27,8 @@ const httpFertilizaciones = {
 			const fechaFinObj = new Date(fechaFin);
 			const fertilizaciones = await Fertilizacion.find({
 				fecha: { $gte: fechaInicioObj, $lte: fechaFinObj },
-			});
+			}).populate("id_cultivo", "nombre tipo")
+			.populate("empleado_id", "nombre documento");
 			res.json({ fertilizaciones });
 		} catch (error) {
 			res.json({ error });
@@ -54,7 +37,8 @@ const httpFertilizaciones = {
 	getFertilizacionesEmpleado: async (req, res) => {
 		try {
 			const { empleado_id } = req.params;
-			const fertilizaciones = await Fertilizacion.find({ empleado_id });
+			const fertilizaciones = await Fertilizacion.find({ empleado_id }).populate("id_cultivo", "nombre tipo")
+			.populate("empleado_id", "nombre documento");
 			res.json({ fertilizaciones });
 		} catch (error) {
 			res.json({ error });

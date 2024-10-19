@@ -24,10 +24,6 @@ const fertilizacionSchema = new mongoose.Schema(
 		},
 		nombreFertilizante: { type: String, required: true },
 		cantidad: { type: Number, required: true },
-		/* inventario_id: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: "Inventario",
-		}, */
 	},
 	{
 		timestamps: true,
