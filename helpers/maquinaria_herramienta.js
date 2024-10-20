@@ -1,5 +1,7 @@
 import validator from "validator";
 import Proveedor from "../models/proveedores.js";
+import Insumo from  "../models/insumos.js";
+import Empleado from "../models/empleados.js";
 
 const { isMongoId } = validator;
 
@@ -41,7 +43,38 @@ const helpersMaquinariaHerramienta = {
 			throw new Error("El campo proveedores_id es obligatorio.");
 		}
 	},
-
+	validarIdInsumo: async (id) => {
+		if (id != undefined) {
+			try {
+				const res = await Insumo.findById(id);
+				if (!res) {
+					throw new Error("El insumo no existe");
+				} else {
+					return true;
+				}
+			} catch (error) {
+				throw new Error(error.message);
+			}
+		} else {
+			return true;
+		}
+	},
+	validarIdEmpleado: async (id) => {
+		if (id != undefined) {
+			try {
+				const res = await Empleado.findById(id);
+				if (!res) {
+					throw new Error("El empleado no existe");
+				} else {
+					return true;
+				}
+			} catch (error) {
+				throw new Error(error.message);
+			}
+		} else {
+			return true;
+		}
+	},
 	validarNombre: (nombre) => {
 		if (nombre !== undefined) {
 			if (typeof nombre !== "string" || nombre.trim() === "") {
@@ -53,7 +86,6 @@ const helpersMaquinariaHerramienta = {
 			throw new Error("El campo nombre es obligatorio.");
 		}
 	},
-
 	validarTipo: (tipo) => {
 		if (tipo !== undefined) {
 			if (typeof tipo !== "string" || tipo.trim() === "") {
@@ -65,40 +97,14 @@ const helpersMaquinariaHerramienta = {
 			throw new Error("El campo tipo es obligatorio.");
 		}
 	},
-
-	validarFechaCompra: (fechaCompra) => {
-		if (fechaCompra !== undefined) {
-			// Intenta convertir el valor en una fechaCompra
-			const fechaConvertida = new Date(fechaCompra);
-
-			// Verifica si la conversión resultó en una fecha válida
-			if (isNaN(fechaConvertida.getTime())) {
-				throw new Error(
-					"La fecha de compra debe ser una fecha válida."
-				);
-			} else {
-				return true;
+	validarFecha: (fecha) => {
+		if (fecha !== undefined) {
+			if (!dateValido(fecha)) {
+				throw new Error("Ingrese una fecha válida.");
 			}
-		} else {
-			throw new Error("La fecha de compra es obligatoria.");
 		}
+		return true;
 	},
-
-	validarObservaciones: (observaciones) => {
-		if (observaciones !== undefined) {
-			if (
-				typeof observaciones !== "string" ||
-				observaciones.trim() === ""
-			) {
-				throw new Error("Las observaciones no deben estar vacías.");
-			} else {
-				return true;
-			}
-		} else {
-			return true;
-		}
-	},
-
 	validarCantidad: (cantidad) => {
 		if (cantidad !== undefined) {
 			if (typeof cantidad !== "number" || cantidad <= 0) {
@@ -110,7 +116,6 @@ const helpersMaquinariaHerramienta = {
 			throw new Error("La cantidad es obligatoria.");
 		}
 	},
-
 	validarTotal: (total) => {
 		if (total !== undefined) {
 			if (typeof total !== "number" || total <= 0) {
@@ -120,20 +125,6 @@ const helpersMaquinariaHerramienta = {
 			}
 		} else {
 			throw new Error("El total es obligatorio.");
-		}
-	},
-
-	validarEstado: (estado) => {
-		if (estado !== undefined) {
-			if (![0, 1].includes(Number(estado))) {
-				throw new Error(
-					"El estado debe ser 0 (inactivo) o 1 (activo)."
-				);
-			} else {
-				return true;
-			}
-		} else {
-			return true;
 		}
 	},
 };

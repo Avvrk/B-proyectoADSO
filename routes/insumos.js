@@ -23,24 +23,26 @@ router.get(
 router.post(
 	"/",
 	[
-		check(
-			"proveedores_id",
-			"El proveedor id no puede estar vacio"
-		).notEmpty(),
-		check("proveedores_id", "Ingrese un mongo id valido").isMongoId(),
-		check("proveedores_id").custom(helpersInsumos.validarIdProveedores),
+		check("id_finca", "El id finca no puede estar vacio").notEmpty(),
+		check("id_finca", "Ingrese un mongo id valido").isMongoId(),
+		check("id_finca").custom(helpersInsumos.validarIdFinca),
 		check("nombre", "El nombre no puede estar vacio").notEmpty(),
+		check(
+			"registro_ica",
+			"El registro ica no puede estar vacia"
+		).notEmpty(),
+		check(
+			"registro_invima",
+			"El registro invima no puede estar vacia"
+		).notEmpty(),
 		check("relacionNPK", "La relacionNPK no puede estar vacia").notEmpty(),
 		check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
 		check("cantidad", "La cantidad debe ser numerica").isNumeric(),
 		check("unidad", "La unidad no puede estar vacia").notEmpty(),
-		check("responsable", "El respondable no puede estar vacio").notEmpty(),
 		check(
 			"observaciones",
 			"La observacion no puede estar vacia"
 		).notEmpty(),
-		check("total", "El total no puede estar vacio").notEmpty(),
-		check("total", "El total debe ser numerico").isNumeric(),
 		validarCampos,
 		validarJWT,
 	],
@@ -52,24 +54,26 @@ router.put(
 	[
 		check("id", "Ingrese un mongo id valido").isMongoId(),
 		check("id").custom(helpersInsumos.validarId),
-		check(
-			"proveedores_id",
-			"El proveedor id no puede estar vacio"
-		).notEmpty(),
-		check("proveedores_id", "Ingrese un mongo id valido").isMongoId(),
-		check("proveedores_id").custom(helpersInsumos.validarIdProveedores),
+		check("id_finca", "El id finca no puede estar vacio").notEmpty(),
+		check("id_finca", "Ingrese un mongo id valido").isMongoId(),
+		check("id_finca").custom(helpersInsumos.validarIdFinca),
 		check("nombre", "El nombre no puede estar vacio").notEmpty(),
+		check(
+			"registro_ica",
+			"El registro ica no puede estar vacia"
+		).notEmpty(),
+		check(
+			"registro_invima",
+			"El registro invima no puede estar vacia"
+		).notEmpty(),
 		check("relacionNPK", "La relacionNPK no puede estar vacia").notEmpty(),
 		check("cantidad", "La cantidad no puede estar vacia").notEmpty(),
 		check("cantidad", "La cantidad debe ser numerica").isNumeric(),
 		check("unidad", "La unidad no puede estar vacia").notEmpty(),
-		check("responsable", "El respondable no puede estar vacio").notEmpty(),
 		check(
 			"observaciones",
 			"La observacion no puede estar vacia"
 		).notEmpty(),
-		check("total", "El total no puede estar vacio").notEmpty(),
-		check("total", "El total debe ser numerico").isNumeric(),
 		validarCampos,
 		validarJWT,
 	],

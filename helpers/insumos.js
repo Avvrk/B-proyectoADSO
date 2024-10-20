@@ -1,5 +1,5 @@
 import Insumo from "../models/insumos.js";
-import Proveedor from "../models/proveedores.js";
+import Finca from "../models/fincas.js";
 
 const helpersInsumos = {
 	validarId: async (id) => {
@@ -16,12 +16,12 @@ const helpersInsumos = {
 		}
 		return true;
 	},
-	validarIdProveedores: async (id) => {
+	validarIdFinca: async (id) => {
 		if (id !== undefined) {
 			try {
-				const res = await Proveedor.findById(id);
+				const res = await Finca.findById(id);
 				if (!res) {
-					throw new Error("El proveedor no existe");
+					throw new Error("La finca no existe");
 				}
 				return true;
 			} catch (error) {

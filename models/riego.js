@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const riegoSchema = new mongoose.Schema({
   cultivo_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Cultivo', required: true },
-  empleado_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin', required: true },
+  empleado_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Empleado', required: true },
   fecha: { type: Date, required: true },
   dias_transplante: { type: Number },
   estado_fenologico: { type: String, enum: ['Inicial', 'Floracion', 'Cosecha'] },

@@ -78,27 +78,59 @@ router.post(
 			"proveedores_id",
 			"El ID del proveedor debe ser un mongoId válido."
 		).isMongoId(),
+		check("proveedores_id").custom(
+			helpersMaquinariaHerramienta.validarIdProveedor
+		),
 		check("nombre", "El nombre es requerido.").notEmpty(),
 		check("tipo", "El tipo es requerido.").notEmpty(),
 		check("fechaCompra", "La fecha de compra es requerida.").notEmpty(),
-		check("fechaCompra", "La fecha de compra debe ser una fecha válida.")
-			.isISO8601()
-			.toDate(),
-		check("observaciones").custom(
-			helpersMaquinariaHerramienta.validarObservaciones
-		),
+		check("fechaCompra").custom(helpersMaquinariaHerramienta.validarFecha),
+		check("observaciones", "La observacion es requerida.").notEmpty(),
 		check("cantidad", "La cantidad es requerida.").notEmpty(),
 		check("cantidad", "La cantidad debe ser un número positivo.")
 			.isNumeric()
-			.toFloat()
 			.isFloat({ min: 0 }),
 		check("total", "El total es requerido.").notEmpty(),
 		check("total", "El total debe ser un número positivo.")
 			.isNumeric()
-			.toFloat()
 			.isFloat({ min: 0 }),
-		check("estado", "El estado es requerido.").notEmpty(),
-		check("estado", "El estado debe ser un número válido.").isNumeric(),
+		check("mantenimiento.*.fecha_mantenimiento").custom(
+			helpersMaquinariaHerramienta.validarFecha
+		),
+		check(
+			"mantenimiento.*.responsable",
+			"El responsable es requerido"
+		).notEmpty(),
+		check(
+			"mantenimiento.*.observaciones",
+			"La observacion es requerido"
+		).notEmpty(),
+		check("mantenimiento.*.precio", "El precio es requerido").notEmpty(),
+		check(
+			"mantenimiento.*.precio",
+			"El precio debe ser un numero valido"
+		).isFloat({ min: 0 }),
+		check(
+			"desinfeccion.*.fecha_desinfeccion",
+			"La fecha de desinfeccion es requerida"
+		).notEmpty(),
+		check("desinfeccion.*.fecha_desinfeccion").custom(
+			helpersMaquinariaHerramienta.validarFecha
+		),
+		check(
+			"desinfeccion.*.productos.*.id_insumo",
+			"El insumo es requerido"
+		).notEmpty(),
+		check("desinfeccion.*.productos.*.id_insumo").custom(
+			helpersMaquinariaHerramienta.validarIdInsumo
+		),
+		check(
+			"desinfeccion.*.id_empleado",
+			"El empleado es requerido"
+		).notEmpty(),
+		check("desinfeccion.*.id_empleado").custom(
+			helpersMaquinariaHerramienta.validarIdEmpleado
+		),
 		validarCampos,
 		validarJWT,
 	],
@@ -116,20 +148,64 @@ router.put(
 			"id",
 			"El ID de la maquinaria o herramienta debe ser un mongoId válido."
 		).isMongoId(),
+		check("proveedores_id", "El ID del proveedor es requerido.").notEmpty(),
+		check(
+			"proveedores_id",
+			"El ID del proveedor debe ser un mongoId válido."
+		).isMongoId(),
 		check("proveedores_id").custom(
 			helpersMaquinariaHerramienta.validarIdProveedor
 		),
-		check("nombre").custom(helpersMaquinariaHerramienta.validarNombre),
-		check("tipo").custom(helpersMaquinariaHerramienta.validarTipo),
-		check("fechaCompra").custom(
-			helpersMaquinariaHerramienta.validarFechaCompra
+		check("nombre", "El nombre es requerido.").notEmpty(),
+		check("tipo", "El tipo es requerido.").notEmpty(),
+		check("fechaCompra", "La fecha de compra es requerida.").notEmpty(),
+		check("fechaCompra").custom(helpersMaquinariaHerramienta.validarFecha),
+		check("observaciones", "La observacion es requerida.").notEmpty(),
+		check("cantidad", "La cantidad es requerida.").notEmpty(),
+		check("cantidad", "La cantidad debe ser un número positivo.").isFloat({
+			min: 0,
+		}),
+		check("total", "El total es requerido.").notEmpty(),
+		check("total", "El total debe ser un número positivo.").isFloat({
+			min: 0,
+		}),
+		check("mantenimiento.*.fecha_mantenimiento").custom(
+			helpersMaquinariaHerramienta.validarFecha
 		),
-		check("observaciones").custom(
-			helpersMaquinariaHerramienta.validarObservaciones
+		check(
+			"mantenimiento.*.responsable",
+			"El responsable es requerido"
+		).notEmpty(),
+		check(
+			"mantenimiento.*.observaciones",
+			"La observacion es requerido"
+		).notEmpty(),
+		check("mantenimiento.*.precio", "El precio es requerido").notEmpty(),
+		check(
+			"mantenimiento.*.precio",
+			"El precio debe ser un numero valido"
+		).isFloat({ min: 0 }),
+		check(
+			"desinfeccion.*.fecha_desinfeccion",
+			"La fecha de desinfeccion es requerida"
+		).notEmpty(),
+		check("desinfeccion.*.fecha_desinfeccion").custom(
+			helpersMaquinariaHerramienta.validarFecha
 		),
-		check("cantidad").custom(helpersMaquinariaHerramienta.validarCantidad),
-		check("total").custom(helpersMaquinariaHerramienta.validarTotal),
-		check("estado").custom(helpersMaquinariaHerramienta.validarEstado),
+		check(
+			"desinfeccion.*.productos.*.id_insumo",
+			"El insumo es requerido"
+		).notEmpty(),
+		check("desinfeccion.*.productos.*.id_insumo").custom(
+			helpersMaquinariaHerramienta.validarIdInsumo
+		),
+		check(
+			"desinfeccion.*.id_empleado",
+			"El empleado es requerido"
+		).notEmpty(),
+		check("desinfeccion.*.id_empleado").custom(
+			helpersMaquinariaHerramienta.validarIdEmpleado
+		),
 		validarCampos,
 		validarJWT,
 	],

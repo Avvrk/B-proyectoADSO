@@ -68,20 +68,19 @@ router.post(
 			"empleado_id",
 			"El ID del empleado debe ser un mongoId válido."
 		).isMongoId(),
-		check("productos", "El campo productos es requerido.").notEmpty(),
 		check(
-			"ingredienteActivo",
+			"productos.*.ingredienteActivo",
 			"El ingrediente activo es requerido."
 		).notEmpty(),
-		check("dosis", "La dosis es requerida.").notEmpty(),
-		check("dosis", "La dosis debe ser un número positivo.")
+		check("productos.*.dosis", "La dosis es requerida.").notEmpty(),
+		check("productos.*.dosis", "La dosis debe ser un número positivo.")
 			.isNumeric()
-			.toFloat()
 			.isFloat({ min: 0 }),
 		check(
-			"metodoAplicacion",
+			"productos.*.metodoAplicacion",
 			"El método de aplicación es requerido."
 		).notEmpty(),
+		check("operario", "El operario es requerido.").notEmpty(),
 		check("responsable", "El responsable es requerido.").notEmpty(),
 		check("observaciones", "Las observaciones son requeridas.").notEmpty(),
 		validarCampos,
@@ -102,24 +101,32 @@ router.put(
 			"El ID de la preparación de suelos debe ser un mongoId válido."
 		).isMongoId(),
 		check("fecha").custom(helpersPreparacionSuelos.validarFecha),
-		check("id_parcela").custom(helpersPreparacionSuelos.validarIdParcela),
-		check("empleado_id").custom(helpersPreparacionSuelos.validarEmpleadoId),
-		check("productos").custom(helpersPreparacionSuelos.validarProductos),
-		check("ingredienteActivo").custom(
-			helpersPreparacionSuelos.validarIngredienteActivo
-		),
-		check("dosis").custom(helpersPreparacionSuelos.validarDosis),
-		check("metodoAplicacion").custom(
-			helpersPreparacionSuelos.validarMetodoAplicacion
-		),
-		check("operario").custom(helpersPreparacionSuelos.validarOperario),
-		check("responsable").custom(
-			helpersPreparacionSuelos.validarResponsable
-		),
-		check("observaciones").custom(
-			helpersPreparacionSuelos.validarObservaciones
-		),
-		check("estado").custom(helpersPreparacionSuelos.validarEstado),
+		check("id_parcela", "El ID de la parcela es requerido.").notEmpty(),
+		check(
+			"id_parcela",
+			"El ID de la parcela debe ser un mongoId válido."
+		).isMongoId(),
+		check("empleado_id", "El ID del empleado es requerido.").notEmpty(),
+		check(
+			"empleado_id",
+			"El ID del empleado debe ser un mongoId válido."
+		).isMongoId(),
+		check(
+			"productos.*.ingredienteActivo",
+			"El ingrediente activo es requerido."
+		).notEmpty(),
+		check("productos.*.dosis", "La dosis es requerida.").notEmpty(),
+		check(
+			"productos.*.dosis",
+			"La dosis debe ser un número positivo."
+		).isFloat({ min: 0 }),
+		check(
+			"productos.*.metodoAplicacion",
+			"El método de aplicación es requerido."
+		).notEmpty(),
+		check("operario", "El operario es requerido.").notEmpty(),
+		check("responsable", "El responsable es requerido.").notEmpty(),
+		check("observaciones", "Las observaciones son requeridas.").notEmpty(),
 		validarCampos,
 		validarJWT,
 	],

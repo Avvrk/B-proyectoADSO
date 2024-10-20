@@ -84,26 +84,8 @@ const httpMaquinariaHerramientas = {
 
 	postMaquinariaH: async (req, res) => {
 		try {
-			const {
-				proveedores_id,
-				nombre,
-				tipo,
-				fechaCompra,
-				observaciones,
-				cantidad,
-				total,
-				estado,
-			} = req.body;
-			const maquinariaH = new MaquinariaH({
-				proveedores_id,
-				nombre,
-				tipo,
-				fechaCompra,
-				observaciones,
-				cantidad,
-				total,
-				estado,
-			});
+			const { ...info } = req.body;
+			const maquinariaH = new MaquinariaH(info);
 			await maquinariaH.save();
 			res.json({ maquinariaH });
 		} catch (error) {

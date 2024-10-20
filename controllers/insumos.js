@@ -24,24 +24,24 @@ const httpInsumos = {
 	postInsumos: async (req, res) => {
 		try {
 			const {
-				proveedores_id,
+				id_finca,
 				nombre,
+				registro_ica,
+				registro_invima,
 				relacionNPK,
 				cantidad,
 				unidad,
-				responsable,
 				observaciones,
-				total,
 			} = req.body;
 			const insumos = new Insumo({
-				proveedores_id,
+				id_finca,
 				nombre,
+				registro_ica,
+				registro_invima,
 				relacionNPK,
 				cantidad,
 				unidad,
-				responsable,
 				observaciones,
-				total,
 			});
 			await insumos.save();
 			res.json({ insumos });

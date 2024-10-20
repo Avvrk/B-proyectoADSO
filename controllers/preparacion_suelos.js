@@ -82,32 +82,8 @@ const httpPreparacionSuelos = {
 
 	postPreparacionSue: async (req, res) => {
 		try {
-			const {
-				fecha,
-				id_parcela,
-				empleado_id,
-				productos,
-				ingredienteActivo,
-				dosis,
-				metodoAplicacion,
-				operario,
-				responsable,
-				observaciones,
-				estado,
-			} = req.body;
-			const preparaciones = new PreparacionS({
-				fecha,
-				id_parcela,
-				empleado_id,
-				productos,
-				ingredienteActivo,
-				dosis,
-				metodoAplicacion,
-				operario,
-				responsable,
-				observaciones,
-				estado,
-			});
+			const { ...info } = req.body;
+			const preparaciones = new PreparacionS(info);
 			await preparaciones.save();
 			res.json({ preparaciones });
 		} catch (error) {

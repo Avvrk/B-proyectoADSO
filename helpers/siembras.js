@@ -1,16 +1,26 @@
 import Cultivo from '../models/cultivos.js';
 import Empleado from '../models/empleados.js';
 
-//Falta terminar unas cosas
+function dateValido(dateString) {
+	const registroTiempo = Date.parse(dateString);
+	if (isNaN(registroTiempo)) {
+		return false;
+	}
+
+	const fecha = new Date(dateString);
+	const formatoFecha = fecha.toISOString().split("T")[0];
+	return dateString === formatoFecha;
+}
 
 const helpersSiembras = {
-
-    validarEstado : (estado) => {
-        if (estado !== 0 && estado !== 1) {
-            throw new Error('El estado debe ser 0 o 1.');
-        }
-        return true;
-    },
+    validarFecha: (fecha) => {
+		if (fecha !== undefined) {
+			if (!dateValido(fecha)) {
+				throw new Error("Ingrese una fecha válida.");
+			}
+		}
+		return true;
+	},
     validarIdCultivo : async (id) => {
         const cultivo = await Cultivo.findById(id);
         if (!cultivo) {

@@ -2,18 +2,18 @@ import mongoose from "mongoose";
 
 const insumoSchema = new mongoose.Schema(
 	{
-		proveedores_id: {
+		id_finca: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Proveedor",
+			ref: "Finca",
 			required: true,
 		},
 		nombre: { type: String, required: true },
-		relacionNPK: { type: String },
+		registro_ica: { type: String, required: true },
+		registro_invima: { type: String, required: true },
+		relacionNPK: { type: String, required: true },
 		cantidad: { type: Number, required: true },
 		unidad: { type: String, required: true },
-		responsable: { type: String },
 		observaciones: { type: String },
-		total: { type: Number, required: true },
 	},
 	{
 		timestamps: true,
