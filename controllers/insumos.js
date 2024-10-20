@@ -4,7 +4,7 @@ const httpInsumos = {
 	getInsumos: async (req, res) => {
 		try {
 			const insumos = await Insumo.find().populate(
-				"if_finca",
+				"id_finca",
 				"nombre rut"
 			);
 			res.json({ insumos });
