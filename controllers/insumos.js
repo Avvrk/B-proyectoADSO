@@ -4,8 +4,8 @@ const httpInsumos = {
 	getInsumos: async (req, res) => {
 		try {
 			const insumos = await Insumo.find().populate(
-				"proveedores_id",
-				"nombre telefono email"
+				"if_finca",
+				"nombre rut"
 			);
 			res.json({ insumos });
 		} catch (error) {
