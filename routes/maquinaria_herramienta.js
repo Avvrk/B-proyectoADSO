@@ -90,11 +90,11 @@ router.post(
 		check("cantidad", "La cantidad debe ser un número positivo.")
 			.isNumeric()
 			.isFloat({ min: 0 }),
-		check("total", "El total es requerido.").notEmpty(),
+		/* check("total", "El total es requerido.").notEmpty(),
 		check("total", "El total debe ser un número positivo.")
 			.isNumeric()
-			.isFloat({ min: 0 }),
-		check("mantenimiento.*.fecha_mantenimiento").custom(
+			.isFloat({ min: 0 }), */
+		/* check("mantenimiento.*.fecha_mantenimiento").custom(
 			helpersMaquinariaHerramienta.validarFecha
 		),
 		check(
@@ -130,7 +130,7 @@ router.post(
 		).notEmpty(),
 		check("desinfeccion.*.id_empleado").custom(
 			helpersMaquinariaHerramienta.validarIdEmpleado
-		),
+		), */
 		validarCampos,
 		validarJWT,
 	],
@@ -165,10 +165,10 @@ router.put(
 		check("cantidad", "La cantidad debe ser un número positivo.").isFloat({
 			min: 0,
 		}),
-		check("total", "El total es requerido.").notEmpty(),
+		/* check("total", "El total es requerido.").notEmpty(),
 		check("total", "El total debe ser un número positivo.").isFloat({
 			min: 0,
-		}),
+		}), */
 		check("mantenimiento.*.fecha_mantenimiento").custom(
 			helpersMaquinariaHerramienta.validarFecha
 		),

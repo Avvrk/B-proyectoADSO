@@ -12,7 +12,7 @@ const maquinariaHerramientaSchema = new mongoose.Schema(
 		fechaCompra: { type: Date, required: true },
 		observaciones: { type: String },
 		cantidad: { type: Number, required: true },
-		total: { type: Number, required: true },
+		/* total: { type: Number, required: true }, */
 		mantenimiento: [
 			{ fecha_mantenimiento: { type: Date } },
 			{ responsable: { type: String } },

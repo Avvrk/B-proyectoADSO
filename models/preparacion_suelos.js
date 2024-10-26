@@ -14,9 +14,11 @@ const preparacionSuelosSchema = new mongoose.Schema(
 			required: true,
 		},
 		productos: [
-			{ ingredienteActivo: { type: String } },
-			{ dosis: { type: Number } },
-			{ metodoAplicacion: { type: String } },
+			{
+				ingredienteActivo: { type: String },
+				dosis: { type: Number },
+				metodoAplicacion: { type: String },
+			},
 		],
 		operario: { type: String },
 		responsable: { type: String },
