@@ -13,7 +13,7 @@ const semillaSchema = new mongoose.Schema(
 		fechaVencimiento: { type: Date },
 		especieYVariedad: { type: String },
 		numLote: { type: Number },
-		origine: { type: String },
+		origen: { type: String },
 		poderGerminativo: { type: String },
 		observaciones: { type: String },
 		unidad: { type: String },
